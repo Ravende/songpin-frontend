@@ -65,5 +65,7 @@
 <br>
 
 - `branch 규칙`
+  - 깃 플로우
+      - `feature -> develop -> main(master)`
   - 이슈 생성후, branch에서 추가할 내용(ex. feat, design, refactor, ...)과 이슈번호를 branch 이름으로 생성
     - 예시: feat/#12, design/#27
