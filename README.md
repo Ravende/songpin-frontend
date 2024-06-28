@@ -48,9 +48,9 @@
 
   - PR 체크 리스트
 
-    - [X] PR 제목을 규칙에 맞게 작성
-    - [X] label 설정
-    - [X] Code Review 요청 / 작업자 Assign
+    -  PR 제목을 규칙에 맞게 작성
+    -  label 설정
+    -  Code Review 요청 / 작업자 Assign
       
 <br>
 
