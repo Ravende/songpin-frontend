@@ -49,7 +49,9 @@
   ```
 
   - PR 체크 리스트
-    -  PR 제목을 규칙에 맞게 작성
+    -  PR 제목 형식 : [type] PR 제목
+      - 타입은 소문자로
+      - ex. `[Chore] 프로젝트 구조 설정`
     -  label 설정
     -  Code Review 요청 / 작업자 Assign
       
