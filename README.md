@@ -50,10 +50,11 @@
 
   - PR 체크 리스트
     -  PR 제목 형식 : [type] PR 제목
-      - 타입은 소문자로
-      - ex. `[Chore] 프로젝트 구조 설정`
+        - 타입은 소문자로
+        - ex. `[Chore] 프로젝트 구조 설정`
     -  label 설정
     -  Code Review 요청 / 작업자 Assign
+    -  PR 확인한 사람은 확인 코멘트 달기. 2명 이상 확인하면 merge (마지막 사람이 merge)
       
 <br>
 
