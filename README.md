@@ -19,19 +19,16 @@
   - gitmoji를 사용하는 것을 원칙으로 함.
   - 깃모지 + 한글 커밋 메시지 형식으로 작성
   - Gitmoji 컨벤션 예시
-    - 💄 :lipstick: UI, 스타일 관련 파일 추가 및 수정
-    - ✨ feature: 새로운 기능 추가, 구현
-    - 💬 :speech_balloon: 텍스트 또는 리터럴 추가 및 수정
-    - 🍱 :bento: asset 파일(이미지, 아이콘 등) 추가
-    - 📝 :memo: 문서 파일 추가 및 수정
-    - ♿️ :wheelchair: 웹 접근성 향상을 위한 코드 추가 및 수정
-    - ✏️ :pencil2: 단순 오타 수정
-    - 🐛 :bug: 버그 수정
-    - 🩹 :adhesive_bandage: 단순한, critical하지 않은 이슈 수정
-    - 🚚 :truck: 파일, 경로, route를 옮기거나 이름 변경
-    - ♻️ :recycle: 코드 리팩토링
-    - 🔥 :fire: 삭제(파일, 코드)
-    - 🙈 :see_no_evil: gitignore 추가 및 수정
+    - ✨ feat : 새로운 기능 추가, 기존의 기능을 요구 사항에 맞추어 수정
+    - 🐛 fix : 기능에 대한 버그 수정
+    - 🛠️ build : 빌드 관련 수정
+    - 🔧 chore : 패키지 매니저 수정, 그 외 기타 수정 ex) .gitignore
+    - 👷 ci : CI 관련 설정 수정
+    - 📝 docs : 문서 파일 추가 및 수정
+    - 🎨 style : 코드 스타일, 포맷팅에 대한 수정
+    - ♻️ refactor : 기능의 변화가 아닌 코드 리팩터링 ex) 변수 이름 변경
+    - ✅ test : 테스트 코드 추가/수정
+    - 🔖 release : 버전 릴리즈
 
 <br>
 
