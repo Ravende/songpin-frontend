@@ -20,7 +20,7 @@
   - 깃모지 + 한글 커밋 메시지 형식으로 작성
   - Gitmoji 컨벤션 예시
     - 💄 :lipstick: UI, 스타일 관련 파일 추가 및 수정
-    - ✨ :feature: 새로운 기능 추가, 구현
+    - ✨ feature: 새로운 기능 추가, 구현
     - 💬 :speech_balloon: 텍스트 또는 리터럴 추가 및 수정
     - 🍱 :bento: asset 파일(이미지, 아이콘 등) 추가
     - 📝 :memo: 문서 파일 추가 및 수정
