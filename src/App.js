@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import IntroducePage from "./pages/IntroducePage";
+import Main from "./pages/IntroducePage/Main";
 import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import CreatePinPage from "./pages/CreatePinPage";
@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<IntroducePage />} />
+        <Route path="/" element={<Main />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/create" element={<CreatePinPage />} />
