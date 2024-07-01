@@ -1,13 +1,13 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import IntroducePage from "./pages/IntroducePage";
-import HomePage from "./pages/HomePage";
-import SearchPage from "./pages/SearchPage";
-import CreatePinPage from "./pages/CreatePinPage";
-import PlaylistPage from "./pages/PlaylistPage";
-import UsersPage from "./pages/UsersPage";
-import MyPage from "./pages/MyPage";
+import IntroducePage from './pages/IntroducePage/IntroducePage';
+import HomePage from './pages/HomePage/HomePage';
+import SearchPage from './pages/SearchPage/SearchPage';
+import CreatePinPage from './pages/CreatePinPage/CreatePinPage';
+import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
+import UsersPage from './pages/UsersPage/UsersPage';
+import MyPage from './pages/MyPage/MyPage';
 
 function App() {
   return (
