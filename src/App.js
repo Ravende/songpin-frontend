@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import IntroducePage from './pages/IntroducePage/IntroducePage';
 import HomePage from './pages/HomePage/HomePage';
-import SearchPage from './pages/SearchPage/SearchPage';
+import MusicSearchPage from './pages/MusicSearchPage/MusicSearchPage';
 import CreatePinPage from './pages/CreatePinPage/CreatePinPage';
 import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
 import UsersPage from './pages/UsersPage/UsersPage';
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<IntroducePage />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/search" element={<SearchPage />} />
+        <Route path="/search" element={<MusicSearchPage />} />
         <Route path="/create" element={<CreatePinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/users" element={<UsersPage />} />
