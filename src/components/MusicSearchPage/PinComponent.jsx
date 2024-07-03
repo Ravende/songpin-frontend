@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import pinImage from '../../assets/images/MusicSearchPage/Rectangle 217.png';
 import mapIconBallad from '../../assets/images/MusicSearchPage/map_icon_flower.svg';
-import mapIconGray from '../../assets/images/MusicSearchPage/map_icon_flower_gray.svg';
 import mapIconBlack from '../../assets/images/MusicSearchPage/map_icon_flower_black.svg';
+import mapIconGray from '../../assets/images/MusicSearchPage/map_icon_flower_gray.svg';
 
 const PinComponent = () => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [image, setImage] = useState(mapIconBlack);
 
   return (
-    <PinBox>
+    <PinBox onMouseEnter={() => setImage(mapIconBallad)} onMouseLeave={() => setImage(mapIconBlack)}>
       <PinImg src={pinImage} alt="앨범 이미지" />
       <TextBox>
         <PinTitle>
-          <MapIcon src={mapIconBlack} alt="지도 아이콘" />
+          <MapIcon src={image} alt="지도 아이콘" />
           <TitleText>사랑</TitleText>
         </PinTitle>
         <PinSinger>임재범</PinSinger>
