@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import UserSideSection from '../../components/UsersPage/UserSideSection';
 
 const UserSearchPage = () => {
-  return <UserSearchContainer></UserSearchContainer>;
+  return (
+    <UserSearchContainer>
+      <UserSideSection />
+    </UserSearchContainer>
+  );
 };
 
 export default UserSearchPage;
