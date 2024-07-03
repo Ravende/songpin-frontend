@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage/HomePage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import CreatePinPage from './pages/CreatePinPage/CreatePinPage';
 import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
-import UsersPage from './pages/UsersPage/UsersPage';
+import UserSearchPage from './pages/UsersPage/UserSearchPage';
 import MyPage from './pages/MyPage/MyPage';
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/create" element={<CreatePinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
-        <Route path="/users" element={<UsersPage />} />
+        <Route path="/users" element={<UserSearchPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
