@@ -57,6 +57,7 @@ const SideBarContainer = styled.div`
     height: 100%;
     border: 1px solid var(--gray, #BCBCBC);
     background: var(--f8f8f8, #FCFCFC);
+    z-index: 100; // 지도 위로 출력
 `;
 
 const PinFeatures = styled.div`

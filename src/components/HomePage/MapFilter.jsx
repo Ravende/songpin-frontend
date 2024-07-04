@@ -56,6 +56,7 @@ const FilterContainer = styled.div`
     margin-top: 20px;
     border: none;
     background: none;
+    z-index: 100; // 지도 위로 출력
 `;
 
 const GivenOptions = styled.div`
