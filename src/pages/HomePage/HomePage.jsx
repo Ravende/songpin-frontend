@@ -1,8 +1,12 @@
+import MapFilter from '../../components/HomePage/MapFilter';
 import SideBar from '../../components/HomePage/SideBar';
 
 const HomePage = () => {
     return(
-        <SideBar />
+        <div>
+            <SideBar />
+            <MapFilter />
+        </div>
     )
 };
 
