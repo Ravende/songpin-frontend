@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import IntroducePage from './pages/IntroducePage/IntroducePage';
 import HomePage from './pages/HomePage/HomePage';
-import MusicSearchPage from './pages/MusicSearchPage/MusicSearchPage';
+import SearchPage from './pages/MusicSearchPage/SearchPage';
+import MusicInfoPage from './pages/MusicSearchPage/MusicInfoPage';
 import CreatePinPage from './pages/CreatePinPage/CreatePinPage';
 import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
 import UsersPage from './pages/UsersPage/UsersPage';
@@ -15,7 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<IntroducePage />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/search" element={<MusicSearchPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/details" element={<MusicInfoPage />} />
         <Route path="/create" element={<CreatePinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/users" element={<UsersPage />} />
