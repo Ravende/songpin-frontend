@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import styled, { keyframes, css } from 'styled-components';
 import backIcon from '../../../assets/images/MusicSearchPage/arrow_back.svg';
 import mapIconSpark from '../../../assets/images/MusicSearchPage/spark_green.svg';
 import mapIconSparkBlack from '../../../assets/images/MusicSearchPage/spark_black.svg';
 import uncheckedBox from '../../../assets/images/MusicSearchPage/checkbox.svg';
 import checkedBox from '../../../assets/images/MusicSearchPage/checkbox-oncheck.svg';
 import MusicInfoPinPreview from './MusicInfoPinPreview';
+import { useNavigate } from 'react-router-dom';
 
 const MusicInfoContainer = () => {
+  // const [isInitialRotate, setIsInitialRotate] = useState(true);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsInitialRotate(false);
+  //   }, 3000);
+  //   return () => clearTimeout(timer);
+  // }, []);
+
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
+  };
+
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate('/search');
   };
 
   return (
@@ -20,12 +34,14 @@ const MusicInfoContainer = () => {
       <SideBox>
         <Content>
           <SongInfo>
-            <BackIcon src={backIcon} />
+            <BackIcon src={backIcon} onClick={handleNavigate} />
             <AlbumImg src="https://s3-alpha-sig.figma.com/img/676f/30fc/fd783e275b3ebcc7a70f49a291035300?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=epOzyXB0QMYKi8SRhdRvKZzyq58YSvoNaJMLg5VD4PIP6zYLrTOk5-N-m3LlpmMlVR7sLVNT4wRpabkXf9P9t~4xLPLerwxPrC8EMAR7GviyOGXwVxblJpAqq4T5Do2jjUmZqwz8TzzWl196AIz6~obC1gCyQqY-ZySx8b2b-77qhxSQJuXFo6ivLTsgQ9c2YtvTr6hLA~JFhwrkuRnBBy0Ip1310J-WCl4TTAvgVu7qH3NeSbQAtKjACccyFkrBGkPF5Gf9URd2qXP37uK7COCblCKbvvwosb86TAARTglVtwSCJRaFlKS0HRsBYIOS51Gn0gjdT9W~LoTrMEDT8Q__" />
             <SongDetail>
               <SongTitle>
                 <MapIcon src={mapIconSpark} />
-                <TitleText>Yes, and?</TitleText>
+                <RotateBox>
+                  <TitleText>Yes, and?aaaaaaaaaaaaaaaaaaa</TitleText>
+                </RotateBox>
               </SongTitle>
               <Singer>Ariana Grande</Singer>
               <PinCount>
@@ -52,6 +68,24 @@ const MusicInfoContainer = () => {
 };
 
 export default MusicInfoContainer;
+
+const initialRotateText = keyframes`
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+`;
+
+const rotateText = keyframes`
+0% {
+  transform: translateX(-100%);
+}
+100% {
+  transform: translateX(100%);
+}
+`;
 
 const SideComponent = styled.div`
   display: flex;
@@ -112,6 +146,7 @@ const SongTitle = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 6px;
+  width: 462px;
 `;
 
 const MapIcon = styled.img`
@@ -121,6 +156,13 @@ const MapIcon = styled.img`
   padding-right: 8px;
 `;
 
+const RotateBox = styled.div`
+  height: 40px;
+  width: 462px;
+  overflow: hidden;
+  white-space: nowrap;
+`;
+
 const TitleText = styled.div`
   color: #000;
   font-family: Pretendard;
@@ -128,6 +170,19 @@ const TitleText = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: 40px; /* 125% */
+  display: inline-block;
+  /* animation:
+    ${initialRotateText} 10s linear 1,
+    ${rotateText} 10s linear infinite; */
+
+  /* animation: ${({ isInitialRotate }) =>
+    isInitialRotate
+      ? css`
+          ${initialRotateText} 10s linear 1;
+        `
+      : css`
+          ${rotateText} 10s linear infinite;
+        `}; */
 `;
 
 const Singer = styled.div`

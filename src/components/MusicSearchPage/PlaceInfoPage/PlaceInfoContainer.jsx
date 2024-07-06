@@ -5,20 +5,26 @@ import location from '../../../assets/images/MusicSearchPage/location_icon.svg';
 import shareButton from '../../../assets/images/MusicSearchPage/sharing_button.svg';
 import sparkIcon from '../../../assets/images/MusicSearchPage/spark_122.svg';
 import PinComponent from '../PinComponent';
+import { useNavigate } from 'react-router-dom';
 
 const PlaceInfoContainer = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate('/search');
+  };
+
   return (
     <SideComponent>
       <SideBar></SideBar>
       <SideBox>
         <Content>
-          <BackIcon src={backIcon} />
+          <BackIcon src={backIcon} onClick={handleNavigate} />
           <PlaceDetails>
             <PlaceTitle>
               <LocationIcon src={location} />
               <Name>신촌역</Name>
             </PlaceTitle>
-            <Sharing src={shareButton} />
+            <SharingBtn src={shareButton} />
           </PlaceDetails>
           <LocationInfo>서울 서대문구 신촌로 90</LocationInfo>
           <PinSection>
@@ -104,10 +110,11 @@ const Name = styled.div`
   line-height: 40px; /* 125% */
 `;
 
-const Sharing = styled.img`
+const SharingBtn = styled.img`
   width: 30px;
   height: 30px;
   flex-shrink: 0;
+  cursor: pointer;
 `;
 
 const LocationInfo = styled.div`
@@ -159,8 +166,6 @@ const Num = styled.div`
 const RecentDate = styled.div`
   color: var(--gray02, #747474);
   text-align: center;
-
-  /* comment */
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;

@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-// import axios, { useNavigate } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import arrowDown from '../../../assets/images/MusicSearchPage/arrow_down.svg';
 import SearchSongs from './SearchSongs';
 import SearchPlaces from './SearchPlaces';
 
-const options = ['정확도순', '핀 등록 많은순', '최근 핀 등록순'];
+const values = ['정확도순', '핀 등록 많은순', '최근 핀 등록순'];
 
 const SearchContainer = () => {
-  // const navigate = useNavigate();
-
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState('정확도순');
 
   const onValueClicked = (value) => () => {
     setSelectedValue(value);
@@ -21,30 +18,41 @@ const SearchContainer = () => {
 
   const toggling = () => setIsOpen(!isOpen);
 
+  const [selectedOption, setSelectedOption] = useState('노래');
+
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+  };
+
   return (
     <SideComponent>
       <SideBar></SideBar>
       <SideBox>
         <Content>
-          <SearchBar />
+          <SearchBar optionChange={handleOptionChange} />
           <Sorting>
             <DropdownSorting>
               <DropdownHeader onClick={toggling}>
-                <SortingText>{selectedValue || '정확도순'}</SortingText>
+                <SortingText>{selectedValue}</SortingText>
                 <DropIcon src={arrowDown} isOpen={isOpen} />
               </DropdownHeader>
               {isOpen && (
                 <DropdownList>
-                  {options.map((option) => (
-                    <ListItem onClick={onValueClicked(option)}>{option}</ListItem>
+                  {values.map((value) => (
+                    <ListItem
+                      onClick={onValueClicked(value)}
+                      style={{ fontWeight: selectedValue === value ? '700' : '400' }}
+                    >
+                      {value}
+                    </ListItem>
                   ))}
                 </DropdownList>
               )}
             </DropdownSorting>
           </Sorting>
           <SearchResult>
-            <SearchPlaces />
-            {/* <SearchSongs /> */}
+            {selectedOption === '노래' && <SearchSongs />}
+            {selectedOption === '장소' && <SearchPlaces />}
           </SearchResult>
         </Content>
       </SideBox>

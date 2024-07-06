@@ -2,31 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import search from '../../../assets/images/MusicSearchPage/search.svg';
 import arrow_dropdown from '../../../assets/images/MusicSearchPage/arrow_drop_down.svg';
-// import SearchSongs from './SearchSongs';
-// import SearchPlaces from './SearchPlaces';
 
 const options = ['노래', '장소'];
 
-const SearchBar = () => {
-  // const renderComponent = () => {
-  //   switch (selectedOption) {
-  //     case '노래':
-  //       return <SearchSongs />;
-  //     case '장소':
-  //       return <SearchPlaces />;
-  //     default:
-  //       return <SearchSongs />;
-  //   }
-  // };
-
+const SearchBar = ({ optionChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('노래');
 
   const toggling = () => setIsOpen(!isOpen);
 
   const onOptionClicked = (value) => () => {
     setSelectedOption(value);
     setIsOpen(false);
+    optionChange(value);
   };
 
   const [inputValue, setInputValue] = useState('');
@@ -41,13 +29,17 @@ const SearchBar = () => {
         <Search>
           <Dropdown onClick={toggling}>
             <DropdownHeader>
-              <SearchFilter>{selectedOption || '노래'}</SearchFilter>
+              <SearchFilter>{selectedOption}</SearchFilter>
               <Toggle src={arrow_dropdown} alt="드롭다운" isOpen={isOpen} />
             </DropdownHeader>
             {isOpen && (
               <DropdownList>
                 {options.map((option) => (
-                  <ListItem onClick={onOptionClicked(option)} key={option}>
+                  <ListItem
+                    onClick={onOptionClicked(option)}
+                    key={option}
+                    style={{ fontWeight: selectedOption === option ? '700' : '400' }}
+                  >
                     {option}
                   </ListItem>
                 ))}
@@ -119,6 +111,9 @@ const ListItem = styled.div`
   font-weight: 400;
   line-height: 150%; /* 24px */
   cursor: pointer;
+  /* &:hover {
+    font-weight: 700;
+  } */
 `;
 
 const SearchFilter = styled.div`

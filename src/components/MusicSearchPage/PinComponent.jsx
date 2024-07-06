@@ -47,7 +47,7 @@ const PinBox = styled.div`
   background: var(--offwhite, #efefef);
   cursor: pointer;
   margin-bottom: 12px;
-  &:hover {
+  &:active {
     border-radius: 8px;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), var(--offwhite, #efefef);
   }
