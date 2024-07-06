@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import MusicInfoContainer from '../../components/MusicSearchPage/MusicInfoContainer';
+import MusicInfoContainer from '../../components/MusicSearchPage/MusicInfoPage/MusicInfoContainer';
 
 const MusicInfoPage = () => {
   return (

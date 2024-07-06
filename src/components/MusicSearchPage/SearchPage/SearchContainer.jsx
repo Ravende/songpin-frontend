@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 // import axios, { useNavigate } from 'react-router-dom';
 import SearchBar from './SearchBar';
-import arrowDown from '../../assets/images/MusicSearchPage/arrow_down.svg';
+import arrowDown from '../../../assets/images/MusicSearchPage/arrow_down.svg';
 import SearchSongs from './SearchSongs';
 import SearchPlaces from './SearchPlaces';
 
@@ -30,7 +30,7 @@ const SearchContainer = () => {
           <Sorting>
             <DropdownSorting>
               <DropdownHeader onClick={toggling}>
-                <SortingText>{selectedValue || '정렬기준'}</SortingText>
+                <SortingText>{selectedValue || '정확도순'}</SortingText>
                 <DropIcon src={arrowDown} isOpen={isOpen} />
               </DropdownHeader>
               {isOpen && (
@@ -43,8 +43,8 @@ const SearchContainer = () => {
             </DropdownSorting>
           </Sorting>
           <SearchResult>
-            {/* <SearchSongs /> */}
             <SearchPlaces />
+            {/* <SearchSongs /> */}
           </SearchResult>
         </Content>
       </SideBox>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import backIcon from '../../assets/images/MusicSearchPage/arrow_back.svg';
-import mapIconSpark from '../../assets/images/MusicSearchPage/map_icon_spark_green.svg';
-import mapIconSparkBlack from '../../assets/images/MusicSearchPage/map_icon_spark_black.svg';
-import uncheckedBox from '../../assets/images/MusicSearchPage/checkbox.svg';
-import checkedBox from '../../assets/images/MusicSearchPage/checkbox-oncheck.svg';
+import backIcon from '../../../assets/images/MusicSearchPage/arrow_back.svg';
+import mapIconSpark from '../../../assets/images/MusicSearchPage/spark_green.svg';
+import mapIconSparkBlack from '../../../assets/images/MusicSearchPage/spark_black.svg';
+import uncheckedBox from '../../../assets/images/MusicSearchPage/checkbox.svg';
+import checkedBox from '../../../assets/images/MusicSearchPage/checkbox-oncheck.svg';
 import MusicInfoPinPreview from './MusicInfoPinPreview';
 
 const MusicInfoContainer = () => {

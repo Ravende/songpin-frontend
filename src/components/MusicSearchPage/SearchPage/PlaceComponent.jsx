@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import mapIconSpark from '../../assets/images/MusicSearchPage/map_icon_spark_gray.svg';
+import mapIconSpark from '../../../assets/images/MusicSearchPage/spark_gray.svg';
+import { useNavigate } from 'react-router-dom';
 
 const PlaceComponent = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate('/details-place');
+  };
+
   return (
-    <PlaceBox>
+    <PlaceBox onClick={handleNavigate}>
       <Content>
         <PlaceName>신촌역</PlaceName>
         <PinTimes>
@@ -19,7 +25,12 @@ const PlaceComponent = () => {
 
 export default PlaceComponent;
 
-const PlaceBox = styled.div``;
+const PlaceBox = styled.div`
+  &:hover {
+    opacity: 0.8;
+    background: rgba(0, 0, 0, 0.2);
+  }
+`;
 
 const Content = styled.div`
   display: flex;

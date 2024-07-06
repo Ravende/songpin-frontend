@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SearchContainer from '../../components/MusicSearchPage/SearchContainer';
-import SideSection from '../../components/MusicSearchPage/SideSection';
+import SearchContainer from '../../components/MusicSearchPage/SearchPage/SearchContainer';
 
 const SearchPage = () => {
   return (

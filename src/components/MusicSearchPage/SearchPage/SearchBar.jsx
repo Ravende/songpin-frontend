@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import search from '../../assets/images/MusicSearchPage/search.svg';
-import arrow_dropdown from '../../assets/images/MusicSearchPage/arrow_drop_down.svg';
+import search from '../../../assets/images/MusicSearchPage/search.svg';
+import arrow_dropdown from '../../../assets/images/MusicSearchPage/arrow_drop_down.svg';
 // import SearchSongs from './SearchSongs';
 // import SearchPlaces from './SearchPlaces';
 
@@ -41,7 +41,7 @@ const SearchBar = () => {
         <Search>
           <Dropdown onClick={toggling}>
             <DropdownHeader>
-              <SearchFilter>{selectedOption || '곡명'}</SearchFilter>
+              <SearchFilter>{selectedOption || '노래'}</SearchFilter>
               <Toggle src={arrow_dropdown} alt="드롭다운" isOpen={isOpen} />
             </DropdownHeader>
             {isOpen && (

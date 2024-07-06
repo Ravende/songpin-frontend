@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import pinImage from '../../assets/images/MusicSearchPage/Rectangle 217.png';
-import mapIconBallad from '../../assets/images/MusicSearchPage/map_icon_flower.svg';
-import mapIconBlack from '../../assets/images/MusicSearchPage/map_icon_flower_black.svg';
-import mapIconGray from '../../assets/images/MusicSearchPage/map_icon_flower_gray.svg';
+import mapIconBallad from '../../assets/images/MusicSearchPage/flower.svg';
+import mapIconBlack from '../../assets/images/MusicSearchPage/flower_black.svg';
+import mapIconGray from '../../assets/images/MusicSearchPage/flower_gray.svg';
 
 const PinComponent = () => {
   const [image, setImage] = useState(mapIconBlack);
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate('/details-song');
+  };
 
   return (
-    <PinBox onMouseEnter={() => setImage(mapIconBallad)} onMouseLeave={() => setImage(mapIconBlack)}>
+    <PinBox
+      onMouseEnter={() => setImage(mapIconBallad)}
+      onMouseLeave={() => setImage(mapIconBlack)}
+      onClick={handleNavigate}
+    >
       <PinImg src={pinImage} alt="앨범 이미지" />
       <TextBox>
         <PinTitle>
@@ -37,6 +47,10 @@ const PinBox = styled.div`
   background: var(--offwhite, #efefef);
   cursor: pointer;
   margin-bottom: 12px;
+  &:hover {
+    border-radius: 8px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), var(--offwhite, #efefef);
+  }
 `;
 
 const PinImg = styled.img`
