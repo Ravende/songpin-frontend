@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import search from '../../assets/images/MusicSearchPage/search.svg';
 
-const SearchBar = () => {
+const SearchBar = ({ placeholder }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = (event) => {
@@ -14,7 +14,7 @@ const SearchBar = () => {
       <SearchBox>
         <Search>
           <InputBox>
-            <Input type="text" value={inputValue} onChange={handleChange} placeholder="유저 핸들을 검색" />
+            <Input type="text" value={inputValue} onChange={handleChange} placeholder={placeholder} />
           </InputBox>
         </Search>
         <SearchIcon src={search} alt="검색 아이콘" />

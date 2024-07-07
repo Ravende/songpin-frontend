@@ -9,7 +9,7 @@ const UserSearchSideSection = () => {
       <SideBar></SideBar>
       <SideBox>
         <ContentBox>
-          <SearchBar />
+          <SearchBar placeholder="유저 핸들을 검색" />
         </ContentBox>
         <ContentBox>
           <UserInfo />
