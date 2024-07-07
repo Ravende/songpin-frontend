@@ -8,7 +8,7 @@ import CreatePinPage from './pages/CreatePinPage/CreatePinPage';
 import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
 import UserSearchPage from './pages/UsersPage/UserSearchPage';
 import UsersPage from './pages/UsersPage/UsersPage';
-import UserFollowPage from './pages/UsersPage/UserFollowSideSection';
+import UserFollowPage from './pages/UsersPage/UserFollowPage';
 import MyPage from './pages/MyPage/MyPage';
 
 function App() {

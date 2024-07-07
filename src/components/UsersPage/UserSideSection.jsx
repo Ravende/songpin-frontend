@@ -24,10 +24,7 @@ const UserSideSection = () => {
         <ContentBox>
           {/* 글자 크기 24px로 바꿔야 함  */}
           <UserInfo />
-          <FollowBox>
-            <Followers />
-            <FollowBtn>팔로우</FollowBtn>
-          </FollowBox>
+          <Followers />
         </ContentBox>
         <ContentBox>
           <MenuBox>
@@ -84,34 +81,9 @@ const BackBtn = styled.img`
   flex-shrink: 0;
   cursor: pointer;
 `;
-const FollowBtn = styled.div`
-  width: 159px;
-  height: 38px;
-  flex-shrink: 0;
-  border-radius: 30px;
-  background: var(--light_black, #232323);
-  display: flex;
-  width: 142px;
-  height: 30px;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  color: var(--f8f8f8, #fcfcfc);
-  text-align: center;
-  cursor: pointer;
-
-  /* 본문_medium */
-  /* font-family: Pretendard; */
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-`;
 
 const MenuText = styled.div`
   color: var(--light_black, #232323);
-
-  /* 본문_medium */
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
@@ -129,12 +101,6 @@ const MenuBox = styled.div`
   display: flex;
   flex-direction: row;
 `;
-
-const FollowBox = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const Line = styled.div`
   width: 528px;
   height: 1px;

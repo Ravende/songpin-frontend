@@ -13,10 +13,3 @@ const UserFollowPage = () => {
 export default UserFollowPage;
 
 const UserFollowContainer = styled.div``;
-
-const Content = styled.div`
-  margin: 33px;
-  padding-top: 40px;
-  display: flex;
-  flex-direction: column;
-`;

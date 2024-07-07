@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import FollowList from './FollowList';
 import backArrow from '../../assets/images/UsersPage/arrow_back_ios.svg';
 
 const UserFollowSideSection = () => {
-  const [selectedMenu, setSelectedMenu] = useState('followers');
   const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedMenu, setSelectedMenu] = useState('followers');
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const menu = params.get('menu');
+    if (menu === 'following') {
+      setSelectedMenu('following');
+    } else {
+      setSelectedMenu('followers');
+    }
+  }, [location.search]);
 
   const handleBackClick = () => {
     navigate(-1);
