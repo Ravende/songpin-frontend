@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import UserSideSection from '../../components/UsersPage/UserSideSection';
+import UserSearchSideSection from '../../components/UsersPage/UserSearchSideSection';
 
 const UserSearchPage = () => {
   return (
     <UserSearchContainer>
-      <UserSideSection />
+      <UserSearchSideSection />
     </UserSearchContainer>
   );
 };

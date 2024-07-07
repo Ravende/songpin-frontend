@@ -1,20 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import SearchBar from './SearchBar';
+import { useNavigate } from 'react-router-dom';
 import UserInfo from './UserInfo';
-
+import Followers from './Followers';
+import backArrow from '../../assets/images/UsersPage/arrow_back_ios.svg';
+import PinFeed from './PinFeed';
+import Playlist from './Playlist';
 const UserSideSection = () => {
+  const [selectedMenu, setSelectedMenu] = useState('pinFeed');
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
   return (
     <SideComponent>
       <SideBar></SideBar>
       <SideBox>
         <ContentBox>
-          <SearchBar />
+          <BackBtn src={backArrow} onClick={handleBackClick} />
         </ContentBox>
-        {/* <Line /> */}
         <ContentBox>
+          {/* 글자 크기 24px로 바꿔야 함  */}
           <UserInfo />
+          <FollowBox>
+            <Followers />
+            <FollowBtn>팔로우</FollowBtn>
+          </FollowBox>
         </ContentBox>
+        <ContentBox>
+          <MenuBox>
+            <MenuText isSelected={selectedMenu === 'pinFeed'} onClick={() => setSelectedMenu('pinFeed')}>
+              핀 피드
+            </MenuText>
+            <MenuText isSelected={selectedMenu === 'playlist'} onClick={() => setSelectedMenu('playlist')}>
+              플레이리스트
+            </MenuText>
+          </MenuBox>
+        </ContentBox>
+        <Line />
+        <FeedBox>{selectedMenu === 'pinFeed' ? <PinFeed /> : <Playlist />}</FeedBox>
       </SideBox>
     </SideComponent>
   );
@@ -41,13 +67,88 @@ const SideBox = styled.div`
 `;
 
 const ContentBox = styled.div`
-  padding: 33px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding-left: 33px;
+  padding-right: 33px;
   padding-top: 40px;
-  border-bottom: 1px solid var(--gray, #bcbcbc);
+
+  align-items: center;
+`;
+
+const BackBtn = styled.img`
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  cursor: pointer;
+`;
+const FollowBtn = styled.div`
+  width: 159px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: var(--light_black, #232323);
+  display: flex;
+  width: 142px;
+  height: 30px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--f8f8f8, #fcfcfc);
+  text-align: center;
+  cursor: pointer;
+
+  /* 본문_medium */
+  /* font-family: Pretendard; */
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+`;
+
+const MenuText = styled.div`
+  color: var(--light_black, #232323);
+
+  /* 본문_medium */
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-right: 28px;
+  padding-bottom: 9px;
+  padding-left: 7px;
+  padding-right: 7px;
+  cursor: pointer;
+  border-bottom: ${(props) => (props.isSelected ? '3px solid var(--light_black, #232323)' : 'none')};
+`;
+
+const MenuBox = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const FollowBox = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Line = styled.div`
   width: 528px;
   height: 1px;
   background: var(--gray, #bcbcbc);
+`;
+
+const FeedBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding-left: 33px;
+  padding-right: 33px;
+  padding-top: 25px;
+
+  align-items: center;
 `;
