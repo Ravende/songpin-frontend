@@ -7,7 +7,7 @@ const UserFollowInfo = ({ myFollowId }) => {
   return (
     <UserFollowInfoBox>
       <UserInfo />
-      <FollowButton myFollowId={myFollowId}>{myFollowId ? '팔로잉' : '팔로우'}</FollowButton>
+      <FollowBtn myFollowId={myFollowId}>{myFollowId ? '팔로잉' : '팔로우'}</FollowBtn>
     </UserFollowInfoBox>
   );
 };
@@ -20,7 +20,7 @@ const UserFollowInfoBox = styled.div`
   justify-content: space-between;
 `;
 
-const FollowButton = styled.div`
+const FollowBtn = styled.div`
   width: 100px;
   height: 38px;
   flex-shrink: 0;

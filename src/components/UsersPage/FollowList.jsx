@@ -17,15 +17,6 @@ export default FollowList;
 
 const ListContainer = styled.div``;
 
-const ListTitle = styled.h2`
-  font-family: Pretendard;
-  font-size: 24px;
-  font-weight: 500;
-  color: var(--light_black, #232323);
-  margin-bottom: 20px;
-  padding-left: 33px;
-`;
-
 const ContentBox = styled.div`
   padding: 33px;
   padding-top: 40px;
