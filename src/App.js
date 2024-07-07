@@ -8,6 +8,7 @@ import CreatePinPage from './pages/CreatePinPage/CreatePinPage';
 import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
 import UserSearchPage from './pages/UsersPage/UserSearchPage';
 import UsersPage from './pages/UsersPage/UsersPage';
+import UserFollowPage from './pages/UsersPage/UserFollowSideSection';
 import MyPage from './pages/MyPage/MyPage';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/usersearch" element={<UserSearchPage />} />
         <Route path="/user" element={<UsersPage />} />
+        <Route path="/user-follows" element={<UserFollowPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
