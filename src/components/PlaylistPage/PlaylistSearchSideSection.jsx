@@ -159,7 +159,7 @@ const DropdownList = styled.div`
   background: var(--f8f8f8, #fcfcfc);
   z-index: 1000;
   position: absolute;
-  top: 60%;
+  top: 100%;
 `;
 
 const ListItem = styled.div`
