@@ -8,6 +8,7 @@ import CreatePinPage from './pages/CreatePinPage/CreatePinPage';
 import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
 import UsersPage from './pages/UsersPage/UsersPage';
 import MyPage from './pages/MyPage/MyPage';
+import PlaylistSearchPage from './pages/PlaylistPage/PlaylistSearchPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/create" element={<CreatePinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
+        <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
         <Route path="/users" element={<UsersPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="*" element={<h1>Not Found</h1>} />
