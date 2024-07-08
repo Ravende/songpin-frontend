@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Calendar from 'react-calendar';
+import moment from 'moment';
+import 'react-calendar/dist/Calendar.css';
 import open_dropdown from '../../assets/filter/open_dropdown.svg';
 import close_dropdown from '../../assets/filter/close_dropdown.svg';
+import calendar_selected from '../../assets/filter/calendar_selected.svg';
 
 const MapFilter = () => {
     const [selectedOption, setSelectedOption] = useState("1week"); // 기본 선택 항목: 최근 일주일
     const [showOptions, setShowOptions] = useState(false); // 드롭다운 옵션 상태: 보이기/감추기
     const [showCalender, setShowCalender] = useState(false);
     const [showGenre, setShowGenre] = useState(false);
+    const [date, setDate] = useState(new Date());
 
     const selectTerm = (term) => {
         setSelectedOption(term);
         setShowOptions(false);
     };
 
-    return(
+    const handleDateChange = (date) => {
+        setDate(date);
+    };
+
+    return (
         <FilterContainer>
             <GivenOptions onClick={() => setShowOptions(!showOptions)}>
                 {selectedOption === "1week" && (
@@ -38,6 +47,19 @@ const MapFilter = () => {
             <SetTerm onClick={() => setShowCalender(!showCalender)}>기간 직접 설정
                 <DropdownIcon src={showCalender ? close_dropdown : open_dropdown} alt="dropdown icon" />
             </SetTerm>
+            {showCalender && (
+                <CalendarContainer>
+                    <StyledCalendar
+                        calendarType="gregory"
+                        value={date}
+                        onChange={handleDateChange}
+                        formatDay={(locale, date) => moment(date).format("D")}
+                        formatYear={(locale, date) => moment(date).format("YYYY")}
+                        formatMonthYear={(locale, date) => moment(date).format("YYYY. MMMM")}
+                        showNeighboringMonth={false}
+                    />
+                </CalendarContainer>
+            )}
             <SetGenre onClick={() => setShowGenre(!showGenre)}>장르별
                 <DropdownIcon src={showGenre ? close_dropdown : open_dropdown} alt="dropdown icon" />
             </SetGenre>
@@ -151,5 +173,73 @@ const SetGenre = styled.div`
     font-weight: 500;
     cursor: pointer;
 `;
+
+const CalendarContainer = styled.div`
+    position: absolute;
+    top: 120%;
+    left: 79%;
+    transform: translateX(-50%);
+    z-index: 10;
+    border: 1px solid var(--gray02, #747474);
+    background: var(--offwhite_, #FCFCFC);
+    padding: 10px;
+    border-radius: 24px;
+`;
+
+const StyledCalendar = styled(Calendar)`
+    font-family: Pretendard;
+
+    .react-calendar {
+        border: none;
+        border-radius: 24px;
+    }
+
+    .react-calendar__navigation {
+        button {
+            color: #232323;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    }
+
+    .react-calendar__tile {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+            background: lightgray;
+            border-radius: 50%;
+        }
+    }
+
+    .react-calendar__tile--now {
+        background: #FCFCFC;
+        &:hover {
+            background: #5452FF;
+            color: #FCFCFC;
+            border-radius: 50%;
+        }
+    }
+
+    .react-calendar__tile--active {
+        background: url(${calendar_selected}) center center no-repeat !important;
+        background-size: 15%;
+        color: white;
+    }
+
+    .react-calendar__month-view__weekdays {
+        abbr {
+            text-decoration: none;
+            font-family: Pretendard;
+        }
+    }
+
+    .react-calendar__month-view__days__day {
+        height: 50px;
+        width: 40px;
+    }
+`;
+
 
 export default MapFilter;
