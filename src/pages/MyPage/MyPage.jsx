@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-//import PinFeedPage from '../../components/MyPage/PinFeedPage';
 import MyInfoTop from '../../components/MyPage/MyInfoTop';
 import PinFeed from '../../components/MyPage/PinFeed';
 import MyPlaylists from '../../components/MyPage/MyPlaylists';
 import Bookmarks from '../../components/MyPage/Bookmarks';
 
 const MyPage = () => {
-  const [clickedPage, setClickedPage] = useState('pinfeed');
+  const [clickedPage, setClickedPage] = useState(localStorage.getItem('clickedPage') || 'pinfeed');
 
   const handlePageClick = (page) => {
     setClickedPage(page);
   };
+
+  useEffect(() => {
+    localStorage.setItem('clickedPage', clickedPage);
+  }, [clickedPage]);
+
+  useEffect(() => {
+    const savedPage = localStorage.getItem('clickedPage');
+    if (savedPage) {
+      setClickedPage(savedPage);
+    }
+  }, []);
 
   return (
     <SideComponent>

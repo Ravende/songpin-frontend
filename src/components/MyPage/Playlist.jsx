@@ -5,18 +5,17 @@ import yesbookmark from '../../assets/images/MyPage/bookmark-yes.svg';
 import pinImage from '../../assets/images/MusicSearchPage/spark_122.svg';
 
 const Playlist = (/* { playlist }*/) => {
-  //   const { isBookmarked, coverImages } = playlist;
   const [isHovered, setIsHovered] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false); // 예시로 초기값을 false로 설정
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const toggleBookmark = () => {
-    setIsBookmarked((prev) => !prev); // 상태 반전
+    setIsBookmarked((prev) => !prev);
   };
+
   return (
     <PlaylistContainer>
       <PlaylistBox>
         <BigBox>
-          {/* 북마크 버튼 클릭하면 바뀌어야 함 */}
           <BookmarkBtn src={isBookmarked ? yesbookmark : nobookmark} alt="북마크 버튼" onClick={toggleBookmark} />
         </BigBox>
         <SmallBoxContainer>
@@ -28,7 +27,7 @@ const Playlist = (/* { playlist }*/) => {
       </PlaylistBox>
       <PlaylistNameContainer onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
         <PlaylistName isHovered={isHovered}>
-          {/*{playlistName}*/}&nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
+          {/*{playlistName}*/}가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
           &nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
         </PlaylistName>
         <FadeOut />
@@ -40,7 +39,7 @@ const Playlist = (/* { playlist }*/) => {
           <PinNum>53</PinNum>
         </PinBox>
       </NameBox>
-      <UpdatedDate>20xx.xx.xx updated</UpdatedDate>
+      <UpdatedDate>최근 업데이트: 20xx.xx.xx</UpdatedDate>
     </PlaylistContainer>
   );
 };
@@ -50,19 +49,19 @@ export default Playlist;
 const PlaylistContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 15px;
 `;
+
 const PlaylistBox = styled.div`
   display: flex;
   overflow: hidden;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 `;
 
 const BigBox = styled.div`
   width: 140px;
   height: 140px;
   border-radius: 8px 0px 0px 8px;
-  border: 1px solid var(--f8f8f8, #fcfcfc);
+  border-right: 1px solid var(--f8f8f8, #fcfcfc);
   background: #5452ff;
   display: flex;
   align-items: flex-start;
@@ -72,26 +71,13 @@ const BigBox = styled.div`
 const SmallBoxContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 140px;
+  gap: 1px;
 `;
-
-// const SmallBox = styled.div`
-//   width: 70px;
-//   height: 70px;
-//   border: 1px solid var(--f8f8f8, #fcfcfc);
-//   background: url(${props => props.imageUrl}) no-repeat center center;
-//   background-size: cover;
-//   &:first-child {
-//     border-radius: 0px 8px 0px 0px;
-//   }
-//   &:last-child {
-//     border-radius: 0px 0px 8px 0px;
-//   }
-// `;
 
 const SmallBox = styled.div`
   width: 70px;
   height: 70px;
-  border: 1px solid var(--f8f8f8, #fcfcfc);
   &:first-child {
     border-radius: 0px 8px 0px 0px;
     background: #00d2d2;
@@ -108,6 +94,11 @@ const BookmarkBtn = styled.img`
   flex-shrink: 0;
   padding: 10px;
   cursor: pointer;
+  fill: #f8f8f8;
+  /* fill: ${(props) => (props.onClick ? '#f8f8f8' : 'none')}; */
+  /* &:hover {
+    fill: #f8f8f8;
+  } */
 `;
 
 const PlaylistNameContainer = styled.div`
@@ -134,7 +125,6 @@ const PlaylistName = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  padding: 6px 6px 6px 2px;
   white-space: nowrap;
   animation: ${(props) => (props.isHovered ? scrollText : 'none')} 9s linear infinite;
 `;
@@ -150,14 +140,16 @@ const FadeOut = styled.div`
 
 const NameBox = styled.div`
   width: 210px;
-  height: 24px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 `;
+
 const UserName = styled.div`
-  color: var(--gray03, #5f5f5f);
+  color: var(--light_black, #232323);
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
@@ -185,7 +177,7 @@ const PinNum = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 22.4px */
-  padding: 5px;
+  padding-left: 5px;
 `;
 
 const UpdatedDate = styled.div`
@@ -196,5 +188,5 @@ const UpdatedDate = styled.div`
   font-weight: 400;
   line-height: 150%; /* 24px */
   height: 24px;
-  padding: 8px;
+  padding-left: 8px;
 `;
