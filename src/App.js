@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Main from "./pages/IntroducePage/Main";
 import HomePage from "./pages/HomePage";
@@ -10,6 +10,7 @@ import UsersPage from "./pages/UsersPage";
 import MyPage from "./pages/MyPage";
 import IntroducePage from "./pages/IntroducePage/IntroducePage";
 import StatisticsPage from "./pages/IntroducePage/StatisticsPage";
+
 
 function App() {
   return (
