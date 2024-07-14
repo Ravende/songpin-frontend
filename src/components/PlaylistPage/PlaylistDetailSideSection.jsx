@@ -7,7 +7,7 @@ import yesbookmark from '../../assets/images/PlaylistPage/yesbookmark_black.svg'
 import pinImage from '../../assets/images/MusicSearchPage/spark_122.svg';
 import shareImg from '../../assets/images/PlaylistPage/share.svg';
 import moreButton from '../../assets/images/PlaylistPage/more_vert.svg';
-
+import PinComponent from './PinComponent';
 const options = ['플레이리스트 수정', '플레이리스트 삭제'];
 
 const PlaylistDetailSideSection = () => {
@@ -69,6 +69,13 @@ const PlaylistDetailSideSection = () => {
           {/* 아직 등록된 노래가 없어요 */}
           <UpdatedDate>최근 업데이트: 20xx.xx.xx</UpdatedDate>
         </InfoBox>
+        <PinContainer>
+          <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent />
+          <PinComponent />
+        </PinContainer>
       </SideBox>
     </SideComponent>
   );
@@ -275,4 +282,9 @@ const ListItem = styled.div`
   font-weight: 500;
   line-height: normal;
   cursor: pointer;
+`;
+
+const PinContainer = styled.div`
+  margin-top: 32px;
+  /* margin-bottom: 32px; */
 `;
