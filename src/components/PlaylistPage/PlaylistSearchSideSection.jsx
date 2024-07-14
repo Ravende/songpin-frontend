@@ -95,8 +95,9 @@ const ContentBox = styled.div`
 
 const PlaylistFeed = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin: 0px 20px 70px 20px;
+  grid-template-columns: repeat(2, 1fr);
+  /* grid-gap: 28px 28px; */
+  padding: 0px 20px 70px 20px;
 `;
 
 const NoPlaylist = styled.div`

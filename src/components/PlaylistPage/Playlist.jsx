@@ -51,20 +51,21 @@ export default Playlist;
 const PlaylistContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 15px;
+  /* margin: 15px; */
   cursor: pointer;
 `;
 const PlaylistBox = styled.div`
   display: flex;
   overflow: hidden;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  /* gap: 1px; */
 `;
 
 const BigBox = styled.div`
   width: 140px;
   height: 140px;
   border-radius: 8px 0px 0px 8px;
-  border: 1px solid var(--f8f8f8, #fcfcfc);
+  border-right: 1px solid var(--f8f8f8, #fcfcfc);
   background: #5452ff;
   display: flex;
   align-items: flex-start;
@@ -74,6 +75,9 @@ const BigBox = styled.div`
 const SmallBoxContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  height: 140px;
+  gap: 1px;
 `;
 
 // const SmallBox = styled.div`
@@ -93,7 +97,7 @@ const SmallBoxContainer = styled.div`
 const SmallBox = styled.div`
   width: 70px;
   height: 70px;
-  border: 1px solid var(--f8f8f8, #fcfcfc);
+  /* border: 1px solid var(--f8f8f8, #fcfcfc); */
   &:first-child {
     border-radius: 0px 8px 0px 0px;
     background: #00d2d2;
