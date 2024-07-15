@@ -73,8 +73,6 @@ const PlaylistDetailSideSection = () => {
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent />
-          <PinComponent />
         </PinContainer>
       </SideBox>
     </SideComponent>

@@ -98,6 +98,7 @@ const TitleBox = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 11px;
+  max-width: 350px;
 `;
 
 const PinTitle = styled.div`
