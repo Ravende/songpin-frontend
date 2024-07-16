@@ -3,11 +3,17 @@ import styled from 'styled-components';
 import UserInfo from './UserInfo';
 import Followers from './Followers';
 import settingIcon from '../../assets/images/MyPage/settings.svg';
+import { useNavigate } from 'react-router-dom';
 
 const MyInfoTop = () => {
+  const navigate = useNavigate();
+  const goSettingsPage = () => {
+    navigate('/settings');
+  };
+
   return (
     <MyInfo>
-      <Settings src={settingIcon}></Settings>
+      <Settings src={settingIcon} onClick={goSettingsPage}></Settings>
       <User>
         <UserInfo />
         <Followers />

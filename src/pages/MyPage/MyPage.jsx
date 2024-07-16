@@ -4,6 +4,7 @@ import MyInfoTop from '../../components/MyPage/MyInfoTop';
 import PinFeed from '../../components/MyPage/PinFeed';
 import MyPlaylists from '../../components/MyPage/MyPlaylists';
 import Bookmarks from '../../components/MyPage/Bookmarks';
+import SideSection from '../../components/common/SideSection';
 
 const MyPage = () => {
   const [clickedPage, setClickedPage] = useState(localStorage.getItem('clickedPage') || 'pinfeed');
@@ -24,57 +25,30 @@ const MyPage = () => {
   }, []);
 
   return (
-    <SideComponent>
-      <SideBar></SideBar>
-      <SideBox>
-        <Content>
-          <MyInfoTop />
-          <TopBar>
-            <PageSelect>
-              <PageItem onClick={() => handlePageClick('pinfeed')} isActive={clickedPage === 'pinfeed'}>
-                핀 피드
-              </PageItem>
-              <PageItem onClick={() => handlePageClick('playlist')} isActive={clickedPage === 'playlist'}>
-                플레이리스트
-              </PageItem>
-              <PageItem onClick={() => handlePageClick('bookmark')} isActive={clickedPage === 'bookmark'}>
-                북마크
-              </PageItem>
-            </PageSelect>
-            <Line />
-          </TopBar>
-          {clickedPage === 'pinfeed' && <PinFeed />}
-          {clickedPage === 'playlist' && <MyPlaylists />}
-          {clickedPage === 'bookmark' && <Bookmarks />}
-        </Content>
-      </SideBox>
-    </SideComponent>
+    <SideSection>
+      <MyInfoTop />
+      <TopBar>
+        <PageSelect>
+          <PageItem onClick={() => handlePageClick('pinfeed')} isActive={clickedPage === 'pinfeed'}>
+            핀 피드
+          </PageItem>
+          <PageItem onClick={() => handlePageClick('playlist')} isActive={clickedPage === 'playlist'}>
+            플레이리스트
+          </PageItem>
+          <PageItem onClick={() => handlePageClick('bookmark')} isActive={clickedPage === 'bookmark'}>
+            북마크
+          </PageItem>
+        </PageSelect>
+        <Line />
+      </TopBar>
+      {clickedPage === 'pinfeed' && <PinFeed />}
+      {clickedPage === 'playlist' && <MyPlaylists />}
+      {clickedPage === 'bookmark' && <Bookmarks />}
+    </SideSection>
   );
 };
 
 export default MyPage;
-
-const SideComponent = styled.div`
-  display: flex;
-  flex-direction: row;
-  min-height: 100vh;
-`;
-
-const SideBar = styled.div`
-  width: 80px;
-  border-right: 1px solid var(--gray, #bcbcbc);
-`;
-
-const SideBox = styled.div`
-  width: 528px;
-  border-right: 1px solid var(--gray, #bcbcbc);
-  flex-shrink: 0;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 const TopBar = styled.div`
   display: flex;

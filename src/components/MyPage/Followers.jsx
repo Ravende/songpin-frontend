@@ -9,6 +9,10 @@ const Followers = () => {
     navigate(`/user-follows?menu=${menu}`);
   };
 
+  const goEditPage = () => {
+    navigate('/edit');
+  };
+
   return (
     <FollowerComponent>
       <FollowInfoBox>
@@ -21,7 +25,7 @@ const Followers = () => {
           <FollowTextBox>팔로잉</FollowTextBox>
         </FollowBox>
       </FollowInfoBox>
-      <EditBtn>프로필 편집</EditBtn>
+      <EditBtn onClick={goEditPage}>프로필 편집</EditBtn>
     </FollowerComponent>
   );
 };
