@@ -7,12 +7,30 @@ import open_dropdown from '../../assets/filter/open_dropdown.svg';
 import close_dropdown from '../../assets/filter/close_dropdown.svg';
 import calendar_selected from '../../assets/filter/calendar_selected.svg';
 
+import smallPopIcon from '../../assets/common/smallPopIcon.svg';
+import smallRockIcon from '../../assets/common/smallRockIcon.svg';
+import smallBalladeIcon from '../../assets/common/smallBalladeIcon.svg';
+import smallJazzIcon from '../../assets/common/smallJazzIcon.svg';
+import smallHiphopIcon from '../../assets/common/smallHiphopIcon.svg';
+import smallLofiIcon from '../../assets/common/smallLoFiIcon.svg';
+import smallDanceIcon from '../../assets/common/smallDanceIcon.svg';
+import smallEtcIcon from '../../assets/common/smallEtcIcon.svg';
+import whitePopIcon from '../../assets/common/whitePopIcon.svg';
+import whiteRockIcon from '../../assets/common/whiteRockIcon.svg';
+import whiteBalladeIcon from '../../assets/common/whiteBalladeIcon.svg';
+import whiteJazzIcon from '../../assets/common/whiteJazzIcon.svg';
+import whiteHiphopIcon from '../../assets/common/whiteHiphopIcon.svg';
+import whiteLoFiIcon from '../../assets/common/whiteLoFiIcon.svg';
+import whiteDanceIcon from '../../assets/common/whiteDanceIcon.svg';
+import whiteEtcIcon from '../../assets/common/whiteEtcIcon.svg';
+
 const MapFilter = () => {
     const [selectedOption, setSelectedOption] = useState("1week"); // 기본 선택 항목: 최근 일주일
     const [showOptions, setShowOptions] = useState(false); // 드롭다운 옵션 상태: 보이기/감추기
     const [showCalender, setShowCalender] = useState(false);
     const [showGenre, setShowGenre] = useState(false);
     const [date, setDate] = useState(new Date());
+    const [selectedGenres, setSelectedGenres] = useState([]);
 
     const selectTerm = (term) => {
         setSelectedOption(term);
@@ -22,6 +40,25 @@ const MapFilter = () => {
     const handleDateChange = (date) => {
         setDate(date);
     };
+
+    const toggleGenre = (genre) => {
+        setSelectedGenres(prevGenres =>
+            prevGenres.includes(genre)
+                ? prevGenres.filter(g => g !== genre)
+                : [...prevGenres, genre]
+        );
+    };
+
+    const genreData = [
+        { id: 'Pop', label: '#팝', smallIcon: smallPopIcon, whiteIcon: whitePopIcon, color: '#4EDE76' },
+        { id: 'Rock', label: '#록/메탈', smallIcon: smallRockIcon, whiteIcon: whiteRockIcon, color: '#FF5862' },
+        { id: 'Ballad', label: '#발라드', smallIcon: smallBalladeIcon, whiteIcon: whiteBalladeIcon, color: '#17C1D8' },
+        { id: 'Jazz', label: '#재즈', smallIcon: smallJazzIcon, whiteIcon: whiteJazzIcon, color: '#E866BC' },
+        { id: 'Hiphop', label: '#힙합', smallIcon: smallHiphopIcon, whiteIcon: whiteHiphopIcon, color: '#5452FF' },
+        { id: 'Lo-Fi', label: '#Lo-Fi', smallIcon: smallLofiIcon, whiteIcon: whiteLoFiIcon, color: '#FE60A2' },
+        { id: 'Etc', label: '#기타', smallIcon: smallEtcIcon, whiteIcon: whiteEtcIcon, color: '#FFCD1D' },
+        { id: 'Dance', label: '#댄스', smallIcon: smallDanceIcon, whiteIcon: whiteDanceIcon, color: '#A64EEC' }
+    ];
 
     return (
         <FilterContainer>
@@ -63,6 +100,23 @@ const MapFilter = () => {
             <SetGenre onClick={() => setShowGenre(!showGenre)}>장르별
                 <DropdownIcon src={showGenre ? close_dropdown : open_dropdown} alt="dropdown icon" />
             </SetGenre>
+            {showGenre && (
+                <GenreDropdown>
+                    <GenreGrid>
+                        {genreData.map((genre) => (
+                            <GenreOption
+                                key={genre.id}
+                                onClick={() => toggleGenre(genre.id)}
+                                isSelected={selectedGenres.includes(genre.id)}
+                                color={genre.color}
+                            >
+                                <span>{genre.label}</span>
+                                <img src={selectedGenres.includes(genre.id) ? genre.whiteIcon : genre.smallIcon} alt={`${genre.label} icon`} />
+                            </GenreOption>
+                        ))}
+                    </GenreGrid>
+                </GenreDropdown>
+            )}
         </FilterContainer>
     );
 };
@@ -241,5 +295,46 @@ const StyledCalendar = styled(Calendar)`
     }
 `;
 
+const GenreDropdown = styled.div`
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(235%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 24px;
+    border: 1px solid var(--gray02, #747474);
+    background: var(--f8f8f8, #FCFCFC);
+    padding: 10px;
+`;
+
+const GenreGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+`;
+
+const GenreOption = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 500;
+    width: auto;
+    color: ${props => (props.isSelected ? '#FCFCFC' : 'var(--light_black, #232323)')};
+    background: ${props => (props.isSelected ? props.color : 'none')};
+    border: ${props => (props.isSelected ? `1px solid ${props.color}` : '1px solid var(--gray02, #747474)')};
+    cursor: pointer;
+    padding:7px;
+    text-align: center;
+    border-radius: 24px;
+    &:hover {
+        background: ${props => (props.isSelected ? props.color : 'lightgray')};
+    }
+`;
 
 export default MapFilter;
