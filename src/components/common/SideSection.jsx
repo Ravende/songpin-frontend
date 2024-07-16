@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SideSection = () => {
+const SideSection = ({ children }) => {
   return (
     <SideComponent>
       <SideBar></SideBar>
       <SideBox>
-        <Content></Content>
+        <Content>{children}</Content>
       </SideBox>
     </SideComponent>
   );
@@ -17,7 +17,7 @@ export default SideSection;
 const SideComponent = styled.div`
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  height: 100vh;
 `;
 
 const SideBar = styled.div`
@@ -35,5 +35,4 @@ const SideBox = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
