@@ -40,7 +40,7 @@ const MusicInfoContainer = () => {
               <SongTitle>
                 <MapIcon src={mapIconSpark} />
                 <RotateBox>
-                  <TitleText>Yes, and?aaaaaaaaaaaaaaaaaaa</TitleText>
+                  <TitleText>Yes, and?</TitleText>
                 </RotateBox>
               </SongTitle>
               <Singer>Ariana Grande</Singer>
