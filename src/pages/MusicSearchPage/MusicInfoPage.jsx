@@ -49,7 +49,7 @@ const MusicInfoPage = () => {
             </PinCount>
           </SongDetail>
           <PinInfo>
-            <ListenedTimes>not yet listened</ListenedTimes>
+            <ListenedTimes>아직 듣지 않았어요</ListenedTimes>
             <CheckMyPin>
               <CheckText>나의 핀 보기</CheckText>
               <Checkbox src={isChecked ? checkedBox : uncheckedBox} onClick={handleCheckboxChange} />
