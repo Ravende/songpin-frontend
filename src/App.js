@@ -8,7 +8,9 @@ import MusicInfoPage from './pages/MusicSearchPage/MusicInfoPage';
 import PlaceInfoPage from './pages/MusicSearchPage/PlaceInfoPage';
 import CreatePinPage from './pages/CreatePinPage/CreatePinPage';
 import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
+import UserSearchPage from './pages/UsersPage/UserSearchPage';
 import UsersPage from './pages/UsersPage/UsersPage';
+import UserFollowPage from './pages/UsersPage/UserFollowPage';
 import MyPage from './pages/MyPage/MyPage';
 import ProfileEditPage from './pages/MyPage/ProfileEditPage';
 import SettingsPage from './pages/MyPage/SettingsPage';
@@ -29,10 +31,12 @@ function App() {
         <Route path="/details-place" element={<PlaceInfoPage />} />
         <Route path="/create" element={<CreatePinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
+        <Route path="/usersearch" element={<UserSearchPage />} />
+        <Route path="/user" element={<UsersPage />} />
+        <Route path="/user-follows" element={<UserFollowPage />} />
         <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
         <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
         <Route path="/playlist-edit/:id" element={<PlaylistEditPage />} />
-        <Route path="/users" element={<UsersPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/edit" element={<ProfileEditPage />} />
         <Route path="/settings" element={<SettingsPage />} />
