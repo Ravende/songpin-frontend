@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-
 import IntroducePage from './pages/IntroducePage/IntroducePage';
 import HomePage from './pages/HomePage/HomePage';
 import SearchPage from './pages/MusicSearchPage/SearchPage';
@@ -16,10 +15,8 @@ import SettingsPage from './pages/MyPage/SettingsPage';
 import PlaylistSearchPage from './pages/PlaylistPage/PlaylistSearchPage';
 import PlaylistDetailPage from './pages/PlaylistPage/PlaylistDetailPage';
 import PlaylistEditPage from './pages/PlaylistPage/PlaylistEditPage';
-import IntroducePage from "./pages/IntroducePage/IntroducePage";
-import StatisticsPage from "./pages/IntroducePage/StatisticsPage";
-import Main from "./pages/IntroducePage/Main";
-
+import StatisticsPage from './pages/IntroducePage/StatisticsPage';
+import Main from './pages/IntroducePage/Main';
 
 function App() {
   return (
@@ -39,8 +36,8 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/edit" element={<ProfileEditPage />} />
         <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/introduce" element={<IntroducePage/>}/>
-        <Route path="/statistics" element={<StatisticsPage/>}/>
+        <Route path="/introduce" element={<IntroducePage />} />
+        <Route path="/statistics" element={<StatisticsPage />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>
