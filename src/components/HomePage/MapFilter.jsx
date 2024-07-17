@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Calendar from 'react-calendar';
 import moment from 'moment';
@@ -28,10 +28,12 @@ import whiteEtcIcon from '../../assets/common/whiteEtcIcon.svg';
 const MapFilter = () => {
     const [selectedOption, setSelectedOption] = useState("1week");
     const [showOptions, setShowOptions] = useState(false);
-    const [showCalender, setShowCalender] = useState(false);
+    const [showCalendar, setShowCalendar] = useState(false);
     const [showGenre, setShowGenre] = useState(false);
-    const [date, setDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
     const [selectedGenres, setSelectedGenres] = useState([]);
+    const [selectedDatesText, setSelectedDatesText] = useState("YYYY.MM.DD ~ YYYY.MM.DD");
 
     const selectTerm = (term) => {
         setSelectedOption(term);
@@ -39,7 +41,30 @@ const MapFilter = () => {
     };
 
     const handleDateChange = (date) => {
-        setDate(date);
+        if (!startDate) {
+            setStartDate(date);
+            setEndDate(null);
+        } else if (!endDate) {
+            if (date >= startDate) {
+                setEndDate(date);
+            } else {
+                setEndDate(startDate);
+                setStartDate(date);
+            }
+        } else {
+            setStartDate(date);
+            setEndDate(null);
+        }
+    };
+
+    const applyDateRange = () => {
+        setShowCalendar(false);
+        if (startDate && endDate) {
+            const formattedStartDate = moment(startDate).format('YYYY.MM.DD');
+            const formattedEndDate = moment(endDate).format('YYYY.MM.DD');
+            setSelectedOption(`${formattedStartDate} ~ ${formattedEndDate}`);
+            setSelectedDatesText(`${formattedStartDate} ~ ${formattedEndDate}`);
+        }
     };
 
     const toggleGenre = (genre) => {
@@ -48,6 +73,29 @@ const MapFilter = () => {
                 ? prevGenres.filter(g => g !== genre)
                 : [...prevGenres, genre]
         );
+    };
+
+    useEffect(() => {
+        if (startDate && !endDate) {
+            setSelectedDatesText(`${moment(startDate).format('YYYY.MM.DD')} ~ YYYY.MM.DD`);
+        } else if (startDate && endDate) {
+            setSelectedDatesText(`${moment(startDate).format('YYYY.MM.DD')} ~ ${moment(endDate).format('YYYY.MM.DD')}`);
+        } else {
+            setSelectedDatesText("YYYY.MM.DD ~ YYYY.MM.DD");
+        }
+    }, [startDate, endDate]);
+
+    const tileClassName = ({ date, view }) => {
+        if (view === 'month') {
+            if (startDate && endDate && date >= startDate && date <= endDate) {
+                return 'react-calendar__tile--range';
+            } else if (startDate && date.getTime() === startDate.getTime()) {
+                return 'react-calendar__tile--rangeStart';
+            } else if (endDate && date.getTime() === endDate.getTime()) {
+                return 'react-calendar__tile--rangeEnd';
+            }
+        }
+        return null;
     };
 
     const genreData = [
@@ -76,23 +124,36 @@ const MapFilter = () => {
                     </Dropdown>
                 )}
             </GivenOptions>
-            <SetTerm onClick={() => setShowCalender(!showCalender)}>
-                기간 직접 설정
-                <DropdownIcon src={showCalender ? close_dropdown : open_dropdown} alt="dropdown icon" />
-            </SetTerm>
-            {showCalender && (
-                <CalendarContainer>
-                    <StyledCalendar
-                        calendarType="gregory"
-                        value={date}
-                        onChange={handleDateChange}
-                        formatDay={(locale, date) => moment(date).format("D")}
-                        formatYear={(locale, date) => moment(date).format("YYYY")}
-                        formatMonthYear={(locale, date) => moment(date).format("YYYY. MMMM")}
-                        showNeighboringMonth={false}
-                    />
-                </CalendarContainer>
-            )}
+            <SetTermWrapper>
+                <SetTerm onClick={() => setShowCalendar(!showCalendar)}>
+                    {selectedOption === "1week" || selectedOption === "1month" || selectedOption === "3months"
+                        ? "기간 직접 설정"
+                        : selectedOption}
+                    <DropdownIcon src={showCalendar ? close_dropdown : open_dropdown} alt="dropdown icon" />
+                </SetTerm>
+                {showCalendar && (
+                    <CalendarContainer>
+                        <StyledCalendar
+                            selectRange={false}
+                            value={[startDate, endDate]}
+                            onChange={handleDateChange}
+                            tileClassName={tileClassName}
+                            formatDay={(locale, date) => moment(date).format("D")}
+                            formatYear={(locale, date) => moment(date).format("YYYY")}
+                            formatMonthYear={(locale, date) => moment(date).format("YYYY. MMMM")}
+                            showNeighboringMonth={true}
+                        />
+                        <ApplyContainer>
+                            <SelectedDates>
+                                {startDate && endDate
+                                    ? `${moment(startDate).format('YYYY.MM.DD')} ~ ${moment(endDate).format('YYYY.MM.DD')}`
+                                    : "YYYY.MM.DD ~ YYYY.MM.DD"}
+                                <ApplyButton onClick={applyDateRange}>결정</ApplyButton>
+                            </SelectedDates>
+                        </ApplyContainer>
+                    </CalendarContainer>
+                )}
+            </SetTermWrapper>
             <SetGenre onClick={() => setShowGenre(!showGenre)}>
                 장르별
                 <DropdownIcon src={showGenre ? close_dropdown : open_dropdown} alt="dropdown icon" />
@@ -185,6 +246,14 @@ const Option = styled.div`
     color: var(--light_black, #232323);
     border: none;
     background: none;
+    cursor: pointer;
+`;
+
+const SetTermWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
 `;
 
 const SetTerm = styled.div`
@@ -225,14 +294,24 @@ const SetGenre = styled.div`
     cursor: pointer;
 `;
 
+const ApplyContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    border: none;
+    background: none;
+`;
+
 const CalendarContainer = styled.div`
-    position: absolute;
-    top: 120%;
-    left: 79%;
-    transform: translateX(-50%);
+    position: fixed;
+    top: 31%;
+    left: 71%;
+    transform: translate(-50%, -50%);
     z-index: 10;
-    border: 1px solid var(--gray02, #747474);
-    background: var(--offwhite_, #FCFCFC);
+    //border: 1px solid var(--gray02, #747474);
+    //background: var(--offwhite_, #FCFCFC);
+    background: none;
     padding: 10px;
     border-radius: 24px;
 `;
@@ -273,10 +352,16 @@ const StyledCalendar = styled(Calendar)`
         }
     }
 
-    .react-calendar__tile--active {
+    .react-calendar__tile--active,
+    .react-calendar__tile--rangeStart,
+    .react-calendar__tile--rangeEnd {
         background: url(${calendar_selected}) center center no-repeat !important;
         background-size: 15%;
         color: white;
+    }
+
+    .react-calendar__tile--range {
+        background: rgba(36, 238, 129, 0.15);
     }
 
     .react-calendar__month-view__weekdays {
@@ -289,6 +374,54 @@ const StyledCalendar = styled(Calendar)`
     .react-calendar__month-view__days__day {
         height: 50px;
         width: 40px;
+    }
+`;
+
+const SelectedDates = styled.div`
+    padding: 8px 16px;
+    border: 1px solid var(--gray02, #747474);
+    border-radius: 24px;
+    background-color: var(--offwhite_, #FCFCFC);
+    color: var(--light_black, #232323);
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+
+    /* ${props => props.startDate && `
+        .react-calendar__tile--rangeStart {
+            background: url(${calendar_selected}) center center no-repeat !important;
+            background-size: 15%;
+            color: white;
+        }
+    `}
+
+    ${props => props.endDate && `
+        .react-calendar__tile--rangeEnd {
+            background: url(${calendar_selected}) center center no-repeat !important;
+            background-size: 15%;
+            color: white;
+        }
+    `} */
+`;
+
+const ApplyButton = styled.button`
+    margin-left: 10px;
+    padding: 4px 10px;
+    margin-left: 20px;
+    border: 1px solid var(--gray02, #747474);
+    border-radius: 4px;
+    background-color: #FCFCFC;
+    color: #232323;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    &:hover {
+        background-color: #3937b2;
+        color: #FFFFFF;
     }
 `;
 
