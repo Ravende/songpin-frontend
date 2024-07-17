@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+
 import IntroducePage from './pages/IntroducePage/IntroducePage';
 import HomePage from './pages/HomePage/HomePage';
 import SearchPage from './pages/SearchPage/SearchPage';
@@ -11,11 +12,15 @@ import MyPage from './pages/MyPage/MyPage';
 import PlaylistSearchPage from './pages/PlaylistPage/PlaylistSearchPage';
 import PlaylistDetailPage from './pages/PlaylistPage/PlaylistDetailPage';
 import PlaylistEditPage from './pages/PlaylistPage/PlaylistEditPage';
+import IntroducePage from "./pages/IntroducePage/IntroducePage";
+import StatisticsPage from "./pages/IntroducePage/StatisticsPage";
+import Main from "./pages/IntroducePage/Main";
+
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<IntroducePage />} />
+        <Route path="/" element={<Main />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/create" element={<CreatePinPage />} />
@@ -25,6 +30,9 @@ function App() {
         <Route path="/playlist-edit/:id" element={<PlaylistEditPage />} />
         <Route path="/users" element={<UsersPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/introduce" element={<IntroducePage/>}/>
+        <Route path="/statistics" element={<StatisticsPage/>}/>
+        
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>
