@@ -22,7 +22,7 @@ const UserSearchPage = () => {
 export default UserSearchPage;
 
 const ContentBox = styled.div`
-  padding: 33px;
+  padding: 34px;
   padding-top: 40px;
   border-bottom: 1px solid var(--gray, #bcbcbc);
 `;
