@@ -5,7 +5,7 @@ import UserInfo from '../../components/UsersPage/UserInfo';
 import Followers from '../../components/UsersPage/Followers';
 import backArrow from '../../assets/images/UsersPage/arrow_back_ios.svg';
 import PinFeed from '../../components/UsersPage/PinFeed';
-import PlaylistFeed from '../../components/UsersPage/Playlist';
+import PlaylistFeed from '../../components/UsersPage/PlaylistFeed';
 import SideSection from '../../components/common/SideSection';
 
 const UsersPage = () => {
@@ -94,9 +94,8 @@ const FeedBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
 
-  padding-left: 33px;
-  padding-right: 33px;
-  padding-top: 25px;
+
+  padding-top: 30px;
 
   align-items: center;
 `;

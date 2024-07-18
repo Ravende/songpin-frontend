@@ -10,7 +10,7 @@ const UserSearchPage = () => {
   return (
     <SideSection>
         <ContentBox>
-          <SearchBar placeholder="유저 핸들을 검색" />
+          <SearchBar placeholder="핸들 또는 닉네임을 검색" />
         </ContentBox>
         <ContentBox>
           <UserInfo />

@@ -10,8 +10,10 @@ const PinFeed = () => {
         <PinImg src={pinImage} alt="핀이미지" />
         <PinNum>9999</PinNum>
       </PinBox>
+      <PinContainer>
       <PinComponent />
       <PinComponent />
+      </PinContainer>
     </div>
   );
 };
@@ -21,7 +23,8 @@ export default PinFeed;
 const PinBox = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 37px;
+  margin-bottom: 34px;
+  margin-left:34px;
   align-items: center;
 `;
 
@@ -42,3 +45,7 @@ const PinNum = styled.div`
   line-height: normal;
   margin-left: 8px;
 `;
+
+const PinContainer = styled.div`
+  margin-left:32px;
+`
