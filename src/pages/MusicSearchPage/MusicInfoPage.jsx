@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import React, { useEffect, useState, useRef } from 'react';
+import styled, { keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import backIcon from '../../assets/images/MusicSearchPage/arrow_back.svg';
 import mapIconSpark from '../../assets/images/MusicSearchPage/spark_green.svg';
@@ -10,22 +10,25 @@ import MusicInfoPinPreview from '../../components/MusicSearchPage/MusicInfoPinPr
 import SideSection from '../../components/common/SideSection';
 
 const MusicInfoPage = () => {
-  // const [isInitialRotate, setIsInitialRotate] = useState(true);
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsInitialRotate(false);
-  //   }, 3000);
-  //   return () => clearTimeout(timer);
-  // }, []);
-
   const [isChecked, setIsChecked] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [title, setTitle] = useState('Yes, and? aaaaaaaaaaaaaaaaaa');
+  const [titleWidth, setTitleWidth] = useState(0);
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      const width = titleRef.current.offsetWidth;
+      setTitleWidth(width);
+    }
+  }, [title]);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
   const navigate = useNavigate();
-  const handleNavigate = () => {
+  const goSearchPage = () => {
     navigate('/search');
   };
 
@@ -33,13 +36,23 @@ const MusicInfoPage = () => {
     <SideSection>
       <MusicInfo>
         <SongInfo>
-          <BackIcon src={backIcon} onClick={handleNavigate} />
+          <BackIcon src={backIcon} onClick={goSearchPage} />
           <AlbumImg src="https://s3-alpha-sig.figma.com/img/676f/30fc/fd783e275b3ebcc7a70f49a291035300?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=epOzyXB0QMYKi8SRhdRvKZzyq58YSvoNaJMLg5VD4PIP6zYLrTOk5-N-m3LlpmMlVR7sLVNT4wRpabkXf9P9t~4xLPLerwxPrC8EMAR7GviyOGXwVxblJpAqq4T5Do2jjUmZqwz8TzzWl196AIz6~obC1gCyQqY-ZySx8b2b-77qhxSQJuXFo6ivLTsgQ9c2YtvTr6hLA~JFhwrkuRnBBy0Ip1310J-WCl4TTAvgVu7qH3NeSbQAtKjACccyFkrBGkPF5Gf9URd2qXP37uK7COCblCKbvvwosb86TAARTglVtwSCJRaFlKS0HRsBYIOS51Gn0gjdT9W~LoTrMEDT8Q__" />
           <SongDetail>
             <SongTitle>
               <MapIcon src={mapIconSpark} />
-              <RotateBox>
-                <TitleText>Yes, and?</TitleText>
+              <RotateBox
+                onMouseEnter={() => {
+                  if (titleWidth > 424) setIsHovered(true);
+                }}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                <TitleText ref={titleRef} isHovered={isHovered}>
+                  {titleWidth > 424
+                    ? `${title} ${String.fromCharCode(8195)} ${String.fromCharCode(8195)} ${title}`
+                    : title}
+                </TitleText>
+                {titleWidth > 424 && <FadeOut />}
               </RotateBox>
             </SongTitle>
             <Singer>Ariana Grande</Singer>
@@ -49,7 +62,7 @@ const MusicInfoPage = () => {
             </PinCount>
           </SongDetail>
           <PinInfo>
-            <ListenedTimes>아직 듣지 않았어요</ListenedTimes>
+            <ListenedTimes>최근 들은 날짜: 2020.3.20</ListenedTimes>
             <CheckMyPin>
               <CheckText>나의 핀 보기</CheckText>
               <Checkbox src={isChecked ? checkedBox : uncheckedBox} onClick={handleCheckboxChange} />
@@ -66,24 +79,6 @@ const MusicInfoPage = () => {
 };
 
 export default MusicInfoPage;
-
-const initialRotateText = keyframes`
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-`;
-
-const rotateText = keyframes`
-0% {
-  transform: translateX(-100%);
-}
-100% {
-  transform: translateX(100%);
-}
-`;
 
 const MusicInfo = styled.div`
   display: flex;
@@ -142,6 +137,16 @@ const RotateBox = styled.div`
   width: 462px;
   overflow: hidden;
   white-space: nowrap;
+  position: relative;
+`;
+
+const rotateText = keyframes`
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 `;
 
 const TitleText = styled.div`
@@ -152,18 +157,16 @@ const TitleText = styled.div`
   font-weight: 700;
   line-height: 40px; /* 125% */
   display: inline-block;
-  /* animation:
-    ${initialRotateText} 10s linear 1,
-    ${rotateText} 10s linear infinite; */
+  animation: ${(props) => (props.isHovered ? rotateText : 'none')} 9s linear infinite;
+`;
 
-  /* animation: ${({ isInitialRotate }) =>
-    isInitialRotate
-      ? css`
-          ${initialRotateText} 10s linear 1;
-        `
-      : css`
-          ${rotateText} 10s linear infinite;
-        `}; */
+const FadeOut = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  background: linear-gradient(to left, white, rgba(255, 255, 255, 0));
 `;
 
 const Singer = styled.div`
