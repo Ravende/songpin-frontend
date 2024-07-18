@@ -11,9 +11,10 @@ const MusicInfoPinPreview = () => {
   };
 
   const text =
-    '사랑하긴 했었나요 스쳐가는 인연이었나요 누가 내 가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나 그대의 눈빛은 날 얼어붙게 해 어쩌구';
-
-  const displayText = isTruncated ? text.substring(0, 55) : text;
+    '사랑하긴 했었나요 스쳐가는 인연이었나요 누가 내 가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나 그대의 눈빛은 날 얼어붙게 하네';
+  const maxLength = 59;
+  const showMoreBtn = text.length > maxLength;
+  const displayText = showMoreBtn && isTruncated ? text.substring(0, 55) : text;
 
   const navigate = useNavigate();
   const goUsersPage = () => {
@@ -28,7 +29,7 @@ const MusicInfoPinPreview = () => {
           <PinMemo onClick={isTruncated ? () => {} : toggleTruncation} isTruncated={isTruncated}>
             <SecretPin src={lockIcon} />
             {displayText}
-            {isTruncated && <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>}
+            {showMoreBtn && isTruncated && <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>}
           </PinMemo>
           <Details>
             <Date>2024.04.04</Date>
@@ -61,6 +62,7 @@ const PinContent = styled.div`
   flex-direction: column;
   padding: 17px 21px 15px 15px;
   display: inline-block;
+  width: 426px;
 `;
 
 const UserName = styled.div`
@@ -71,6 +73,7 @@ const UserName = styled.div`
   font-weight: 400;
   line-height: 140%; /* 22.4px */
   cursor: pointer;
+  width: auto;
   display: inline-block;
 `;
 
@@ -78,6 +81,7 @@ const PinMemo = styled(UserName)`
   line-height: 150%; /* 24px */
   padding-top: 7px;
   cursor: ${(props) => (props.isTruncated ? 'auto' : 'pointer')};
+  width: 426px;
 `;
 
 const SecretPin = styled.img`
@@ -86,7 +90,7 @@ const SecretPin = styled.img`
   flex-shrink: 0;
   padding-right: 8px;
   padding-left: 3px;
-  vertical-align: calc(-10%);
+  vertical-align: calc(-8%);
 `;
 
 const MoreBtn = styled.span`
