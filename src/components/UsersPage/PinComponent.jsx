@@ -8,6 +8,16 @@ import moreMenu from '../../assets/images/UsersPage/more_vert.svg';
 import lock from '../../assets/images/UsersPage/lock.svg';
 const PinComponent = () => {
   const [image, setImage] = useState(mapIconBlack);
+  const [isTruncated, setIsTruncated] = useState(true);
+  const text =
+  '사랑하긴 했었나요 스쳐가는 인연이었나요 짧지 않은 우리 함께했던 시간들이 자꾸 내 마음을 가둬두네 누가 내 가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나';
+  const maxLength = 59;
+  const showMoreBtn = text.length > maxLength;
+  const displayText = showMoreBtn && isTruncated ? text.substring(0, 55) : text;
+
+  const toggleTruncation = () => {
+    setIsTruncated(!isTruncated);
+  };
 
   return (
     <PinBox onMouseEnter={() => setImage(mapIconBallad)} onMouseLeave={() => setImage(mapIconBlack)}>
@@ -26,10 +36,10 @@ const PinComponent = () => {
           <MoreIcon src={moreMenu} alt="더보기 아이콘" />
         </SongBox>
         <ContentBox>
-          <LyricText>
+          <LyricText  onClick={isTruncated ? () => {} : toggleTruncation} isTruncated={isTruncated}>
             <LockImg src={lock} alt="나만보기 아이콘" />
-            사랑하긴 했었나요 스쳐가는 인연이었나요 짧지 않은 우리 함께했던 시간들이 자꾸 내 마음을 가둬두네 누가 내
-            가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나
+            {displayText}
+            {showMoreBtn && isTruncated && <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>}
           </LyricText>
           <InfoBox>
             <InfoText>2024.04.04</InfoText>
@@ -47,7 +57,7 @@ const PinBox = styled.div`
   display: flex;
   flex-direction: row;
   width: 462px;
-  height: 174px;
+  min-height: 174px;
   flex-shrink: 0;
   border-radius: 8px;
 
@@ -145,16 +155,16 @@ const LockImg = styled.img`
 
 const LyricText = styled.div`
   width: 426px;
-  height: 48px;
+  min-height: 48px;
   flex-shrink: 0;
 
   overflow: hidden;
   color: var(--light_black, #232323);
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  white-space: normal;
+  -webkit-line-clamp: 2; */
+  /* -webkit-box-orient: vertical;
+  white-space: normal; */
 
   font-family: Pretendard;
   font-size: 16px;
@@ -163,6 +173,7 @@ const LyricText = styled.div`
   line-height: 150%; /* 24px */
 
   margin-top: 11px;
+  cursor: ${(props) => (props.isTruncated ? 'auto' : 'pointer')};
 `;
 
 const ContentBox = styled.div`
@@ -192,4 +203,14 @@ const InfoText = styled.div`
   font-weight: 400;
   line-height: 150%; /* 24px */
   padding-left: 8px;
+`;
+
+const MoreBtn = styled.span`
+  color: var(--gray02, #747474);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  cursor: pointer;
 `;
