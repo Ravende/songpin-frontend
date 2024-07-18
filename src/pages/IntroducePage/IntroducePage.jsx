@@ -42,6 +42,7 @@ const IntroducePage = () => {
   );
 };
 
+export default IntroducePage;
 const NavWrap = styled.div`
   font-size: 50px;
 `;
