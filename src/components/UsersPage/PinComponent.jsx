@@ -43,7 +43,8 @@ const PinComponent = () => {
           </LyricText>
           <InfoBox>
             <InfoText>2024.04.04</InfoText>
-            <InfoText>이화여대 학문관에서</InfoText>
+            <PlaceText>이화여대 학문관</PlaceText>
+            <InfoText>에서</InfoText>
           </InfoBox>
         </ContentBox>
       </TextBox>
@@ -202,7 +203,25 @@ const InfoText = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 24px */
-  padding-left: 8px;
+  padding-right: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+`;
+
+const PlaceText = styled.div`
+  color: var(--gray02, #747474);
+  text-align: right;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
+  max-width: 220px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
 `;
 
 const MoreBtn = styled.span`
