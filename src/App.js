@@ -36,7 +36,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/edit" element={<ProfileEditPage />} />
         <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/introduce" element={<IntroducePage />} />
+        {/* <Route path="/introduce" element={<IntroducePage />} /> */}
         <Route path="/statistics" element={<StatisticsPage />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
