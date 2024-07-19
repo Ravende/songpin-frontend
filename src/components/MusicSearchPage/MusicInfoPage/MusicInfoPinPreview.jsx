@@ -13,7 +13,8 @@ const MusicInfoPinPreview = () => {
           </PinMemo>
           <Details>
             <Date>2024.4.2</Date>
-            <Place>대현동에서</Place>
+            <Place>대현동</Place>
+            <PlaceText>에서</PlaceText>
           </Details>
         </PinContent>
       </PinPreview>
@@ -66,7 +67,6 @@ const Details = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  gap: 8px;
   padding-top: 8px;
 `;
 
@@ -81,4 +81,16 @@ const Date = styled.div`
   line-height: 150%; /* 24px */
 `;
 
-const Place = styled(Date)``;
+const Place = styled(Date)`
+  max-width: 218px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  padding-left: 8px;
+`;
+
+const PlaceText = styled(Date)`
+  white-space: nowrap;
+  flex-shrink: 0;
+`;

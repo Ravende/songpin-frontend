@@ -30,7 +30,6 @@ const SideComponent = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 100vh;
-  /* overflow-y: overlay; */
 `;
 
 const SideBar = styled.div`
@@ -43,8 +42,9 @@ const SideBox = styled.div`
   border-right: 1px solid var(--gray, #bcbcbc);
   flex-shrink: 0;
   height: 100vh;
+  /* overflow-x: ${(props) => (props.openModal ? 'visible' : 'hidden')}; */
   overflow-x: hidden;
-  /* overflow-y: overlay; */
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 7px;

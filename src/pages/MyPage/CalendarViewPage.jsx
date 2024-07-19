@@ -172,6 +172,7 @@ const YearCalendarDropdown = styled.div`
   z-index: 1000;
   position: absolute;
   top: 41px;
+  right: 8px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 4px;

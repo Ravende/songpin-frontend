@@ -44,7 +44,8 @@ const PinMemoComponent = () => {
         </Memo>
         <Info>
           <Date>2024.04.04</Date>
-          <Place>이화여대 학문관에서</Place>
+          <Place>이화여대 학문관</Place>
+          <PlaceText>에서</PlaceText>
         </Info>
       </DetailsSection>
     </PinBox>
@@ -194,12 +195,11 @@ const Info = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  gap: 8px;
   padding-top: 4px;
+  white-space: nowrap;
 `;
 
 const Date = styled.div`
-  overflow: hidden;
   color: var(--gray02, #747474);
   text-overflow: ellipsis;
   font-family: Pretendard;
@@ -209,4 +209,17 @@ const Date = styled.div`
   line-height: 150%; /* 24px */
 `;
 
-const Place = styled(Date)``;
+const Place = styled(Date)`
+  max-width: 218px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  padding-left: 8px;
+`;
+
+const PlaceText = styled(Date)`
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-right: 2px;
+`;

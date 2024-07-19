@@ -1,17 +1,10 @@
-import react, { useState } from 'react';
+import react from 'react';
 import styled from 'styled-components';
 import albumImgExample from '../../assets/images/MyPage/album-eg.png';
 import pinIcon from '../../assets/images/MyPage/vector-icon.svg';
-import moreButton from '../../assets/images/MyPage/more-icon.svg';
-const options = ['플레이리스트에 추가', '핀 수정', '핀 삭제'];
+import PinModalBox from './PinModalBox';
 
 const PinCalendarViewComponent = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handlePopup = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <PinBox>
       <AlbumImg src={albumImgExample} />
@@ -24,18 +17,12 @@ const PinCalendarViewComponent = () => {
             </SongTitle>
             <Singer>잔나비</Singer>
           </SongInfo>
-          <MoreBtn src={moreButton} onClick={handlePopup} />
-          {isOpen && (
-            <MorePopup>
-              {options.map((option) => (
-                <ListItem>{option}</ListItem>
-              ))}
-            </MorePopup>
-          )}
+          <PinModalBox />
         </TitleSection>
         <Info>
           <Date>2024.04.04</Date>
-          <Place>신촌에서</Place>
+          <Place>신촌</Place>
+          <PlaceText>에서</PlaceText>
         </Info>
       </Content>
     </PinBox>
@@ -118,47 +105,12 @@ const Singer = styled.div`
   padding-top: 4px;
 `;
 
-const MoreBtn = styled.img`
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  padding-left: 31px;
-  cursor: pointer;
-`;
-
-const MorePopup = styled.div`
-  display: flex;
-  /* width: 197px; */
-  padding: 18px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid var(--gray02, #747474);
-  background: var(--f8f8f8, #fcfcfc);
-  z-index: 1000;
-  position: absolute;
-  top: 42px;
-  right: -163px;
-`;
-
-const ListItem = styled.div`
-  color: var(--light_black, #232323);
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  cursor: pointer;
-`;
-
 const Info = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  gap: 8px;
   padding-right: 11px;
+  white-space: nowrap;
 `;
 
 const Date = styled.div`
@@ -172,4 +124,16 @@ const Date = styled.div`
   line-height: 150%; /* 24px */
 `;
 
-const Place = styled(Date)``;
+const Place = styled(Date)`
+  max-width: 218px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  padding-left: 8px;
+`;
+
+const PlaceText = styled(Date)`
+  white-space: nowrap;
+  flex-shrink: 0;
+`;
