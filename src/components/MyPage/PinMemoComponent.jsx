@@ -187,8 +187,9 @@ const SecretPin = styled.img`
   width: 13px;
   height: 16px;
   flex-shrink: 0;
-  margin-right: 8px;
-  margin-left: 4px;
+  padding-right: 8px;
+  padding-left: 3px;
+  vertical-align: calc(-12%);
 `;
 
 const Info = styled.div`

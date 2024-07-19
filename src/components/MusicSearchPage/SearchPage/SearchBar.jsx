@@ -47,7 +47,12 @@ const SearchBar = ({ optionChange }) => {
             )}
           </Dropdown>
           <InputBox>
-            <Input type="text" value={inputValue} onChange={handleChange} />
+            <Input
+              type="text"
+              value={inputValue}
+              onChange={handleChange}
+              placeholder={selectedOption === '장소' ? '장소명을 검색' : '노래 제목 또는 가수명을 검색'}
+            />
           </InputBox>
         </Search>
         <SearchIcon src={search} alt="검색 아이콘" />
@@ -147,6 +152,14 @@ const Input = styled.input`
   line-height: normal;
   border: none;
   outline: none;
+  &::placeholder {
+    color: var(--gray, #bcbcbc);
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
 `;
 
 const SearchIcon = styled.img`
