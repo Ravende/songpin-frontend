@@ -11,13 +11,10 @@ const ModalCommon = ({
   handleButton,
   addPlaylist,
   createPlaylist,
+  setModalCommon,
 }) => {
   const [active, setActive] = useState(true);
   const modalRef = useRef(null);
-  const [modalCommon, setModalCommon] = useState(false);
-  useEffect(() => {
-    console.log(modalText);
-  }, [modalText]);
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -30,21 +27,19 @@ const ModalCommon = ({
 
   return (
     <Wrapper>
-      {!modalCommon && (
-        <ModalWrapper ref={modalRef}>
-          <div className="modalText">{modalText}</div>
-          <InputButton>
-            {addPlaylist && (
-              <PlaylistDropdown
-                placeholder={inputPlaceholder}
-                setActive={setActive}
-              />
-            )}
-            {/* {createPlaylist && <></>}토글 추가 */}
-            <Button active={active} name={buttonName} onClick={handleButton} />
-          </InputButton>
-        </ModalWrapper>
-      )}
+      <ModalWrapper ref={modalRef}>
+        <div className="modalText">{modalText}</div>
+        <InputButton>
+          {addPlaylist && (
+            <PlaylistDropdown
+              placeholder={inputPlaceholder}
+              setActive={setActive}
+            />
+          )}
+          {/* {createPlaylist && <></>}토글 추가 */}
+          <Button active={active} name={buttonName} onClick={handleButton} />
+        </InputButton>
+      </ModalWrapper>
     </Wrapper>
   );
 };
