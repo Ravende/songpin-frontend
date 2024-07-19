@@ -1,19 +1,11 @@
-import react, { useState } from 'react';
-import styled from 'styled-components';
-import albumImgExample from '../../assets/images/MyPage/album-eg.png';
-import pinIcon from '../../assets/images/MyPage/vector-icon.svg';
-import moreButton from '../../assets/images/MyPage/more-icon.svg';
-import lockIcon from '../../assets/images/MyPage/lock.svg';
-
-const options = ['플레이리스트에 추가', '핀 수정', '핀 삭제'];
+import react, { useState } from "react";
+import styled from "styled-components";
+import albumImgExample from "../../assets/images/MyPage/album-eg.png";
+import pinIcon from "../../assets/images/MyPage/vector-icon.svg";
+import lockIcon from "../../assets/images/MyPage/lock.svg";
+import PinModalBox from "./PinModalBox";
 
 const PinMemoComponent = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handlePopup = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <PinBox>
       <TitleSection>
@@ -21,25 +13,20 @@ const PinMemoComponent = () => {
         <SongInfo>
           <SongTitle>
             <SongIcon src={pinIcon} />
-            <TitleText>사랑하긴 했었나요 스쳐 지나가는 인연이었나요aaaaa</TitleText>
+            <TitleText>
+              사랑하긴 했었나요 스쳐 지나가는 인연이었나요aaaaa
+            </TitleText>
           </SongTitle>
           <Singer>잔나비</Singer>
         </SongInfo>
-        <MoreBtn src={moreButton} onClick={handlePopup} />
-        {isOpen && (
-          <MorePopup>
-            {options.map((option) => (
-              <ListItem>{option}</ListItem>
-            ))}
-          </MorePopup>
-        )}
+        <PinModalBox right="-163px" padding="6px" />
       </TitleSection>
       <DetailsSection>
         <Memo>
           <Text>
             <SecretPin src={lockIcon} />
-            사랑하긴 했었나요 스쳐가는 인연이었나요 누가 내 가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나 그대의
-            눈빛은 날 얼어붙게 해 그대의
+            사랑하긴 했었나요 스쳐가는 인연이었나요 누가 내 가슴에다 불을 질렀나
+            누가 내 심장에다 못을 박았나 그대의 눈빛은 날 얼어붙게 해 그대의
           </Text>
         </Memo>
         <Info>

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import moreButton from '../../assets/images/MyPage/more-icon.svg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import moreButton from "../../assets/images/MyPage/more-icon.svg";
 
-const options = ['플레이리스트에 추가', '핀 수정', '핀 삭제'];
+const options = ["플레이리스트에 추가", "핀 수정", "핀 삭제"];
 
-const PinModalBox = () => {
+const PinModalBox = ({ top, right, padding }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handlePopup = () => {
@@ -13,10 +13,10 @@ const PinModalBox = () => {
 
   return (
     <PinModal>
-      <MoreBtn src={moreButton} onClick={handlePopup} />
+      <MoreBtn src={moreButton} onClick={handlePopup} setPadding={padding} />
       {isOpen && (
-        <MorePopup>
-          {options.map((option) => (
+        <MorePopup positionTop={top} positionRight={right}>
+          {options.map(option => (
             <ListItem>{option}</ListItem>
           ))}
         </MorePopup>
@@ -33,7 +33,7 @@ const MoreBtn = styled.img`
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  padding-left: 31px;
+  padding-left: ${props => props.setPadding};
   cursor: pointer;
 `;
 
@@ -50,8 +50,8 @@ const MorePopup = styled.div`
   background: var(--f8f8f8, #fcfcfc);
   z-index: 1000;
   position: absolute;
-  top: 42px;
-  right: -163px;
+  top: ${props => props.positionTop};
+  right: ${props => props.positionRight};
 `;
 
 const ListItem = styled.div`
