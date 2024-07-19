@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useRef } from 'react';
-import Input from './Input';
+import Input from '../common/Input';
 import Button from '../common/Button';
 
 const LoginModal = ({ setPwResetModal, setCompleteLogin, setSignupModal, setLoginModal }) => {

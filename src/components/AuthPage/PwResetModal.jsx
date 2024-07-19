@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button';
 import { useNavigate } from 'react-router-dom';
-import Input from './Input';
+import Input from '../common/Input';
 import back from '../../assets/images/MusicSearchPage/arrow_back.svg';
 
 const PwResetModal = ({ setPwResetModal, setLoginModal }) => {

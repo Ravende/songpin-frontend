@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Input from '../../components/AuthPage/Input';
+import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 

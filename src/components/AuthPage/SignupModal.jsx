@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
-import Input from './Input';
+import Input from '../common/Input';
 import Button from '../common/Button';
 
 const SignupModal = ({ setCompleteLogin, setLoginModal, setSignupModal }) => {
