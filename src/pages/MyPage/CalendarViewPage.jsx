@@ -6,14 +6,16 @@ import SideSection from '../../components/common/SideSection';
 import backIcon from '../../assets/images/MusicSearchPage/arrow_back.svg';
 import dropdownIcon from '../../assets/images/MyPage/arrow-down.svg';
 
-const years = ['2022년', '2023년', '2024년', '2025년'];
-const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+const startYear = 1980;
+const endYear = 2024;
+const years = [...Array(endYear - startYear + 1).keys()].map((i) => i + startYear);
+const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const CalendarViewPage = () => {
   const [isYearOpen, setIsYearOpen] = useState(false);
   const [isMonthOpen, setIsMonthOpen] = useState(false);
-  const [selectedYear, setSelectedYear] = useState('2024년'); // 현재 날짜 반영
-  const [selectedMonth, setSelectedMonth] = useState('7월'); // 현재 날짜 반영
+  const [selectedYear, setSelectedYear] = useState(2024); // 현재 날짜 반영
+  const [selectedMonth, setSelectedMonth] = useState(7); // 현재 날짜 반영
 
   const togglingYear = () => {
     setIsYearOpen(!isYearOpen);
@@ -44,7 +46,7 @@ const CalendarViewPage = () => {
           <Calendar>
             <DateChoice>
               <DateSet onClick={togglingYear}>
-                <Date>{selectedYear}</Date>
+                <Date>{selectedYear}년</Date>
                 <Dropdown src={dropdownIcon} isOpen={isYearOpen} />
               </DateSet>
               {isYearOpen && (
@@ -52,10 +54,12 @@ const CalendarViewPage = () => {
                   <DatesList>
                     {years.map((year) => (
                       <ListItem
+                        key={year}
+                        value={year}
                         onClick={onYearClicked(year)}
                         style={{ color: selectedYear === year ? 'var(--light_black, #232323)' : 'auto' }}
                       >
-                        {year}
+                        {year}년
                       </ListItem>
                     ))}
                   </DatesList>
@@ -64,7 +68,7 @@ const CalendarViewPage = () => {
             </DateChoice>
             <DateChoice>
               <DateSet onClick={togglingMonth}>
-                <Date>{selectedMonth}</Date>
+                <Date>{selectedMonth}월</Date>
                 <Dropdown src={dropdownIcon} isOpen={isMonthOpen} />
               </DateSet>
               {isMonthOpen && (
@@ -75,7 +79,7 @@ const CalendarViewPage = () => {
                         onClick={onMonthClicked(month)}
                         style={{ color: selectedMonth === month ? 'var(--light_black, #232323)' : 'auto' }}
                       >
-                        {month}
+                        {month}월
                       </ListItem>
                     ))}
                   </DatesList>
