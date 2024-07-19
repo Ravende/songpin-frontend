@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import lockIcon from '../../assets/images/MyPage/lock.svg';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import styled from "styled-components";
+import lockIcon from "../../assets/images/MyPage/lock.svg";
+import { useNavigate } from "react-router-dom";
 
 const MusicInfoPinPreview = () => {
   const [isTruncated, setIsTruncated] = useState(true);
@@ -11,14 +11,14 @@ const MusicInfoPinPreview = () => {
   };
 
   const text =
-    '사랑하긴 했었나요 스쳐가는 인연이었나요 누가 내 가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나 그대의 눈빛은 날 얼어붙게 하네';
+    "사랑하긴 했었나요 스쳐가는 인연이었나요 누가 내 가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나 그대의 눈빛은 날 얼어붙게 하네";
   const maxLength = 59;
   const showMoreBtn = text.length > maxLength;
   const displayText = showMoreBtn && isTruncated ? text.substring(0, 55) : text;
 
   const navigate = useNavigate();
   const goUsersPage = () => {
-    navigate('/users');
+    navigate("/users");
   };
 
   return (
@@ -26,14 +26,20 @@ const MusicInfoPinPreview = () => {
       <PinPreview>
         <PinContent>
           <UserName onClick={goUsersPage}>채연</UserName>
-          <PinMemo onClick={isTruncated ? () => {} : toggleTruncation} isTruncated={isTruncated}>
+          <PinMemo
+            onClick={isTruncated ? () => {} : toggleTruncation}
+            isTruncated={isTruncated}
+          >
             <SecretPin src={lockIcon} />
             {displayText}
-            {showMoreBtn && isTruncated && <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>}
+            {showMoreBtn && isTruncated && (
+              <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>
+            )}
           </PinMemo>
           <Details>
             <Date>2024.04.04</Date>
-            <Place>이화여대 학문관에서</Place>
+            <Place>이화여대 학문관</Place>
+            <PlaceText>에서</PlaceText>
           </Details>
         </PinContent>
       </PinPreview>
@@ -80,7 +86,7 @@ const UserName = styled.div`
 const PinMemo = styled(UserName)`
   line-height: 150%; /* 24px */
   padding-top: 7px;
-  cursor: ${(props) => (props.isTruncated ? 'auto' : 'pointer')};
+  cursor: ${props => (props.isTruncated ? "auto" : "pointer")};
   width: 426px;
 `;
 
@@ -107,8 +113,8 @@ const Details = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  gap: 8px;
   padding-top: 4px;
+  white-space: nowrap;
 `;
 
 const Date = styled.div`
@@ -122,4 +128,16 @@ const Date = styled.div`
   line-height: 150%; /* 24px */
 `;
 
-const Place = styled(Date)``;
+const Place = styled(Date)`
+  max-width: 218px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  padding-left: 8px;
+`;
+
+const PlaceText = styled(Date)`
+  white-space: nowrap;
+  flex-shrink: 0;
+`;
