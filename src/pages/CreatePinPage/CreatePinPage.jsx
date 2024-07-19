@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import arrowDown from '../../assets/images/MusicSearchPage/arrow_down.svg';
+import CreateSection from '../../components/CreatePinPage/CreateSection';
 import SideSection from '../../components/common/SideSection';
-import SearchBar from '../../components/MusicSearchPage/SearchPage/SearchBar';
 import SearchSongs from '../../components/MusicSearchPage/SearchPage/SearchSongs';
 import SearchSongContainer from '../../components/CreatePinPage/SearchSongContainer';
 import SearchPlaceContainer from '../../components/CreatePinPage/SearchPlaceContainer';
 import SearchPlaces from '../../components/MusicSearchPage/SearchPage/SearchPlaces';
-import PinComponent from '../../components/MusicSearchPage/PinComponent';
+import PinComponent from '../../components/CreatePinPage/PinComponent';
 import { GenreList } from '../../constants/GenreList';
 import { ReactComponent as Calendar} from '../../assets/images/CreatePin/calendar_month.svg';
 import { ReactComponent as Location} from '../../assets/images/CreatePin/location_on.svg';
@@ -15,19 +15,44 @@ import PublicToggle from '../../components/common/PublicToggle';
 
 const CreatePinPage = () => {
     let [inputCount, setInputCount] = useState(0);
+    const [isSongSelected, setIsSongSelected] = useState(false);
+    const [showSearchSongContainer, setShowSearchSongContainer] = useState(false);
+    const [selectedPin, setSelectedPin] = useState(null);
 
     const onInputHandler = (e) => {
         setInputCount(e.target.value.length);
     };
 
+    const handlePinClick = () => {
+        setShowSearchSongContainer(true);
+    };
+
+    const handlePinSelect = (pinInfo) => {
+        setSelectedPin(pinInfo);
+        setIsSongSelected(true);
+        setShowSearchSongContainer(false);
+    };
+    
+    const handleSongSelection = () => {
+        setIsSongSelected(true);
+        setShowSearchSongContainer(!showSearchSongContainer);
+    };
+
     return (
         <MainContainer>
-            <SideSection>
+            <CreateSection>
                 <Content>
-                    <PinBox>
-                        <PinImg></PinImg>
-                        <PinText>노래를 선택해주세요.</PinText>
-                    </PinBox>
+                    {!isSongSelected ? (
+                        <PinBox onClick={handlePinClick}>
+                            <PinImg></PinImg>
+                            <PinText>노래를 선택해주세요.</PinText>
+                        </PinBox>
+                    ) : (
+                        <PinComponent
+                            onPinClick={handlePinClick}
+                            pinInfo={selectedPin}
+                        />
+                    )}
                 </Content>
                     <Title>언제</Title>
                     <When>언제 이 노래를 들었나요? <Calendar/></When>
@@ -50,8 +75,8 @@ const CreatePinPage = () => {
                         <PublicToggle />
                     </IsPublic>
                     <CreateBtn>핀 생성하기</CreateBtn>
-            </SideSection>
-            <SearchSongContainer />
+            </CreateSection>
+            {showSearchSongContainer && <SearchSongContainer onPinSelect={handlePinSelect}/>}
         </MainContainer>
     );
 };

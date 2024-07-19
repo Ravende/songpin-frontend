@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import SideSection from '../common/SideSection';
+import SideSection from './SideSection';
 import PlainSearchBar from './PlainSearchBar';
-import SearchSongs from '../MusicSearchPage/SearchPage/SearchSongs';
+import PinComponent from './PinComponent';
+import pinImage from '../../assets/images/MusicSearchPage/Rectangle 217.png';
 
-const SearchSongContainer = () => {
+const SearchSongContainer = ({onPinSelect}) => {
+    const handlePinClick = () => {
+        const pinInfo = {
+            title: "사랑",
+            singer: "임재범",
+            image: pinImage
+        };
+        onPinSelect(pinInfo);
+    };
 
     return (
             <SideSection>
                 <Content>
                     <PlainSearchBar />
                     <SearchResult>
-                        <SearchSongs />
+                        <PinComponent onPinClick={handlePinClick}/>
+                        <PinComponent onPinClick={handlePinClick}/>
                     </SearchResult>
                 </Content>
             </SideSection>

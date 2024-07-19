@@ -30,8 +30,7 @@ const SearchPlaceContainer = () => {
             <Content>
                 <PlainSearchBar optionChange={handleOptionChange} />
                 <SearchResult>
-                {selectedOption === '노래' && <SearchSongs />}
-                {selectedOption === '장소' && <SearchPlaces />}
+                    <SearchPlaces />
                 </SearchResult>
             </Content>
             </SideSection>
