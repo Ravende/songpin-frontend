@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import moreButton from "../../assets/images/MyPage/more-icon.svg";
+import SmallModal from "./Modal/SmallModal";
 
 const options = ["플레이리스트에 추가", "핀 수정", "핀 삭제"];
 
 const PinModalBox = ({ top, right, padding }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [clickedOption, setClickedOption] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handlePopup = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleOptionClick = option => {
+    setClickedOption(option);
+    setIsOpen(false);
+  };
+
+  const handleModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -17,9 +29,14 @@ const PinModalBox = ({ top, right, padding }) => {
       {isOpen && (
         <MorePopup positionTop={top} positionRight={right}>
           {options.map(option => (
-            <ListItem>{option}</ListItem>
+            <ListItem key={option} onClick={() => handleOptionClick(option)}>
+              {option}
+            </ListItem>
           ))}
         </MorePopup>
+      )}
+      {clickedOption === "핀 삭제" && (
+        <SmallModal text="핀을 삭제할까요?" onClose={handleModal} />
       )}
     </PinModal>
   );

@@ -1,23 +1,38 @@
 import React from "react";
 import styled from "styled-components";
 
-const SmallModal = ({ text }) => {
+const SmallModal = ({ text, onClose }) => {
   return (
-    <ModalComponent>
-      <Message>{text}</Message>
-      <Buttons>
-        <CancelBtn>
-          <CancelText>취소</CancelText>
-        </CancelBtn>
-        <DecideBtn>
-          <DecideText>삭제</DecideText>
-        </DecideBtn>
-      </Buttons>
-    </ModalComponent>
+    <BackGround>
+      <ModalComponent>
+        <Message>{text}</Message>
+        <Buttons>
+          <CancelBtn>
+            <CancelText onClick={onClose}>취소</CancelText>
+          </CancelBtn>
+          <DecideBtn>
+            <DecideText onClick={onClose}>삭제</DecideText>
+          </DecideBtn>
+        </Buttons>
+      </ModalComponent>
+    </BackGround>
   );
 };
 
 export default SmallModal;
+
+const BackGround = styled.div`
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+`;
 
 const ModalComponent = styled.div`
   display: flex;
@@ -28,13 +43,6 @@ const ModalComponent = styled.div`
   flex-shrink: 0;
   border-radius: 19px;
   background: var(--f8f8f8, #fcfcfc);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1000;
 `;
 
 const Message = styled.div`
