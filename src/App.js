@@ -14,11 +14,13 @@ import UserFollowPage from './pages/UsersPage/UserFollowPage';
 import MyPage from './pages/MyPage/MyPage';
 import ProfileEditPage from './pages/MyPage/ProfileEditPage';
 import SettingsPage from './pages/MyPage/SettingsPage';
+import CalendarViewPage from './pages/MyPage/CalendarViewPage';
 import PlaylistSearchPage from './pages/PlaylistPage/PlaylistSearchPage';
 import PlaylistDetailPage from './pages/PlaylistPage/PlaylistDetailPage';
 import PlaylistEditPage from './pages/PlaylistPage/PlaylistEditPage';
 import StatisticsPage from './pages/IntroducePage/StatisticsPage';
 import Main from './pages/IntroducePage/Main';
+import MyPinSearchPage from './pages/MyPage/MyPinSearchPage';
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/edit" element={<ProfileEditPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/calendar" element={<CalendarViewPage />} />
+        <Route path="/mypin-search" element={<MyPinSearchPage />} />
         <Route path="/introduce" element={<IntroducePage />} />
         <Route path="/statistics" element={<StatisticsPage />} />
         <Route path="*" element={<h1>Not Found</h1>} />
