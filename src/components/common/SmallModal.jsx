@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-const SmallModal = () => {
+const SmallModal = ({ text }) => {
   return (
     <ModalComponent>
-      <Message>핀을 삭제할까요?</Message>
+      <Message>{text}</Message>
       <Buttons>
         <CancelBtn>
           <CancelText>취소</CancelText>
@@ -28,6 +28,13 @@ const ModalComponent = styled.div`
   flex-shrink: 0;
   border-radius: 19px;
   background: var(--f8f8f8, #fcfcfc);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
 `;
 
 const Message = styled.div`

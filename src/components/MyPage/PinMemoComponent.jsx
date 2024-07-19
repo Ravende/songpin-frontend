@@ -3,7 +3,7 @@ import styled from "styled-components";
 import albumImgExample from "../../assets/images/MyPage/album-eg.png";
 import pinIcon from "../../assets/images/MyPage/vector-icon.svg";
 import lockIcon from "../../assets/images/MyPage/lock.svg";
-import PinModalBox from "./PinModalBox";
+import PinModalBox from "../common/PinModalBox";
 
 const PinMemoComponent = () => {
   return (

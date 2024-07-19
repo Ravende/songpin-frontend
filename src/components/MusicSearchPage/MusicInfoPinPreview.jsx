@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import lockIcon from "../../assets/images/MyPage/lock.svg";
 import { useNavigate } from "react-router-dom";
-import PinModalBox from "../MyPage/PinModalBox";
+import PinModalBox from "../common/PinModalBox";
 
 const MusicInfoPinPreview = () => {
   const [isTruncated, setIsTruncated] = useState(true);
