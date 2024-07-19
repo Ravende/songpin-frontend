@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import arrowDown from '../../assets/images/MusicSearchPage/arrow_down.svg';
 import CreateSection from '../../components/CreatePinPage/CreateSection';
-import SideSection from '../../components/common/SideSection';
-import SearchSongs from '../../components/MusicSearchPage/SearchPage/SearchSongs';
 import SearchSongContainer from '../../components/CreatePinPage/SearchSongContainer';
 import SearchPlaceContainer from '../../components/CreatePinPage/SearchPlaceContainer';
-import SearchPlaces from '../../components/MusicSearchPage/SearchPage/SearchPlaces';
 import PinComponent from '../../components/CreatePinPage/PinComponent';
 import { GenreList } from '../../constants/GenreList';
 import { ReactComponent as Calendar} from '../../assets/images/CreatePin/calendar_month.svg';
@@ -14,10 +10,12 @@ import { ReactComponent as Location} from '../../assets/images/CreatePin/locatio
 import PublicToggle from '../../components/common/PublicToggle';
 
 const CreatePinPage = () => {
-    let [inputCount, setInputCount] = useState(0);
+    const [inputCount, setInputCount] = useState(0);
     const [isSongSelected, setIsSongSelected] = useState(false);
     const [showSearchSongContainer, setShowSearchSongContainer] = useState(false);
     const [selectedPin, setSelectedPin] = useState(null);
+    const [showSearchPlaceContainer, setShowSearchPlaceContainer] = useState(false);
+    const [selectedPlace, setSelectedPlace] = useState("");
 
     const onInputHandler = (e) => {
         setInputCount(e.target.value.length);
@@ -32,11 +30,20 @@ const CreatePinPage = () => {
         setIsSongSelected(true);
         setShowSearchSongContainer(false);
     };
-    
-    const handleSongSelection = () => {
-        setIsSongSelected(true);
-        setShowSearchSongContainer(!showSearchSongContainer);
+
+    const handlePlaceClick = () => {
+        setShowSearchPlaceContainer(true);
     };
+
+    const handlePlaceSelect = (placeName) => {
+        setSelectedPlace(placeName);
+        setShowSearchPlaceContainer(false);
+    };
+    
+    // const handleSongSelection = () => {
+    //     setIsSongSelected(true);
+    //     setShowSearchSongContainer(!showSearchSongContainer);
+    // };
 
     return (
         <MainContainer>
@@ -57,7 +64,10 @@ const CreatePinPage = () => {
                     <Title>언제</Title>
                     <When>언제 이 노래를 들었나요? <Calendar/></When>
                     <Title>어디서</Title>
-                    <Where>이 노래를 들었던 장소는 어디였나요? <Location/></Where>
+                    <Where onClick={handlePlaceClick}>
+                        {selectedPlace || "이 노래를 들었던 장소는 어디였나요?"}
+                        <Location />
+                    </Where>
                     <Title>장르</Title>
                     {/* <GenreList></GenreList> */}
                     <Title>메모</Title>
@@ -77,6 +87,7 @@ const CreatePinPage = () => {
                     <CreateBtn>핀 생성하기</CreateBtn>
             </CreateSection>
             {showSearchSongContainer && <SearchSongContainer onPinSelect={handlePinSelect}/>}
+            {showSearchPlaceContainer && (<SearchPlaceContainer onPlaceSelect={handlePlaceSelect} />)}
         </MainContainer>
     );
 };
@@ -158,6 +169,7 @@ const When = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+    cursor: pointer;
 `;
 
 const Where = styled.div`
@@ -173,6 +185,7 @@ const Where = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+    cursor: pointer;
 `;
 
 const MemoArea = styled.textarea`
