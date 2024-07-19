@@ -87,6 +87,10 @@ const CalendarViewPage = () => {
           <PinCalendarViewComponent />
           <PinCalendarViewComponent />
           <PinCalendarViewComponent />
+          <PinCalendarViewComponent />
+          <PinCalendarViewComponent />
+          <PinCalendarViewComponent />
+          <PinCalendarViewComponent />
           {/* <Empty>
             <EmptyMessage>해당 월에 등록한 핀이 없습니다.</EmptyMessage>
           </Empty> */}

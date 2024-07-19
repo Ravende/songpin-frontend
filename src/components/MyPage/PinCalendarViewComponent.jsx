@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import albumImgExample from '../../assets/images/MyPage/album-eg.png';
 import pinIcon from '../../assets/images/MyPage/vector-icon.svg';
 import moreButton from '../../assets/images/MyPage/more-icon.svg';
-import lockIcon from '../../assets/images/MyPage/lock.svg';
-
 const options = ['플레이리스트에 추가', '핀 수정', '핀 삭제'];
 
 const PinCalendarViewComponent = () => {
