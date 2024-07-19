@@ -19,12 +19,18 @@ import PlaylistDetailPage from './pages/PlaylistPage/PlaylistDetailPage';
 import PlaylistEditPage from './pages/PlaylistPage/PlaylistEditPage';
 import StatisticsPage from './pages/IntroducePage/StatisticsPage';
 import Main from './pages/IntroducePage/Main';
+import PwResetPage from './pages/AuthPages/PwResetPage';
+import PwResetCompletePage from './pages/AuthPages/PwResetCompletePage';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/introduce" element={<IntroducePage />} />
+        <Route path="/statistics" element={<StatisticsPage />} />
+        <Route path="/resetPassword" element={<PwResetPage />} />
+        <Route path="/resetPasswordComplete" element={<PwResetCompletePage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/details-song" element={<MusicInfoPage />} />
@@ -40,8 +46,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/edit" element={<ProfileEditPage />} />
         <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/introduce" element={<IntroducePage />} />
-        <Route path="/statistics" element={<StatisticsPage />} />
+
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>
