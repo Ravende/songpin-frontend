@@ -4,6 +4,8 @@ import arrowDown from '../../assets/images/MusicSearchPage/arrow_down.svg';
 import SideSection from '../../components/common/SideSection';
 import SearchBar from '../../components/MusicSearchPage/SearchPage/SearchBar';
 import SearchSongs from '../../components/MusicSearchPage/SearchPage/SearchSongs';
+import SearchSongContainer from '../../components/CreatePinPage/SearchSongContainer';
+import SearchPlaceContainer from '../../components/CreatePinPage/SearchPlaceContainer';
 import SearchPlaces from '../../components/MusicSearchPage/SearchPage/SearchPlaces';
 import PinComponent from '../../components/MusicSearchPage/PinComponent';
 import { GenreList } from '../../constants/GenreList';
@@ -19,37 +21,44 @@ const CreatePinPage = () => {
     };
 
     return (
-        <SideSection>
-            <Content>
-                <PinBox>
-                    <PinImg></PinImg>
-                    <PinText>노래를 선택해주세요.</PinText>
-                </PinBox>
-            </Content>
-                <Title>언제</Title>
-                <When>언제 이 노래를 들었나요? <Calendar/></When>
-                <Title>어디서</Title>
-                <Where>이 노래를 들었던 장소는 어디였나요? <Location/></Where>
-                <Title>장르</Title>
-                {/* <GenreList></GenreList> */}
-                <Title>메모</Title>
-                <MemoArea
-                    placeholder="이곳에 메모를 남겨주세요."
-                    maxLength={200}
-                    onChange={onInputHandler}
-                ></MemoArea> 
-                <TextNum>
-                    <span>{inputCount}</span>
-                    <span>/200</span>
-                </TextNum>
-                <IsPublic>
-                    <Title>공개 여부</Title>
-                    <PublicToggle />
-                </IsPublic>
-                <CreateBtn>핀 생성하기</CreateBtn>
-        </SideSection>
+        <MainContainer>
+            <SideSection>
+                <Content>
+                    <PinBox>
+                        <PinImg></PinImg>
+                        <PinText>노래를 선택해주세요.</PinText>
+                    </PinBox>
+                </Content>
+                    <Title>언제</Title>
+                    <When>언제 이 노래를 들었나요? <Calendar/></When>
+                    <Title>어디서</Title>
+                    <Where>이 노래를 들었던 장소는 어디였나요? <Location/></Where>
+                    <Title>장르</Title>
+                    {/* <GenreList></GenreList> */}
+                    <Title>메모</Title>
+                    <MemoArea
+                        placeholder="이곳에 메모를 남겨주세요."
+                        maxLength={200}
+                        onChange={onInputHandler}
+                    ></MemoArea> 
+                    <TextNum>
+                        <span>{inputCount}</span>
+                        <span>/200</span>
+                    </TextNum>
+                    <IsPublic>
+                        <Title>공개 여부</Title>
+                        <PublicToggle />
+                    </IsPublic>
+                    <CreateBtn>핀 생성하기</CreateBtn>
+            </SideSection>
+            <SearchSongContainer />
+        </MainContainer>
     );
 };
+const MainContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
 
 const Content = styled.div`
     display: flex;
