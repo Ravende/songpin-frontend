@@ -4,8 +4,17 @@ import pinIconSpark from '../../assets/images/MyPage/spark-51.svg';
 import calendarIcon from '../../assets/images/MyPage/calendar.svg';
 import searchIcon from '../../assets/images/MyPage/search.svg';
 import PinMemoComponent from './PinMemoComponent';
+import { useNavigate } from 'react-router-dom';
 
 const PinFeed = () => {
+  const navigate = useNavigate();
+  const goCalendar = () => {
+    navigate('/calendar');
+  };
+  const goMySearch = () => {
+    navigate('/mypin-search');
+  };
+
   return (
     <PinFeedContainer>
       <PinShow>
@@ -14,8 +23,8 @@ const PinFeed = () => {
           <Num>9999</Num>
         </PinTimes>
         <ShowIcons>
-          <Calendar src={calendarIcon} />
-          <Search src={searchIcon} />
+          <Calendar src={calendarIcon} onClick={goCalendar} />
+          <Search src={searchIcon} onClick={goMySearch} />
         </ShowIcons>
       </PinShow>
       <PinsSection>

@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import userLogoPop from '../../assets/images/MyPage/user-logo-pop.svg'; //임시 유저 프로필
 import SideSection from '../../components/common/SideSection';
 import { useNavigate } from 'react-router-dom';
 
 const ProfileEditPage = () => {
-  const navigate = useNavigate();
+  const [inputNickname, setInputNickname] = useState('송핀');
+  const [inputHandle, setInputHandle] = useState('songp1n');
 
+  const changeNickname = (event) => {
+    setInputNickname(event.target.value);
+  };
+  const changeHandle = (event) => {
+    setInputHandle(event.target.value);
+  };
+
+  const navigate = useNavigate();
   const goBackPage = () => {
     navigate('/mypage');
   };
@@ -19,7 +28,7 @@ const ProfileEditPage = () => {
           <NickName>
             <Title>닉네임</Title>
             <Edit>
-              <EditText>송핀</EditText>
+              <EditText type="text" value={inputNickname} onChange={changeNickname} placeholder="송핀" />
               <Line />
               <AlarmMessage>닉네임은 8자 이내로 작성해주세요.</AlarmMessage>
             </Edit>
@@ -27,7 +36,7 @@ const ProfileEditPage = () => {
           <Handle>
             <Title>핸들</Title>
             <Edit>
-              <EditText>songp1n</EditText>
+              <EditText type="text" value={inputHandle} onChange={changeHandle} placeholder="songp1n" />
               <Line />
               <AlarmMessage>이미 사용 중인 핸들입니다.</AlarmMessage>
             </Edit>
@@ -90,13 +99,15 @@ const Edit = styled.div`
   flex-direction: column;
 `;
 
-const EditText = styled.div`
+const EditText = styled.input`
   color: var(--light_black, #232323);
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 28px */
+  border: none;
+  outline: none;
 `;
 
 const Line = styled.div`
