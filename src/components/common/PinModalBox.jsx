@@ -45,7 +45,7 @@ const PinModalBox = ({ top, right, padding }) => {
         <SmallModal
           text="핀을 삭제할까요?"
           onClose={handleModal}
-          onDelete={handleDeletePin}
+          onDecide={handleDeletePin}
         />
       )}
     </PinModal>

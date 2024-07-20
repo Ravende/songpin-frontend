@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const SmallModal = ({ text, onClose, onDelete }) => {
+const SmallModal = ({ text, onClose, onDecide }) => {
   return (
     <BackGround>
       <ModalComponent>
@@ -10,8 +10,10 @@ const SmallModal = ({ text, onClose, onDelete }) => {
           <CancelBtn onClick={onClose}>
             <CancelText>취소</CancelText>
           </CancelBtn>
-          <DecideBtn onClick={onDelete}>
-            <DecideText>삭제</DecideText>
+          <DecideBtn onClick={onDecide}>
+            <DecideText>
+              {text === "편집한 내용을 저장할까요?" ? "확인" : "삭제"}
+            </DecideText>
           </DecideBtn>
         </Buttons>
       </ModalComponent>
