@@ -17,11 +17,16 @@ const PinModalBox = ({ top, right, padding }) => {
   const handleOptionClick = option => {
     setClickedOption(option);
     setIsOpen(false);
-    handleModalClose();
+    handleModal();
   };
 
-  const handleModalClose = () => {
+  const handleModal = () => {
     setIsModalOpen(prevState => !prevState);
+  };
+
+  const handleDeletePin = () => {
+    setIsModalOpen(false);
+    window.location.reload();
   };
 
   return (
@@ -37,7 +42,11 @@ const PinModalBox = ({ top, right, padding }) => {
         </MorePopup>
       )}
       {isModalOpen && clickedOption === "핀 삭제" && (
-        <SmallModal text="핀을 삭제할까요?" onClose={handleModalClose} />
+        <SmallModal
+          text="핀을 삭제할까요?"
+          onClose={handleModal}
+          onDelete={handleDeletePin}
+        />
       )}
     </PinModal>
   );

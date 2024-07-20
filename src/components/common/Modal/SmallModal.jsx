@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const SmallModal = ({ text, onClose }) => {
+const SmallModal = ({ text, onClose, onDelete }) => {
   return (
     <BackGround>
       <ModalComponent>
@@ -10,7 +10,7 @@ const SmallModal = ({ text, onClose }) => {
           <CancelBtn onClick={onClose}>
             <CancelText>취소</CancelText>
           </CancelBtn>
-          <DecideBtn onClick={onClose}>
+          <DecideBtn onClick={onDelete}>
             <DecideText>삭제</DecideText>
           </DecideBtn>
         </Buttons>
@@ -69,6 +69,7 @@ const CancelBtn = styled.div`
   height: 60px;
   flex-shrink: 0;
   border: 1px solid var(--light_black, #232323);
+  background: var(--f8f8f8, #fcfcfc);
   display: flex;
   justify-content: center;
   align-items: center;
