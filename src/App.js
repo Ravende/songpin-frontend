@@ -7,6 +7,7 @@ import SearchPage from './pages/MusicSearchPage/SearchPage';
 import MusicInfoPage from './pages/MusicSearchPage/MusicInfoPage';
 import PlaceInfoPage from './pages/MusicSearchPage/PlaceInfoPage';
 import CreatePinPage from './pages/CreatePinPage/CreatePinPage';
+import EditPinPage from './pages/EditPinPage/EditPinPage';
 import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
 import UsersPage from './pages/UsersPage/UsersPage';
 import MyPage from './pages/MyPage/MyPage';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/details-song" element={<MusicInfoPage />} />
         <Route path="/details-place" element={<PlaceInfoPage />} />
         <Route path="/create" element={<CreatePinPage />} />
+        <Route path="/pin-edit" element={<EditPinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
         <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
