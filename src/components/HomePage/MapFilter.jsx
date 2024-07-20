@@ -26,9 +26,10 @@ import whiteDanceIcon from '../../assets/common/whiteDanceIcon.svg';
 import whiteEtcIcon from '../../assets/common/whiteEtcIcon.svg';
 
 const MapFilter = () => {
-    const [selectedOption, setSelectedOption] = useState("1week");
+    const [selectedOption, setSelectedOption] = useState("All");
     const [showOptions, setShowOptions] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [showSetTerm, setShowSetTerm] = useState(false);
     const [showGenre, setShowGenre] = useState(false);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -38,6 +39,11 @@ const MapFilter = () => {
     const selectTerm = (term) => {
         setSelectedOption(term);
         setShowOptions(false);
+        if (term === "Userself") {
+            setShowSetTerm(true);
+        } else {
+            setShowSetTerm(false);
+        }
     };
 
     const handleDateChange = (date) => {
@@ -62,7 +68,7 @@ const MapFilter = () => {
         if (startDate && endDate) {
             const formattedStartDate = moment(startDate).format('YYYY.MM.DD');
             const formattedEndDate = moment(endDate).format('YYYY.MM.DD');
-            setSelectedOption(`${formattedStartDate} ~ ${formattedEndDate}`);
+            setSelectedOption('Userself');
             setSelectedDatesText(`${formattedStartDate} ~ ${formattedEndDate}`);
         }
     };
@@ -98,6 +104,24 @@ const MapFilter = () => {
         return null;
     };
 
+    const handleShowOptions = () => {
+        setShowOptions(!showOptions);
+        setShowCalendar(false);
+        setShowGenre(false);
+    };
+
+    const handleShowCalendar = () => {
+        setShowCalendar(!showCalendar);
+        setShowOptions(false);
+        setShowGenre(false);
+    };
+
+    const handleShowGenre = () => {
+        setShowGenre(!showGenre);
+        setShowOptions(false);
+        setShowCalendar(false);
+    };
+
     const genreData = [
         { id: 'Pop', label: '팝', smallIcon: smallPopIcon, whiteIcon: whitePopIcon, color: '#4EDE76' },
         { id: 'Rock', label: '록/메탈', smallIcon: smallRockIcon, whiteIcon: whiteRockIcon, color: '#FF5862' },
@@ -111,50 +135,54 @@ const MapFilter = () => {
 
     return (
         <FilterContainer>
-            <GivenOptions onClick={() => setShowOptions(!showOptions)}>
+            <GivenOptions onClick={handleShowOptions}>
+                {selectedOption === "All" && <span>전체 기간</span>}
                 {selectedOption === "1week" && <span>최근 일주일</span>}
                 {selectedOption === "1month" && <span>최근 한 달</span>}
                 {selectedOption === "3months" && <span>최근 세 달</span>}
+                {selectedOption === "Userself" && <span>기간 직접 설정</span>}
                 <DropdownIcon src={showOptions ? close_dropdown : open_dropdown} alt="dropdown icon" />
                 {showOptions && (
                     <Dropdown>
+                        <Option onClick={() => selectTerm("All")}>전체 기간</Option>
                         <Option onClick={() => selectTerm("1week")}>최근 일주일</Option>
                         <Option onClick={() => selectTerm("1month")}>최근 한 달</Option>
                         <Option onClick={() => selectTerm("3months")}>최근 세 달</Option>
+                        <Option onClick={() => selectTerm("Userself")}>기간 직접 설정</Option>
                     </Dropdown>
                 )}
             </GivenOptions>
-            <SetTermWrapper>
-                <SetTerm onClick={() => setShowCalendar(!showCalendar)}>
-                    {selectedOption === "1week" || selectedOption === "1month" || selectedOption === "3months"
-                        ? "기간 직접 설정"
-                        : selectedOption}
-                    <DropdownIcon src={showCalendar ? close_dropdown : open_dropdown} alt="dropdown icon" />
-                </SetTerm>
-                {showCalendar && (
-                    <CalendarContainer>
-                        <StyledCalendar
-                            selectRange={false}
-                            value={[startDate, endDate]}
-                            onChange={handleDateChange}
-                            tileClassName={tileClassName}
-                            formatDay={(locale, date) => moment(date).format("D")}
-                            formatYear={(locale, date) => moment(date).format("YYYY")}
-                            formatMonthYear={(locale, date) => moment(date).format("YYYY. MMMM")}
-                            showNeighboringMonth={true}
-                        />
-                        <ApplyContainer>
-                            <SelectedDates>
-                                {startDate && endDate
-                                    ? `${moment(startDate).format('YYYY.MM.DD')} ~ ${moment(endDate).format('YYYY.MM.DD')}`
-                                    : "YYYY.MM.DD ~ YYYY.MM.DD"}
-                                <ApplyButton onClick={applyDateRange}>결정</ApplyButton>
-                            </SelectedDates>
-                        </ApplyContainer>
-                    </CalendarContainer>
-                )}
-            </SetTermWrapper>
-            <SetGenre onClick={() => setShowGenre(!showGenre)}>
+            {showSetTerm && (
+                <SetTermWrapper>
+                    <SetTerm onClick={handleShowCalendar}>
+                        {selectedDatesText}
+                        <DropdownIcon src={showCalendar ? close_dropdown : open_dropdown} alt="dropdown icon" />
+                    </SetTerm>
+                    {showCalendar && (
+                        <CalendarContainer>
+                            <StyledCalendar
+                                selectRange={false}
+                                value={[startDate, endDate]}
+                                onChange={handleDateChange}
+                                tileClassName={tileClassName}
+                                formatDay={(locale, date) => moment(date).format("D")}
+                                formatYear={(locale, date) => moment(date).format("YYYY")}
+                                formatMonthYear={(locale, date) => moment(date).format("YYYY. MMMM")}
+                                showNeighboringMonth={true}
+                            />
+                            <ApplyContainer>
+                                <SelectedDates>
+                                    {startDate && endDate
+                                        ? `${moment(startDate).format('YYYY.MM.DD')} ~ ${moment(endDate).format('YYYY.MM.DD')}`
+                                        : "YYYY.MM.DD ~ YYYY.MM.DD"}
+                                    <ApplyButton onClick={applyDateRange}>적용</ApplyButton>
+                                </SelectedDates>
+                            </ApplyContainer>
+                        </CalendarContainer>
+                    )}
+                </SetTermWrapper>
+            )}
+            <SetGenre onClick={handleShowGenre}>
                 장르별
                 <DropdownIcon src={showGenre ? close_dropdown : open_dropdown} alt="dropdown icon" />
             </SetGenre>
@@ -197,7 +225,7 @@ const GivenOptions = styled.div`
     position: relative;
     display: flex;
     padding: 10px 16px 10px 20px;
-    width: 120px;
+    //width: 120px;
     height: 24px;
     justify-content: center;
     align-items: center;
@@ -260,7 +288,7 @@ const SetTerm = styled.div`
     position: relative;
     display: flex;
     padding: 10px 16px 10px 20px;
-    width: 142px;
+    /* width: 142px; */
     height: 24px;
     justify-content: center;
     align-items: center;
@@ -298,31 +326,32 @@ const ApplyContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
-    border: none;
+    margin-top: 20px;
     background: none;
+    border: 1px solid var(--gray02, #747474);
+    border-radius: 24px;
+    background-color: var(--offwhite_, #FCFCFC);
 `;
 
 const CalendarContainer = styled.div`
     position: fixed;
-    top: 31%;
+    top: 29%;
     left: 71%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    //border: 1px solid var(--gray02, #747474);
-    //background: var(--offwhite_, #FCFCFC);
-    background: none;
+    border: 1px solid var(--gray02, #747474);
+    background: var(--offwhite_, #FCFCFC);
     padding: 10px;
     border-radius: 24px;
-`;
-
-const StyledCalendar = styled(Calendar)`
-    font-family: Pretendard;
-
+    height: 340px;
     .react-calendar {
         border: none;
         border-radius: 24px;
     }
+`;
+
+const StyledCalendar = styled(Calendar)`
+    font-family: Pretendard;
 
     .react-calendar__navigation {
         button {
@@ -351,8 +380,12 @@ const StyledCalendar = styled(Calendar)`
             border-radius: 50%;
         }
     }
+    
+    .react-calendar__tile--range {
+        background: rgba(36, 238, 129, 0.15);
+        color: black;
+    }
 
-    .react-calendar__tile--active,
     .react-calendar__tile--rangeStart,
     .react-calendar__tile--rangeEnd {
         background: url(${calendar_selected}) center center no-repeat !important;
@@ -360,9 +393,6 @@ const StyledCalendar = styled(Calendar)`
         color: white;
     }
 
-    .react-calendar__tile--range {
-        background: rgba(36, 238, 129, 0.15);
-    }
 
     .react-calendar__month-view__weekdays {
         abbr {
@@ -379,32 +409,12 @@ const StyledCalendar = styled(Calendar)`
 
 const SelectedDates = styled.div`
     padding: 8px 16px;
-    border: 1px solid var(--gray02, #747474);
-    border-radius: 24px;
-    background-color: var(--offwhite_, #FCFCFC);
     color: var(--light_black, #232323);
     font-family: Pretendard;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
     display: flex;
     align-items: center;
-    margin-top: 10px;
-
-    /* ${props => props.startDate && `
-        .react-calendar__tile--rangeStart {
-            background: url(${calendar_selected}) center center no-repeat !important;
-            background-size: 15%;
-            color: white;
-        }
-    `}
-
-    ${props => props.endDate && `
-        .react-calendar__tile--rangeEnd {
-            background: url(${calendar_selected}) center center no-repeat !important;
-            background-size: 15%;
-            color: white;
-        }
-    `} */
 `;
 
 const ApplyButton = styled.button`
