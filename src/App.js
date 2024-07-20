@@ -29,7 +29,7 @@ function App() {
         <Route path="/details-song" element={<MusicInfoPage />} />
         <Route path="/details-place" element={<PlaceInfoPage />} />
         <Route path="/create" element={<CreatePinPage />} />
-        <Route path="/pin-edit" element={<EditPinPage />} />
+        <Route path="/pin-edit/:id" element={<EditPinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
         <Route path="/playlist/:id" element={<PlaylistDetailPage />} />

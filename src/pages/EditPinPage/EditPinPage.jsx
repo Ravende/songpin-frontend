@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
-import CreateSection from '../../components/CreatePinPage/CreateSection';
+import EditSection from '../../components/CreatePinPage/CreateSection';
 import SearchSongContainer from '../../components/CreatePinPage/SearchSongContainer';
 import SearchPlaceContainer from '../../components/CreatePinPage/SearchPlaceContainer';
 import PinComponent from '../../components/CreatePinPage/PinComponent';
@@ -13,11 +13,12 @@ import { ReactComponent as CalendarImg} from '../../assets/images/CreatePin/cale
 import { ReactComponent as LocationImg} from '../../assets/images/CreatePin/location_on.svg';
 import PublicToggle from '../../components/common/PublicToggle';
 import calendar_selected from '../../assets/images/CreatePin/calendar_selected.svg'
-
+import arrowIcon from '../../assets/images/CreatePin/arrow_back_ios.svg';
 
 const EditPinPage = () => {
     const [inputCount, setInputCount] = useState(0);
     const [isSongSelected, setIsSongSelected] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [showSearchSongContainer, setShowSearchSongContainer] = useState(false);
     const [selectedPin, setSelectedPin] = useState(null);
     const [showSearchPlaceContainer, setShowSearchPlaceContainer] = useState(false);
@@ -29,6 +30,10 @@ const EditPinPage = () => {
 
     const handleNavigate = () => {
         navigate('/details-song');
+    };
+
+    const handleModal = () => {
+        setShowModal(true);
     };
 
     const onInputHandler = (e) => {
@@ -60,7 +65,9 @@ const EditPinPage = () => {
 
     return (
         <MainContainer>
-            <CreateSection>
+            <EditSection>
+                <Arrow src={arrowIcon} onClick={handleModal}/>
+                {showModal && (<EditModal></EditModal>)}
                 <Content>
                     {!isSongSelected ? (
                         <PinBox onClick={handlePinClick}>
@@ -69,8 +76,8 @@ const EditPinPage = () => {
                         </PinBox>
                     ) : (
                         <PinComponent
-                            onPinClick={handlePinClick}
-                            pinInfo={selectedPin}
+                        onPinClick={handlePinClick}
+                        pinInfo={selectedPin}
                         />
                     )}
                 </Content>
@@ -116,7 +123,7 @@ const EditPinPage = () => {
                     <CreateBtn
                         onClick={handleNavigate}
                     >수정 완료</CreateBtn> 
-            </CreateSection>
+            </EditSection>
             {showSearchSongContainer && <SearchSongContainer onPinSelect={handlePinSelect}/>}
             {showSearchPlaceContainer && (<SearchPlaceContainer onPlaceSelect={handlePlaceSelect} />)}
         </MainContainer>
@@ -127,11 +134,28 @@ const MainContainer = styled.div`
     flex-direction: row;
 `;
 
+// const EditModal = styled.div`
+//     width: 600px;
+//     height: 300px;
+//     flex-shrink: 0;
+//     border-radius: 19px;
+//     background: var(--f8f8f8, #FCFCFC);
+// `; 
+// 공용 컴포넌트 사용
+
+const Arrow = styled.img`
+    fill: #000000;
+    width: 30px;
+    height: 30px;
+    margin-top: 20px;
+    margin-left: 35px;
+`;
+
 const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 20px;
     //margin: 40px;
 `;
 
