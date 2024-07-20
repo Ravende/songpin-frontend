@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import moreButton from "../../assets/images/MyPage/more-icon.svg";
 import SmallModal from "./Modal/SmallModal";
@@ -17,10 +17,11 @@ const PinModalBox = ({ top, right, padding }) => {
   const handleOptionClick = option => {
     setClickedOption(option);
     setIsOpen(false);
+    handleModalClose();
   };
 
-  const handleModal = () => {
-    setIsModalOpen(false);
+  const handleModalClose = () => {
+    setIsModalOpen(prevState => !prevState);
   };
 
   return (
@@ -35,8 +36,8 @@ const PinModalBox = ({ top, right, padding }) => {
           ))}
         </MorePopup>
       )}
-      {clickedOption === "핀 삭제" && (
-        <SmallModal text="핀을 삭제할까요?" onClose={handleModal} />
+      {isModalOpen && clickedOption === "핀 삭제" && (
+        <SmallModal text="핀을 삭제할까요?" onClose={handleModalClose} />
       )}
     </PinModal>
   );

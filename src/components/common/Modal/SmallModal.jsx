@@ -7,11 +7,11 @@ const SmallModal = ({ text, onClose }) => {
       <ModalComponent>
         <Message>{text}</Message>
         <Buttons>
-          <CancelBtn>
-            <CancelText onClick={onClose}>취소</CancelText>
+          <CancelBtn onClick={onClose}>
+            <CancelText>취소</CancelText>
           </CancelBtn>
-          <DecideBtn>
-            <DecideText onClick={onClose}>삭제</DecideText>
+          <DecideBtn onClick={onClose}>
+            <DecideText>삭제</DecideText>
           </DecideBtn>
         </Buttons>
       </ModalComponent>
