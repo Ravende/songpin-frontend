@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import Calendar from 'react-calendar';
+import moment from 'moment';
+import 'react-calendar/dist/Calendar.css';
 import CreateSection from '../../components/CreatePinPage/CreateSection';
 import SearchSongContainer from '../../components/CreatePinPage/SearchSongContainer';
 import SearchPlaceContainer from '../../components/CreatePinPage/SearchPlaceContainer';
 import PinComponent from '../../components/CreatePinPage/PinComponent';
 import { GenreList } from '../../constants/GenreList';
-import { ReactComponent as Calendar} from '../../assets/images/CreatePin/calendar_month.svg';
-import { ReactComponent as Location} from '../../assets/images/CreatePin/location_on.svg';
+import { ReactComponent as CalendarImg} from '../../assets/images/CreatePin/calendar_month.svg';
+import { ReactComponent as LocationImg} from '../../assets/images/CreatePin/location_on.svg';
 import PublicToggle from '../../components/common/PublicToggle';
+import calendar_selected from '../../assets/images/CreatePin/calendar_selected.svg'
+
 
 const CreatePinPage = () => {
     const [inputCount, setInputCount] = useState(0);
@@ -16,6 +22,14 @@ const CreatePinPage = () => {
     const [selectedPin, setSelectedPin] = useState(null);
     const [showSearchPlaceContainer, setShowSearchPlaceContainer] = useState(false);
     const [selectedPlace, setSelectedPlace] = useState("");
+    const [showCalendar, setShowCalendar] = useState(false);
+    const [date, setDate] = useState(new Date());
+
+    const navigate = useNavigate();
+
+    const handleNavigate = () => {
+        navigate('/details-song');
+    };
 
     const onInputHandler = (e) => {
         setInputCount(e.target.value.length);
@@ -39,11 +53,10 @@ const CreatePinPage = () => {
         setSelectedPlace(placeName);
         setShowSearchPlaceContainer(false);
     };
-    
-    // const handleSongSelection = () => {
-    //     setIsSongSelected(true);
-    //     setShowSearchSongContainer(!showSearchSongContainer);
-    // };
+
+    const handleDateChange = (date) => {
+        setDate(date);
+    };
 
     return (
         <MainContainer>
@@ -62,14 +75,29 @@ const CreatePinPage = () => {
                     )}
                 </Content>
                     <Title>언제</Title>
-                    <When>언제 이 노래를 들었나요? <Calendar/></When>
+                    <When>
+                        {moment(date).format("YYYY.MM.DD") || "언제 이 노래를 들었나요?"}
+                        <CalendarImg onClick={() => setShowCalendar(!showCalendar)}/></When>
+                    {showCalendar && (
+                        <CalendarContainer>
+                            <StyledCalendar
+                                calendarType="gregory"
+                                value={date}
+                                onChange={handleDateChange}
+                                formatDay={(locale, date) => moment(date).format("D")}
+                                formatYear={(locale, date) => moment(date).format("YYYY")}
+                                formatMonthYear={(locale, date) => moment(date).format("YYYY. MMMM")}
+                                showNeighboringMonth={true}
+                            />
+                        </CalendarContainer>
+                    )}
                     <Title>어디서</Title>
                     <Where onClick={handlePlaceClick}>
                         {selectedPlace || "이 노래를 들었던 장소는 어디였나요?"}
-                        <Location />
+                        <LocationImg />
                     </Where>
                     <Title>장르</Title>
-                    {/* <GenreList></GenreList> */}
+                    {/* <GenreList /> */}
                     <Title>메모</Title>
                     <MemoArea
                         placeholder="이곳에 메모를 남겨주세요."
@@ -84,7 +112,10 @@ const CreatePinPage = () => {
                         <Title>공개 여부</Title>
                         <PublicToggle />
                     </IsPublic>
-                    <CreateBtn>핀 생성하기</CreateBtn>
+                    {/* 아래 생성 버튼에 핀 위치 주소 연결하기 */}
+                    <CreateBtn
+                        onClick={handleNavigate}
+                    >핀 생성하기</CreateBtn> 
             </CreateSection>
             {showSearchSongContainer && <SearchSongContainer onPinSelect={handlePinSelect}/>}
             {showSearchPlaceContainer && (<SearchPlaceContainer onPlaceSelect={handlePlaceSelect} />)}
@@ -241,6 +272,68 @@ const CreateBtn = styled.button`
     font-weight: 600;
     line-height: normal;
     cursor: pointer;
+`;
+
+const CalendarContainer = styled.div`
+    position: absolute;
+    top: 28%;
+    left: 17%;
+    z-index: 10;
+    border: 1px solid var(--gray02, #747474);
+    background: var(--offwhite_, #FCFCFC);
+    padding: 8px;
+    border-radius: 24px;
+`;
+
+const StyledCalendar = styled(Calendar)`
+    font-family: Pretendard;
+    width: 273px;
+
+    .react-calendar {
+        border: none;
+        border-radius: 24px;
+        //width: 100%;
+    }
+    .react-calendar__navigation {
+        button {
+            color: #232323;
+            font-size: 1em;
+            font-weight: bold;
+        }
+    }
+    .react-calendar__tile {
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+            background: lightgray;
+            border-radius: 50%;
+        }
+    }
+    .react-calendar__tile--now {
+        background: #FCFCFC;
+        &:hover {
+            background: #5452FF;
+            color: #FCFCFC;
+            border-radius: 50%;
+        }
+    }
+    .react-calendar__tile--active {
+        background: url(${calendar_selected}) center center no-repeat !important;
+        background-size: 15%;
+        color: white;
+    }
+    .react-calendar__month-view__weekdays {
+        abbr {
+            text-decoration: none;
+            font-family: Pretendard;
+        }
+    }
+    .react-calendar__month-view__days__day {
+        height: 39px;
+        width: 20px;
+    }
 `;
 
 export default CreatePinPage;
