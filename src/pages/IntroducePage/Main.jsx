@@ -3,7 +3,7 @@ import main_center from "../../assets/introduce/main_center.svg";
 import main_bottom from "../../assets/introduce/main_bottom.svg";
 import styled from "styled-components";
 import Background from "../../components/IntroducePage/Background";
-import AddPlaylistModal from "../../components/common/modal/AddPlaylistModal";
+import AddPlaylistModal from "../../components/common/Modal/AddPlaylistModal";
 import { useState } from "react";
 const Main = () => {
   const [modalCommon, setModalCommon] = useState(true);
