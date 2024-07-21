@@ -1,10 +1,12 @@
-import NavBar from '../../components/IntroducePage/NavBar';
-import main_center from '../../assets/introduce/main_center.svg';
-import main_bottom from '../../assets/introduce/main_bottom.svg';
-import styled from 'styled-components';
-import Background from '../../components/IntroducePage/Background';
-
+import NavBar from "../../components/IntroducePage/NavBar";
+import main_center from "../../assets/introduce/main_center.svg";
+import main_bottom from "../../assets/introduce/main_bottom.svg";
+import styled from "styled-components";
+import Background from "../../components/IntroducePage/Background";
+import AddPlaylistModal from "../../components/common/modal/AddPlaylistModal";
+import { useState } from "react";
 const Main = () => {
+  const [modalCommon, setModalCommon] = useState(true);
   return (
     <>
       <BackgroundWrapper>
@@ -20,6 +22,7 @@ const Main = () => {
           <img src={main_bottom} alt="main bottom" />
         </Bottom>
       </Wrapper>
+      {modalCommon && <AddPlaylistModal setModalCommon={setModalCommon} />}
     </>
   );
 };
