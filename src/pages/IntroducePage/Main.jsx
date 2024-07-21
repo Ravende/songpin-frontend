@@ -6,6 +6,7 @@ import Background from "../../components/IntroducePage/Background";
 import AddPlaylistModal from "../../components/common/Modal/AddPlaylistModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const Main = () => {
   const navigate = useNavigate();
   const handleGotoHomepage = () => {

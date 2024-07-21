@@ -15,6 +15,7 @@ const PlaylistEditSideSection = () => {
   const handleCheckClicked = () => {
     setIsChecked(!isChecked);
   };
+
   return (
     <SideComponent>
       <SideBar></SideBar>
