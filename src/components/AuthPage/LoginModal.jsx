@@ -42,7 +42,7 @@ const LoginModal = ({
             <Input placeholder="이메일" />
             <Input placeholder="비밀번호" />
             <div className="loginButton">
-              <Button onClick={handleComplete} name="로그인" />
+              <Button active="true" onClick={handleComplete} name="로그인" />
             </div>
             <SignUpAndPWReSet>
               <SignUpAndPWReSetText>

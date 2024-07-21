@@ -1,23 +1,40 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-const SmallModal = () => {
+const SmallModal = ({ text, onClose, onDecide }) => {
   return (
-    <ModalComponent>
-      <Message>핀을 삭제할까요?</Message>
-      <Buttons>
-        <CancelBtn>
-          <CancelText>취소</CancelText>
-        </CancelBtn>
-        <DecideBtn>
-          <DecideText>삭제</DecideText>
-        </DecideBtn>
-      </Buttons>
-    </ModalComponent>
+    <BackGround>
+      <ModalComponent>
+        <Message>{text}</Message>
+        <Buttons>
+          <CancelBtn onClick={onClose}>
+            <CancelText>취소</CancelText>
+          </CancelBtn>
+          <DecideBtn onClick={onDecide}>
+            <DecideText>
+              {text === "편집한 내용을 저장할까요?" ? "확인" : "삭제"}
+            </DecideText>
+          </DecideBtn>
+        </Buttons>
+      </ModalComponent>
+    </BackGround>
   );
 };
 
 export default SmallModal;
+
+const BackGround = styled.div`
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+`;
 
 const ModalComponent = styled.div`
   display: flex;
@@ -54,6 +71,7 @@ const CancelBtn = styled.div`
   height: 60px;
   flex-shrink: 0;
   border: 1px solid var(--light_black, #232323);
+  background: var(--f8f8f8, #fcfcfc);
   display: flex;
   justify-content: center;
   align-items: center;

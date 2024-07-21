@@ -1,17 +1,29 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import SideSection from '../../components/common/SideSection';
-import backIcon from '../../assets/images/MusicSearchPage/arrow_back.svg';
-import userLogoPop from '../../assets/images/MyPage/user-logo-pop.svg'; //임시 유저 프로필
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import SideSection from "../../components/common/SideSection";
+import backIcon from "../../assets/images/MusicSearchPage/arrow_back.svg";
+import userLogoPop from "../../assets/images/MyPage/user-logo-pop.svg"; //임시 유저 프로필
+import OpenQuitModal from "../../components/common/Modal/MemberQuitModal";
 
 const SettingsPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModal = () => {
+    setIsModalOpen(prevState => !prevState);
+  };
+
+  const handleQuitBtn = () => {
+    setIsModalOpen(false);
+    navigate("/");
+  };
+
   const navigate = useNavigate();
   const goMyPage = () => {
-    navigate('/mypage');
+    navigate("/mypage");
   };
   const goEditPage = () => {
-    navigate('/edit');
+    navigate("/edit");
   };
 
   return (
@@ -31,7 +43,10 @@ const SettingsPage = () => {
         <ClickBtnsSection>
           <Button>비밀번호 재설정</Button>
           <Button>로그아웃</Button>
-          <Button>회원탈퇴</Button>
+          <Button onClick={handleModal}>회원탈퇴</Button>
+          {isModalOpen && (
+            <OpenQuitModal onClose={handleModal} onQuit={handleQuitBtn} />
+          )}
         </ClickBtnsSection>
       </SettingComponent>
     </SideSection>
