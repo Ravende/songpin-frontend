@@ -78,3 +78,4 @@ const Bottom = styled.div`
 `;
 
 export default IntroducePage;
+

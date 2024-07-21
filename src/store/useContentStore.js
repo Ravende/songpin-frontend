@@ -1,8 +1,8 @@
 import create from 'zustand';
 
-const useContentStore = create((set) => ({
-  content: true,
-  setContent: (newContent) => set(() => ({ content: newContent })),
+const useLoginModalStore = create((set) => ({
+  loginModal: false,
+  setLoginModal: (newState) => set({ loginModal: newState }),
 }));
 
-export default useContentStore;
+export default useLoginModalStore;
