@@ -5,8 +5,12 @@ import styled from "styled-components";
 import Background from "../../components/IntroducePage/Background";
 import AddPlaylistModal from "../../components/common/Modal/AddPlaylistModal";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Main = () => {
-  const [modalCommon, setModalCommon] = useState(true);
+  const navigate = useNavigate();
+  const handleGotoHomepage = () => {
+    navigate("/home");
+  };
   return (
     <>
       <BackgroundWrapper>
@@ -19,10 +23,13 @@ const Main = () => {
           <img src={main_center} alt="main center" />
         </Center>
         <Bottom>
-          <img src={main_bottom} alt="main bottom" />
+          <img
+            onClick={handleGotoHomepage}
+            src={main_bottom}
+            alt="main bottom"
+          />
         </Bottom>
       </Wrapper>
-      {modalCommon && <AddPlaylistModal setModalCommon={setModalCommon} />}
     </>
   );
 };
@@ -53,6 +60,7 @@ const Bottom = styled.div`
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  cursor: pointer;
 `;
 
 export default Main;
