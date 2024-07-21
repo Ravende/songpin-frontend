@@ -67,7 +67,7 @@ const EditPinPage = () => {
         <MainContainer>
             <EditSection>
                 <Arrow src={arrowIcon} onClick={handleModal}/>
-                {showModal && (<EditModal></EditModal>)}
+                {/* {showModal && (<EditModal></EditModal>)} */}
                 <Content>
                     {!isSongSelected ? (
                         <PinBox onClick={handlePinClick}>
