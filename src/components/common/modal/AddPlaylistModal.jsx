@@ -1,6 +1,6 @@
 import ModalCommon from "./ModalCommon";
 
-const AddPlaylistModal = () => {
+const AddPlaylistModal = ({ setModalCommon }) => {
   const addPlaylist = () => {};
   return (
     <ModalCommon
@@ -9,6 +9,7 @@ const AddPlaylistModal = () => {
       buttonName="완료"
       handleButton={addPlaylist}
       addPlaylist="true"
+      setModalCommon={setModalCommon}
     />
   );
 };

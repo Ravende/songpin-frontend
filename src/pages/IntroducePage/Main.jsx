@@ -4,7 +4,9 @@ import main_bottom from "../../assets/introduce/main_bottom.svg";
 import styled from "styled-components";
 import Background from "../../components/IntroducePage/Background";
 import AddPlaylistModal from "../../components/common/modal/AddPlaylistModal";
+import { useState } from "react";
 const Main = () => {
+  const [modalCommon, setModalCommon] = useState(true);
   return (
     <>
       <BackgroundWrapper>
@@ -20,7 +22,7 @@ const Main = () => {
           <img src={main_bottom} alt="main bottom" />
         </Bottom>
       </Wrapper>
-      <AddPlaylistModal />
+      {modalCommon && <AddPlaylistModal setModalCommon={setModalCommon} />}
     </>
   );
 };
