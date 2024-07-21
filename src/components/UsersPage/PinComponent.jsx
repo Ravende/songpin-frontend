@@ -33,7 +33,7 @@ const PinComponent = () => {
             </PinTitle>
             <PinSinger>잔나비</PinSinger>
           </TitleBox>
-          <MoreIcon src={moreMenu} alt="더보기 아이콘" />
+          {/* <MoreIcon src={moreMenu} alt="더보기 아이콘" /> */}
         </SongBox>
         <ContentBox>
           <LyricText  onClick={isTruncated ? () => {} : toggleTruncation} isTruncated={isTruncated}>
