@@ -20,6 +20,7 @@ const UserInfoBox = styled.div`
   display: flex;
   flex-direction: row;
   /* margin: 32px 34px; */
+  align-items: center;
 `;
 
 const UserLogo = styled.img`
@@ -30,6 +31,7 @@ const UserLogo = styled.img`
 const UserNameBox = styled.div`
   flex-direction: column;
   margin-left: 28px;
+ 
 `;
 
 const UserName = styled.div`
