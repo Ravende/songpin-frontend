@@ -1,6 +1,8 @@
+import { useState } from "react";
 import ModalCommon from "./ModalCommon";
 
 const AddPlaylistModal = ({ setModalCommon }) => {
+  const [active, setActive] = useState(true);
   const addPlaylist = () => {};
   return (
     <ModalCommon
@@ -8,8 +10,10 @@ const AddPlaylistModal = ({ setModalCommon }) => {
       inputPlaceholder="플레이리스트를 선택"
       buttonName="완료"
       handleButton={addPlaylist}
-      addPlaylist="true"
+      addPlaylist={true}
       setModalCommon={setModalCommon}
+      active={active}
+      setActive={setActive}
     />
   );
 };

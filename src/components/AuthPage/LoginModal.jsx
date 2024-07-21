@@ -1,18 +1,23 @@
-import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
-import Input from '../common/Input';
-import Button from '../common/Button';
+import styled from "styled-components";
+import { useEffect, useRef } from "react";
+import Input from "../common/Input";
+import Button from "../common/Button";
 
-const LoginModal = ({ setPwResetModal, setCompleteLogin, setSignupModal, setLoginModal }) => {
+const LoginModal = ({
+  setPwResetModal,
+  setCompleteLogin,
+  setSignupModal,
+  setLoginModal,
+}) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         setLoginModal(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
   }, [setLoginModal]);
 
   const handleSignup = () => {
