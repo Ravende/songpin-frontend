@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import lockIcon from "../../assets/images/MyPage/lock.svg";
 import { useNavigate } from "react-router-dom";
+import PinModalBox from "../common/PinModalBox";
 
 const MusicInfoPinPreview = () => {
   const [isTruncated, setIsTruncated] = useState(true);
@@ -25,7 +26,10 @@ const MusicInfoPinPreview = () => {
     <PinsContainer>
       <PinPreview>
         <PinContent>
-          <UserName onClick={goUsersPage}>채연</UserName>
+          <UserView>
+            <UserName onClick={goUsersPage}>채연</UserName>
+            <PinModalBox top="30px" right="-177px" />
+          </UserView>
           <PinMemo
             onClick={isTruncated ? () => {} : toggleTruncation}
             isTruncated={isTruncated}
@@ -66,9 +70,15 @@ const PinPreview = styled.div`
 const PinContent = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 17px 21px 15px 15px;
+  padding: 16px 12px 15px 15px;
   display: inline-block;
-  width: 426px;
+`;
+
+const UserView = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
 `;
 
 const UserName = styled.div`
@@ -86,6 +96,7 @@ const UserName = styled.div`
 const PinMemo = styled(UserName)`
   line-height: 150%; /* 24px */
   padding-top: 7px;
+  padding-right: 8px;
   cursor: ${props => (props.isTruncated ? "auto" : "pointer")};
   width: 426px;
 `;
@@ -115,6 +126,7 @@ const Details = styled.div`
   justify-content: flex-end;
   padding-top: 4px;
   white-space: nowrap;
+  padding-right: 10px;
 `;
 
 const Date = styled.div`

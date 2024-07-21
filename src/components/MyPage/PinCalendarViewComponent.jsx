@@ -1,8 +1,8 @@
-import react from 'react';
-import styled from 'styled-components';
-import albumImgExample from '../../assets/images/MyPage/album-eg.png';
-import pinIcon from '../../assets/images/MyPage/vector-icon.svg';
-import PinModalBox from './PinModalBox';
+import react from "react";
+import styled from "styled-components";
+import albumImgExample from "../../assets/images/MyPage/album-eg.png";
+import pinIcon from "../../assets/images/MyPage/vector-icon.svg";
+import PinModalBox from "../common/PinModalBox";
 
 const PinCalendarViewComponent = () => {
   return (
@@ -17,7 +17,7 @@ const PinCalendarViewComponent = () => {
             </SongTitle>
             <Singer>잔나비</Singer>
           </SongInfo>
-          <PinModalBox />
+          <PinModalBox top="42px" right="-163px" padding="31px" />
         </TitleSection>
         <Info>
           <Date>2024.04.04</Date>
