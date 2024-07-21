@@ -5,7 +5,6 @@ import backArrow from '../../assets/images/UsersPage/arrow_back_ios.svg';
 import checked from '../../assets/images/PlaylistPage/checkbox_checked.svg';
 import unchecked from '../../assets/images/PlaylistPage/checkbox_unchecked.svg';
 import PinComponent from './PinComponent';
-import CreatePlaylistModal from '../common/Modal/CreatePlaylistModal';
 
 const PlaylistEditSideSection = () => {
   const navigate = useNavigate();
@@ -16,17 +15,6 @@ const PlaylistEditSideSection = () => {
   const handleCheckClicked = () => {
     setIsChecked(!isChecked);
   };
-
-  // 모달창 임시 사용 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleDeleteClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-  // <<
 
   return (
     <SideComponent>
@@ -48,8 +36,7 @@ const PlaylistEditSideSection = () => {
             <TotalIcon src={isChecked ? checked : unchecked} alt="전체선택 버튼" onClick={handleCheckClicked} />
             <SelectText>전체선택</SelectText>
           </SelectBox>
-          {/* onClick={handleDeleteClick} 임시 추가  */}
-          <BtnText  onClick={handleDeleteClick} >삭제</BtnText>
+          <BtnText>삭제</BtnText>
         </ContentBox>
         <PinContainer>
           <PinComponent selectable={true} buttonVisible={false} />
@@ -57,8 +44,6 @@ const PlaylistEditSideSection = () => {
           <PinComponent selectable={true} buttonVisible={false} />
         </PinContainer>
       </SideBox>
-      {/* 임시 추가  */}
-      {isModalOpen && <CreatePlaylistModal setModalCommon={handleCloseModal} />}
     </SideComponent>
   );
 };
