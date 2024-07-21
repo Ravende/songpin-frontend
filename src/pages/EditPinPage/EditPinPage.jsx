@@ -8,6 +8,7 @@ import EditSection from '../../components/CreatePinPage/CreateSection';
 import SearchSongContainer from '../../components/CreatePinPage/SearchSongContainer';
 import SearchPlaceContainer from '../../components/CreatePinPage/SearchPlaceContainer';
 import PinComponent from '../../components/CreatePinPage/PinComponent';
+import Genre from '../../components/common/Genre';
 import { GenreList } from '../../constants/GenreList';
 import { ReactComponent as CalendarImg} from '../../assets/images/CreatePin/calendar_month.svg';
 import { ReactComponent as LocationImg} from '../../assets/images/CreatePin/location_on.svg';
@@ -25,6 +26,7 @@ const EditPinPage = () => {
     const [selectedPlace, setSelectedPlace] = useState("");
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
+    const [selectedGenre, setSelectedGenre] = useState(null);
 
     const navigate = useNavigate();
 
@@ -61,6 +63,10 @@ const EditPinPage = () => {
 
     const handleDateChange = (date) => {
         setDate(date);
+    };
+
+    const handleGenreClick = (id) => {
+        setSelectedGenre(id);
     };
 
     return (
@@ -104,7 +110,18 @@ const EditPinPage = () => {
                         <LocationImg />
                     </Where>
                     <Title>장르</Title>
-                    {/* <GenreList /> */}
+                    <GenreContainer>
+                        {GenreList.map((genre) => (
+                            <Genre
+                                key={genre.id}
+                                name={genre.name}
+                                img={selectedGenre === genre.id ? genre.whiteImgSrc : genre.imgSrc}
+                                bgColor={selectedGenre === genre.id ? genre.bgColor : null}
+                                onClick={() => handleGenreClick(genre.id)}
+                                height={40}
+                            />
+                        ))}
+                    </GenreContainer>
                     <Title>메모</Title>
                     <MemoArea
                         placeholder="이곳에 메모를 남겨주세요."
@@ -300,24 +317,24 @@ const CreateBtn = styled.button`
 
 const CalendarContainer = styled.div`
     position: absolute;
-    top: 28%;
-    left: 17%;
+    top: 27%;
+    left: 16%;
     z-index: 10;
     border: 1px solid var(--gray02, #747474);
     background: var(--offwhite_, #FCFCFC);
     padding: 8px;
     border-radius: 24px;
+    .react-calendar {
+        border: none;
+        border-radius: 24px;
+        //width: 100%;
+    }
 `;
 
 const StyledCalendar = styled(Calendar)`
     font-family: Pretendard;
     width: 273px;
 
-    .react-calendar {
-        border: none;
-        border-radius: 24px;
-        //width: 100%;
-    }
     .react-calendar__navigation {
         button {
             color: #232323;
@@ -358,6 +375,14 @@ const StyledCalendar = styled(Calendar)`
         height: 39px;
         width: 20px;
     }
+`;
+
+const GenreContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-left: 30px;
+    gap: 5px;
 `;
 
 export default EditPinPage;
