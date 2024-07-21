@@ -7,7 +7,7 @@ import unchecked from '../../assets/images/PlaylistPage/checkbox_unchecked.svg';
 import ToggleOn from '../../assets/images/PlaylistPage/toggle_on.svg'
 import PinComponent from '../../components/PlaylistPage/PinComponent';
 import SideSection from '../../components/common/SideSection';
-
+import PublicToggle from '../../components/common/PublicToggle';
 const PlaylistEditPage = () => {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
@@ -52,10 +52,7 @@ const PlaylistEditPage = () => {
         </ContentBox>
         <ContentBox>
           <BodyText>공개 여부</BodyText>
-          <ToggleBox >
-            <ToggleText>{isPublic ? '공개' : '비공개'}</ToggleText>
-            <ToggleBtn src={ToggleOn}   isPublic={isPublic} onClick={handleToggleClick}/>
-          </ToggleBox>
+          <PublicToggle />
         </ContentBox>
         <ContentBox>
           <SelectBox>
