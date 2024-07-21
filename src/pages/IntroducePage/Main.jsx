@@ -1,10 +1,16 @@
-import NavBar from '../../components/IntroducePage/NavBar';
-import main_center from '../../assets/introduce/main_center.svg';
-import main_bottom from '../../assets/introduce/main_bottom.svg';
-import styled from 'styled-components';
-import Background from '../../components/IntroducePage/Background';
-
+import NavBar from "../../components/IntroducePage/NavBar";
+import main_center from "../../assets/introduce/main_center.svg";
+import main_bottom from "../../assets/introduce/main_bottom.svg";
+import styled from "styled-components";
+import Background from "../../components/IntroducePage/Background";
+import AddPlaylistModal from "../../components/common/Modal/AddPlaylistModal";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Main = () => {
+  const navigate = useNavigate();
+  const handleGotoHomepage = () => {
+    navigate("/home");
+  };
   return (
     <>
       <BackgroundWrapper>
@@ -17,7 +23,11 @@ const Main = () => {
           <img src={main_center} alt="main center" />
         </Center>
         <Bottom>
-          <img src={main_bottom} alt="main bottom" />
+          <img
+            onClick={handleGotoHomepage}
+            src={main_bottom}
+            alt="main bottom"
+          />
         </Bottom>
       </Wrapper>
     </>
@@ -50,6 +60,7 @@ const Bottom = styled.div`
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  cursor: pointer;
 `;
 
 export default Main;

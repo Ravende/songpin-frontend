@@ -1,7 +1,7 @@
-import NavBar from '../../components/IntroducePage/NavBar';
-import main_center from '../../assets/introduce/main_center.svg';
-import styled from 'styled-components';
-import Background from '../../components/IntroducePage/Background';
+import NavBar from "../../components/IntroducePage/NavBar";
+import main_center from "../../assets/introduce/main_center.svg";
+import styled from "styled-components";
+import Background from "../../components/IntroducePage/Background";
 
 const IntroducePage = () => {
   return (
@@ -34,13 +34,15 @@ const IntroducePage = () => {
             백엔드 개발자
             <br />
             <br />
-            디자이너{' '}
+            디자이너{" "}
           </div>
         </Bottom>
       </Wrapper>
     </div>
   );
 };
+
+export default IntroducePage;
 
 const NavWrap = styled.div`
   font-size: 50px;
@@ -76,6 +78,5 @@ const Bottom = styled.div`
   flex-direction: column;
   gap: 336px;
 `;
-
 export default IntroducePage;
 

@@ -1,20 +1,23 @@
-import styled from 'styled-components';
-import Input from '../../components/common/Input';
-import Button from '../../components/common/Button';
-import { useNavigate } from 'react-router-dom';
+import styled from "styled-components";
+import Input from "../../components/common/Input";
+import Button from "../../components/common/Button";
+import { useNavigate } from "react-router-dom";
 
 const PwResetPage = () => {
   const navigate = useNavigate();
   const resetComplete = () => {
-    navigate('/resetPasswordComplete');
+    navigate("/resetPasswordComplete");
   };
   return (
     <Wrapper>
       <div className="resetText">비밀번호 재설정</div>
       <Input placeholder="새 비밀번호" />
-      <Input placeholder="새 비밀번호 확인" infoMsg="비밀번호가 일치하지 않습니다." />
+      <Input
+        placeholder="새 비밀번호 확인"
+        infoMsg="비밀번호가 일치하지 않습니다."
+      />
       <ButtonWrapper>
-        <Button onClick={resetComplete} name="완료" />
+        <Button active="true" onClick={resetComplete} name="완료" />
       </ButtonWrapper>
     </Wrapper>
   );
