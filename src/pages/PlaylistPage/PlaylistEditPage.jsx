@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import backArrow from '../../assets/images/UsersPage/arrow_back_ios.svg';
 import checked from '../../assets/images/PlaylistPage/checkbox_checked.svg';
 import unchecked from '../../assets/images/PlaylistPage/checkbox_unchecked.svg';
-import ToggleOn from '../../assets/images/PlaylistPage/toggle_on.svg'
 import PinComponent from '../../components/PlaylistPage/PinComponent';
 import SideSection from '../../components/common/SideSection';
 import PublicToggle from '../../components/common/PublicToggle';
+
 const PlaylistEditPage = () => {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);

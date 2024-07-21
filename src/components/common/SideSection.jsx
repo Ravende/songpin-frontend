@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import arrowIcon from '../../assets/images/MyPage/arrow.svg';
+import SideBar from '../../components/HomePage/SideBar';
 
 const SideSection = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -11,7 +12,9 @@ const SideSection = ({ children }) => {
 
   return (
     <SideComponent>
-      <SideBar></SideBar>
+      <SideBarContainer>
+      <SideBar />
+      </SideBarContainer>
       <SideBox isOpen={isOpen}>
         <Content>{children}</Content>
       </SideBox>
@@ -33,7 +36,7 @@ const SideComponent = styled.div`
   /* overflow-y: overlay; */
 `;
 
-const SideBar = styled.div`
+const SideBarContainer = styled.div`
   width: 80px;
   border-right: 1px solid var(--gray, #bcbcbc);
 `;
