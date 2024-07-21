@@ -91,6 +91,7 @@ const ContentBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  positive:relative;
 
   /* padding-left: 33px; */
   /* padding-right: 33px; */
@@ -112,6 +113,7 @@ const MoreBtn = styled.img`
   height: 40px;
   flex-shrink: 0;
   cursor: pointer;
+  
 `;
 
 const PlaylistBox = styled.div`
@@ -252,12 +254,10 @@ const MorePopup = styled.div`
   position: absolute;
   /* top: 100%; */
   /* right: -163px; */
-  top: 7%;
-  left: 35%;
-  /* 
+  top: 85px;
+  left: 540px;
   z-index: 1000;
-  position: absolute;
-  top: 100%; */
+  /* top: 100%; */
 `;
 
 const ListItem = styled.div`
