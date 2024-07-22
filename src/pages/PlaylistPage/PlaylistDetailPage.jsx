@@ -74,6 +74,14 @@ const PlaylistDetailPage = () => {
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent selectable={false} buttonVisible={true} />
+          <PinComponent selectable={false} buttonVisible={true} />
+          
         </PinContainer>
         </DetailContainer>
       </SideSection>
@@ -91,7 +99,7 @@ const ContentBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  positive:relative;
+  position:relative;
 
   /* padding-left: 33px; */
   /* padding-right: 33px; */
