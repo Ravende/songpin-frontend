@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Input from "../Input";
 import Button from "../Button";
 import PlaylistDropdown from "./dropdown/PlaylistDropdown";
-
+import PublicToggle from "../PublicToggle";
 const ModalCommon = ({
   modalText,
   inputPlaceholder,
@@ -12,9 +12,11 @@ const ModalCommon = ({
   addPlaylist,
   createPlaylist,
   setModalCommon,
+  active,
+  setActive,
 }) => {
-  const [active, setActive] = useState(true);
   const modalRef = useRef(null);
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -25,18 +27,39 @@ const ModalCommon = ({
     document.addEventListener("mousedown", handleClickOutside);
   }, [setModalCommon]);
 
+  const handleChange = event => {
+    const { value } = event.target;
+    if (value.length <= 40) {
+      setInputValue(value);
+    }
+  };
+
+  useEffect(() => {
+    createPlaylist && setActive(inputValue.length > 0);
+  }, [inputValue, setActive]);
+
   return (
     <Wrapper>
       <ModalWrapper ref={modalRef}>
         <div className="modalText">{modalText}</div>
         <InputButton>
-          {addPlaylist && (
-            <PlaylistDropdown
-              placeholder={inputPlaceholder}
-              setActive={setActive}
-            />
+          {addPlaylist && <PlaylistDropdown placeholder={inputPlaceholder} />}
+          {createPlaylist && (
+            <CreatePlaylistBox>
+              <Edit>
+                <EditBox>
+                  <EditText
+                    type="text"
+                    value={inputValue}
+                    placeholder={inputPlaceholder}
+                    onChange={handleChange}
+                  />
+                  <AlarmMessage>{inputValue.length}/40</AlarmMessage>
+                </EditBox>
+              </Edit>
+              <PublicToggle />
+            </CreatePlaylistBox>
           )}
-          {/* {createPlaylist && <></>}토글 추가 */}
           <Button active={active} name={buttonName} onClick={handleButton} />
         </InputButton>
       </ModalWrapper>
@@ -81,6 +104,52 @@ const ModalWrapper = styled.div`
     line-height: 40px; /* 125% */
     margin-bottom: 56px;
   }
+`;
+const EditText = styled.input`
+  color: var(--light_black, #232323);
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 28px */
+  border: none;
+  outline: none;
+`;
+const AlarmMessage = styled.div`
+  color: var(--gray02, #747474);
+  text-align: right;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
+`;
+
+const EditBox = styled.div`
+  width: 500px;
+  padding: 23px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Edit = styled.div`
+  width: 500px;
+  height: 60px;
+  flex-shrink: 0;
+  border: 1px solid var(--light_black, #232323);
+  background: var(--f8f8f8, #fcfcfc);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 21px;
+`;
+
+const CreatePlaylistBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;
 
 export default ModalCommon;
