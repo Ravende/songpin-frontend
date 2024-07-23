@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const Genre = ({ name, img, bgColor, width, height, text }) => {
+const Genre = ({ name, img, bgColor, width, height, text, onClick }) => {
   return (
-    <GenreWrapper bgColor={bgColor} width={width} height={height} text={text}>
+    <GenreWrapper bgColor={bgColor} width={width} height={height} text={text} onClick={onClick}>
       <span># {name}</span>
       <span>
         <ImgWrapper className={bgColor ? 'colored' : ''}>

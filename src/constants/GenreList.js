@@ -16,12 +16,12 @@ import whiteDanceIcon from '../assets/common/whiteDanceIcon.svg';
 import whiteEtcIcon from '../assets/common/whiteEtcIcon.svg';
 
 export const GenreList = [
-  { id: 1, name: '팝', imgSrc: smallPopIcon, whiteImgSrc: whitePopIcon, width: 78 },
-  { id: 2, name: '록/메탈', imgSrc: smallRockIcon, whiteImgSrc: whiteRockIcon, width: 119 },
-  { id: 3, name: '발라드', imgSrc: smallBalladeIcon, whiteImgSrc: whiteBalladeIcon, width: 113 },
-  { id: 4, name: '재즈', imgSrc: smallJazzIcon, whiteImgSrc: whiteJazzIcon, width: 95 },
-  { id: 5, name: '힙합', imgSrc: smallHiphopIcon, whiteImgSrc: whiteHiphopIcon, width: 95 },
-  { id: 6, name: 'Lo-Fi', imgSrc: smallLofiIcon, whiteImgSrc: whiteLoFiIcon, width: 107 },
-  { id: 7, name: '댄스', imgSrc: smallDanceIcon, whiteImgSrc: whiteDanceIcon, width: 95 },
-  { id: 8, name: '기타', imgSrc: smallEtcIcon, whiteImgSrc: whiteEtcIcon, width: 95 },
+  { id: 1, name: '팝', imgSrc: smallPopIcon, whiteImgSrc: whitePopIcon, width: 78, bgColor: '#4EDE76' },
+  { id: 2, name: '록/메탈', imgSrc: smallRockIcon, whiteImgSrc: whiteRockIcon, width: 119, bgColor: '#FF5862' },
+  { id: 3, name: '발라드', imgSrc: smallBalladeIcon, whiteImgSrc: whiteBalladeIcon, width: 113, bgColor: '#17C1D8' },
+  { id: 4, name: '재즈', imgSrc: smallJazzIcon, whiteImgSrc: whiteJazzIcon, width: 95, bgColor: '#E866BC' },
+  { id: 5, name: '힙합', imgSrc: smallHiphopIcon, whiteImgSrc: whiteHiphopIcon, width: 95, bgColor: '#5452FF' },
+  { id: 6, name: 'Lo-Fi', imgSrc: smallLofiIcon, whiteImgSrc: whiteLoFiIcon, width: 107, bgColor: '#FE60A2' },
+  { id: 7, name: '댄스', imgSrc: smallDanceIcon, whiteImgSrc: whiteDanceIcon, width: 95, bgColor: '#A64EEC' },
+  { id: 8, name: '기타', imgSrc: smallEtcIcon, whiteImgSrc: whiteEtcIcon, width: 95, bgColor: '#FFCD1D' },
 ];
