@@ -35,7 +35,7 @@ const PublicToggle = () => {
 const Switch = styled.div`
     display: flex;
     align-items: center;
-    /* margin-right: 20px; */
+    margin-right: 20px;
 `;
 
 const ToggleText = styled.span`
@@ -50,7 +50,7 @@ const ToggleText = styled.span`
 
 const StyledSwitch = styled(ReactSwitch)`
     &.react-switch {
-        border: ${({ checked }) => (checked ? '1px solid #000000' : 'none')};
+        border: ${({ checked }) => (checked ? '1px solid #000000' : '1px solid #000000')};
     }
 `;
 
