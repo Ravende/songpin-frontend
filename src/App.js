@@ -7,6 +7,7 @@ import SearchPage from "./pages/MusicSearchPage/SearchPage";
 import MusicInfoPage from "./pages/MusicSearchPage/MusicInfoPage";
 import PlaceInfoPage from "./pages/MusicSearchPage/PlaceInfoPage";
 import CreatePinPage from "./pages/CreatePinPage/CreatePinPage";
+import EditPinPage from "./pages/EditPinPage/EditPinPage";
 import PlaylistPage from "./pages/PlaylistPage/PlaylistPage";
 import UserSearchPage from "./pages/UsersPage/UserSearchPage";
 import UsersPage from "./pages/UsersPage/UsersPage";
