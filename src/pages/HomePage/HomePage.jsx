@@ -1,4 +1,4 @@
-//import { Map, MapMarker} from "react-kakao-maps-sdk";
+import { Map, MapMarker} from "react-kakao-maps-sdk";
 import MapFilter from '../../components/HomePage/MapFilter';
 import SideBar from '../../components/HomePage/SideBar';
 import SideSection from '../../components/common/SideSection';
@@ -10,7 +10,7 @@ const HomePage = () => {
     return(
         <div style={{position: "relative"}}>
             <SideBar />
-            <SideSection>
+            {/* <SideSection>
                 <Title>닉네임님, <br></br> 무슨 노래 듣고 계세요?</Title>
                 <SongTxt>사람들은 이 노래를 듣고 있어요</SongTxt>
                 <SongListContainer>
@@ -24,10 +24,10 @@ const HomePage = () => {
                     <PlaceComponent />
                     <PlaceComponent />
                 </PlaceListContainer>
-            </SideSection>
+            </SideSection> */}
             <MapFilter />
             <div style={{ position: "relative", width: "1920px", height: "1080px" }}>
-                {/* <Map
+                <Map
                     center={{ lat: 37.56011030387691, lng: 126.94585449321849 }}
                     style={{
                         position: "absolute",
@@ -36,7 +36,7 @@ const HomePage = () => {
                         width: "100%",
                         height: "100%",
                     }}
-                ></Map> */}
+                ></Map>
             </div>
         </div>
     )
