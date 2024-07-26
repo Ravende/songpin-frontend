@@ -73,3 +73,5 @@ const Bottom = styled.div`
   flex-direction: column;
   gap: 336px;
 `;
+
+

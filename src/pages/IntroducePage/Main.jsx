@@ -4,6 +4,7 @@ import main_bottom from "../../assets/introduce/main_bottom.svg";
 import styled from "styled-components";
 import Background from "../../components/IntroducePage/Background";
 import { useNavigate } from "react-router-dom";
+
 const Main = () => {
   const navigate = useNavigate();
   const handleGotoHomepage = () => {

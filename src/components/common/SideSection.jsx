@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import arrowIcon from '../../assets/images/MyPage/arrow.svg';
-
+import SideBar from '../HomePage/SideBar';
 const SideSection = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -11,7 +11,9 @@ const SideSection = ({ children }) => {
 
   return (
     <SideComponent>
-      <SideBar></SideBar>
+      <SideBarContainer>
+        <SideBar />
+      </SideBarContainer>
       <SideBox isOpen={isOpen}>
         <Content>{children}</Content>
       </SideBox>
@@ -30,9 +32,10 @@ const SideComponent = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 100vh;
+  /* overflow-y: overlay; */
 `;
 
-const SideBar = styled.div`
+const SideBarContainer = styled.div`
   width: 80px;
   border-right: 1px solid var(--gray, #bcbcbc);
 `;
@@ -42,9 +45,8 @@ const SideBox = styled.div`
   border-right: 1px solid var(--gray, #bcbcbc);
   flex-shrink: 0;
   height: 100vh;
-  /* overflow-x: ${(props) => (props.openModal ? 'visible' : 'hidden')}; */
   overflow-x: hidden;
-  overflow-y: auto;
+  /* overflow-y: overlay; */
 
   &::-webkit-scrollbar {
     width: 7px;

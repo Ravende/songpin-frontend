@@ -5,6 +5,7 @@ import mapIconBallad from '../../assets/images/MusicSearchPage/flower.svg';
 import mapIconBlack from '../../assets/images/MusicSearchPage/flower_black.svg';
 import mapIconGray from '../../assets/images/MusicSearchPage/flower_gray.svg';
 import moreMenu from '../../assets/images/UsersPage/more_vert.svg';
+import PinModalBox from '../common/PinModalBox';
 const options = ['핀 수정', '핀 삭제'];
 
 const PinComponent = ({ selectable, buttonVisible }) => {
@@ -40,14 +41,15 @@ const PinComponent = ({ selectable, buttonVisible }) => {
             <TitleText>
               사랑하긴 했었나요 스쳐가는 인연이었나요 짧지않은 우리 함께했던 시간들이 자꾸 내 마음을 가둬두네
             </TitleText>
-            {buttonVisible && <MoreIcon src={moreMenu} alt="더보기 아이콘" onClick={handlePopup} />}
+            {/* {buttonVisible && <MoreIcon src={moreMenu} alt="더보기 아이콘" onClick={handlePopup} />}
             {isOpen && (
               <MorePopup>
                 {options.map((option) => (
                   <ListItem>{option}</ListItem>
                 ))}
               </MorePopup>
-            )}
+            )} */}
+            {buttonVisible && <PinModalBox />}
           </PinTitle>
           <PinSinger>잔나비</PinSinger>
           <InfoBox>

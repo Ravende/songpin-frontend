@@ -23,6 +23,7 @@ import Main from "./pages/IntroducePage/Main";
 import MyPinSearchPage from "./pages/MyPage/MyPinSearchPage";
 import PwResetPage from "./pages/AuthPages/PwResetPage";
 import PwResetCompletePage from "./pages/AuthPages/PwResetCompletePage";
+import EditPinPage from "./pages/EditPinPage/EditPinPage";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/details-song" element={<MusicInfoPage />} />
         <Route path="/details-place" element={<PlaceInfoPage />} />
         <Route path="/create" element={<CreatePinPage />} />
+        <Route path="/pin-edit" element={<EditPinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/usersearch" element={<UserSearchPage />} />
         <Route path="/user" element={<UsersPage />} />

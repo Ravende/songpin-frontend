@@ -13,7 +13,7 @@ const Playlist = (/* { playlist }*/ { onClick }) => {
     setIsBookmarked((prev) => !prev); // 상태 반전
   };
   return (
-    <PlaylistContainer onClick={onClick}>
+    <PlaylistContainer >
       <PlaylistBox>
         <BigBox>
           {/* 북마크 버튼 클릭하면 바뀌어야 함 */}
@@ -26,7 +26,7 @@ const Playlist = (/* { playlist }*/ { onClick }) => {
           <SmallBox imageUrl={coverImages[2]} /> */}
         </SmallBoxContainer>
       </PlaylistBox>
-      <PlaylistNameContainer onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+      <PlaylistNameContainer onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onClick={onClick}>
         <PlaylistName isHovered={isHovered}>
           {/*{playlistName}*/}&nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
           &nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
