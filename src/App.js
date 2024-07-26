@@ -24,7 +24,6 @@ import Main from "./pages/IntroducePage/Main";
 import MyPinSearchPage from "./pages/MyPage/MyPinSearchPage";
 import PwResetPage from "./pages/AuthPages/PwResetPage";
 import PwResetCompletePage from "./pages/AuthPages/PwResetCompletePage";
-import EditPinPage from "./pages/EditPinPage/EditPinPage";
 
 function App() {
   return (
