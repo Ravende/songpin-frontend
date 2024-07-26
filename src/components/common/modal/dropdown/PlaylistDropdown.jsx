@@ -2,7 +2,7 @@ import { useState } from "react";
 import down from "../../../../assets/common/dropdown.svg";
 import styled from "styled-components";
 import Dropdown from "./Dropdown";
-const PlaylistDropdown = ({ placeholder, setActive }) => {
+const PlaylistDropdown = ({ placeholder }) => {
   const [DropdownView, setDropdownView] = useState(false);
   const [initState, setInitState] = useState(placeholder);
 

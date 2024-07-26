@@ -3,8 +3,6 @@ import main_center from "../../assets/introduce/main_center.svg";
 import main_bottom from "../../assets/introduce/main_bottom.svg";
 import styled from "styled-components";
 import Background from "../../components/IntroducePage/Background";
-import AddPlaylistModal from "../../components/common/Modal/AddPlaylistModal";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Main = () => {
   const navigate = useNavigate();

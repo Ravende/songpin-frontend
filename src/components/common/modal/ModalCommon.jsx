@@ -30,12 +30,7 @@ const ModalCommon = ({
       <ModalWrapper ref={modalRef}>
         <div className="modalText">{modalText}</div>
         <InputButton>
-          {addPlaylist && (
-            <PlaylistDropdown
-              placeholder={inputPlaceholder}
-              setActive={setActive}
-            />
-          )}
+          {addPlaylist && <PlaylistDropdown placeholder={inputPlaceholder} />}
           {/* {createPlaylist && <></>}토글 추가 */}
           <Button active={active} name={buttonName} onClick={handleButton} />
         </InputButton>
