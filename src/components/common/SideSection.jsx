@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import arrowIcon from '../../assets/images/MyPage/arrow.svg';
-import SideBar from '../HomePage/SideBar';
+import React, { useState } from "react";
+import styled from "styled-components";
+import arrowIcon from "../../assets/images/MyPage/arrow.svg";
+import SideBar from "../HomePage/SideBar";
 const SideSection = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -41,7 +41,7 @@ const SideBarContainer = styled.div`
 `;
 
 const SideBox = styled.div`
-  width: ${(props) => (props.isOpen ? '528px' : '0')};
+  width: ${props => (props.isOpen ? "528px" : "0")};
   border-right: 1px solid var(--gray, #bcbcbc);
   flex-shrink: 0;
   height: 100vh;
@@ -70,6 +70,7 @@ const Content = styled.div`
 const BoxHandle = styled.div`
   display: flex;
   align-items: center;
+  z-index: 2;
 `;
 
 const CloseBar = styled.div`
@@ -90,5 +91,5 @@ const Arrow = styled.img`
   width: 30px;
   height: 30px;
   padding-left: 10px;
-  transform: ${(props) => (props.isOpen ? 'rotate(0deg)' : 'rotate(180deg)')};
+  transform: ${props => (props.isOpen ? "rotate(0deg)" : "rotate(180deg)")};
 `;
