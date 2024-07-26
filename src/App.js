@@ -7,6 +7,7 @@ import SearchPage from "./pages/MusicSearchPage/SearchPage";
 import MusicInfoPage from "./pages/MusicSearchPage/MusicInfoPage";
 import PlaceInfoPage from "./pages/MusicSearchPage/PlaceInfoPage";
 import CreatePinPage from "./pages/CreatePinPage/CreatePinPage";
+import EditPinPage from "./pages/EditPinPage/EditPinPage";
 import PlaylistPage from "./pages/PlaylistPage/PlaylistPage";
 import UserSearchPage from "./pages/UsersPage/UserSearchPage";
 import UsersPage from "./pages/UsersPage/UsersPage";
@@ -23,7 +24,6 @@ import Main from "./pages/IntroducePage/Main";
 import MyPinSearchPage from "./pages/MyPage/MyPinSearchPage";
 import PwResetPage from "./pages/AuthPages/PwResetPage";
 import PwResetCompletePage from "./pages/AuthPages/PwResetCompletePage";
-import EditPinPage from "./pages/EditPinPage/EditPinPage";
 
 function App() {
   return (
@@ -45,7 +45,7 @@ function App() {
         <Route path="/pin-edit" element={<EditPinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/usersearch" element={<UserSearchPage />} />
-        <Route path="/user" element={<UsersPage />} />
+        <Route path="/users" element={<UsersPage />} />
         <Route path="/user-follows" element={<UserFollowPage />} />
         <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
         <Route path="/playlist/:id" element={<PlaylistDetailPage />} />

@@ -10,9 +10,7 @@ const IntroducePage = () => {
         <Background />
       </BackgroundWrapper>
       <Wrapper>
-        <NavWrap>
-          <NavBar />
-        </NavWrap>
+        <NavBar />
         <Center>
           <img src={main_center} alt="main center" />
         </Center>
@@ -34,7 +32,7 @@ const IntroducePage = () => {
             백엔드 개발자
             <br />
             <br />
-            디자이너{" "}
+            디자이너
           </div>
         </Bottom>
       </Wrapper>
@@ -43,10 +41,6 @@ const IntroducePage = () => {
 };
 
 export default IntroducePage;
-
-const NavWrap = styled.div`
-  font-size: 50px;
-`;
 
 const BackgroundWrapper = styled.div`
   position: absolute;
@@ -58,6 +52,7 @@ const BackgroundWrapper = styled.div`
 `;
 const Wrapper = styled.div`
   position: relative;
+  z-index: 1;
 `;
 const Center = styled.div`
   display: flex;
@@ -66,12 +61,12 @@ const Center = styled.div`
   align-items: center;
   position: relative;
   z-index: 1;
+  top: -15px;
 `;
 const Bottom = styled.div`
   font-size: 32px;
   text-align: center;
   font-weight: bold;
-  z-index: 0;
   margin-top: 74px;
   margin-bottom: 53px;
   display: flex;
