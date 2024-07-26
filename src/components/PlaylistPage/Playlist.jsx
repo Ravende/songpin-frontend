@@ -4,10 +4,10 @@ import nobookmark from '../../assets/images/PlaylistPage/bookmark-no.svg';
 import yesbookmark from '../../assets/images/PlaylistPage/bookmark-yes.svg';
 import pinImage from '../../assets/images/MusicSearchPage/spark_122.svg';
 
-const Playlist = (/* { playlist }*/ { onClick }) => {
-  //   const { isBookmarked, coverImages } = playlist;
+const Playlist = ({ playlist, onClick }) => {
+  const { playlistName, nickname, pinCount, updatedDate, coverImages, bookmarkId, isBookmarked: initialBookmarked } = playlist;
   const [isHovered, setIsHovered] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false); // 예시로 초기값을 false로 설정
+  const [isBookmarked, setIsBookmarked] = useState(bookmarkId !== null); // bookmarkId를 받을것인지 isBookmarked를 받을것인지 결정 
 
   const toggleBookmark = () => {
     setIsBookmarked((prev) => !prev); // 상태 반전
@@ -15,33 +15,31 @@ const Playlist = (/* { playlist }*/ { onClick }) => {
   return (
     <PlaylistContainer >
       <PlaylistBox>
-        <BigBox>
-          {/* 북마크 버튼 클릭하면 바뀌어야 함 */}
+        <BigBox imageUrl={coverImages[0]}>
           <BookmarkBtn src={isBookmarked ? yesbookmark : nobookmark} alt="북마크 버튼" onClick={toggleBookmark} />
         </BigBox>
         <SmallBoxContainer>
-          <SmallBox />
-          <SmallBox />
-          {/* <SmallBox imageUrl={coverImages[1]} />
-          <SmallBox imageUrl={coverImages[2]} /> */}
+          <SmallBox imageUrl={coverImages[1]} />
+          <SmallBox imageUrl={coverImages[2]} />
         </SmallBoxContainer>
       </PlaylistBox>
       <PlaylistNameContainer onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onClick={onClick}>
         <PlaylistName isHovered={isHovered}>
-          {/*{playlistName}*/}&nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
-          &nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
+          &nbsp;{playlistName}&nbsp;{playlistName}
+          {/* &nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
+          &nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타 */}
         </PlaylistName>
         <FadeOut />
       </PlaylistNameContainer>
       <NameBox>
-        <UserName>by 송송</UserName>
+        <UserName>by {nickname}</UserName>
         <PinBox>
           <PinImg src={pinImage} alt="핀이미지" />
-          <PinNum>53</PinNum>
+          <PinNum>{pinCount}</PinNum>
         </PinBox>
       </NameBox>
       {/* 아직 등록된 노래가 없어요 */}
-      <UpdatedDate>최근 업데이트: 20xx.xx.xx</UpdatedDate>
+      <UpdatedDate>최근 업데이트: {updatedDate}</UpdatedDate>
     </PlaylistContainer>
   );
 };
@@ -66,7 +64,8 @@ const BigBox = styled.div`
   height: 140px;
   border-radius: 8px 0px 0px 8px;
   border-right: 1px solid var(--f8f8f8, #fcfcfc);
-  background: #5452ff;
+  background: ${({ imageUrl }) => (imageUrl ? `url(${imageUrl}) no-repeat center center` : '#E7E7E7')};
+  background-size: cover;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -80,31 +79,16 @@ const SmallBoxContainer = styled.div`
   gap: 1px;
 `;
 
-// const SmallBox = styled.div`
-//   width: 70px;
-//   height: 70px;
-//   border: 1px solid var(--f8f8f8, #fcfcfc);
-//   background: url(${props => props.imageUrl}) no-repeat center center;
-//   background-size: cover;
-//   &:first-child {
-//     border-radius: 0px 8px 0px 0px;
-//   }
-//   &:last-child {
-//     border-radius: 0px 0px 8px 0px;
-//   }
-// `;
-
 const SmallBox = styled.div`
   width: 70px;
   height: 70px;
-  /* border: 1px solid var(--f8f8f8, #fcfcfc); */
+  background: ${({ imageUrl }) => (imageUrl ? `url(${imageUrl}) no-repeat center center` : '#E7E7E7')};
+  background-size: cover;
   &:first-child {
     border-radius: 0px 8px 0px 0px;
-    background: #00d2d2;
   }
   &:last-child {
     border-radius: 0px 0px 8px 0px;
-    background: var(--offwhite, #efefef);
   }
 `;
 

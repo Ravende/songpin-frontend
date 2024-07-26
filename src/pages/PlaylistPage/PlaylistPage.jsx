@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import SideSection from '../../components/common/SideSection';
@@ -7,7 +7,38 @@ import Playlist from '../../components/PlaylistPage/Playlist';
 
 const PlaylistPage = () => {
   const navigate = useNavigate();
+  const [recentPlaylists, setRecentPlaylists] = useState([]);
+  const [followingPlaylists, setFollowingPlaylists] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    // API 호출 함수
+    const fetchPlaylists = async () => {
+      try {
+        const response = await fetch('API_ENDPOINT', { //API 수정 필요
+          headers: {
+            Authorization: `Bearer YOUR_ACCESS_TOKEN`, // 실제 토큰으로 교체해야함 
+          },
+        });
+        
+        if (response.status === 401) {
+          // 401 Unauthorized 에러 처리
+          navigate('/login'); // 로그인 페이지로 리다이렉트
+          return;
+        }
 
+        const data = await response.json();
+        setRecentPlaylists(data.recentPlaylists);
+        setFollowingPlaylists(data.followingPlaylists);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching playlists:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchPlaylists();
+  }, [navigate]);
   const handlePlaylistClick = (id) => {
     navigate(`/playlist/${id}`);
   };
@@ -17,13 +48,37 @@ const PlaylistPage = () => {
           <SearchBar placeholder="플레이리스트 이름을 검색" />
         </ContentBox>
         <TitleText>최근 생성된 플레이리스트</TitleText>
+        {loading ? (
+        <NoPlaylist>로딩 중...</NoPlaylist>
+      ) : recentPlaylists.length > 0 ? (
         <PlaylistFeed>
-          <Playlist onClick={() => handlePlaylistClick(1)} />
-          <Playlist onClick={() => handlePlaylistClick(2)} />
-          <Playlist onClick={() => handlePlaylistClick(3)} />
+          {recentPlaylists.map((playlist) => (
+            <Playlist
+              key={playlist.playlistId}
+              playlist={playlist}
+              onClick={() => handlePlaylistClick(playlist.playlistId)}
+            />
+          ))}
         </PlaylistFeed>
-        <TitleText>팔로잉 중인 사람들의 플레이리스트</TitleText>
+      ) : (
         <NoPlaylist>표시할 플레이리스트가 없습니다.</NoPlaylist>
+      )}
+        <TitleText>팔로잉 중인 사람들의 플레이리스트</TitleText>
+        {loading ? (
+        <NoPlaylist>로딩 중...</NoPlaylist>
+      ) : followingPlaylists.length > 0 ? (
+        <PlaylistFeed>
+          {followingPlaylists.map((playlist) => (
+            <Playlist
+              key={playlist.playlistId}
+              playlist={playlist}
+              onClick={() => handlePlaylistClick(playlist.playlistId)}
+            />
+          ))}
+        </PlaylistFeed>
+      ) : (
+        <NoPlaylist>표시할 플레이리스트가 없습니다.</NoPlaylist>
+      )}
     </SideSection>
   );
 };
