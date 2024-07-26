@@ -45,7 +45,7 @@ function App() {
         <Route path="/pin-edit" element={<EditPinPage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/usersearch" element={<UserSearchPage />} />
-        <Route path="/user" element={<UsersPage />} />
+        <Route path="/users" element={<UsersPage />} />
         <Route path="/user-follows" element={<UserFollowPage />} />
         <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
         <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
