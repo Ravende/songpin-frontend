@@ -28,7 +28,7 @@ const MyPage = () => {
 
   return (
     <MyPageContainer>
-      <SideSection style={{}}>
+      <SideSection>
         <MyInfoTop />
         <TopBar>
           <PageSelect>
@@ -69,24 +69,14 @@ const MyPageContainer = styled.div`
 
 const ChosenPage = styled.div`
   position: relative;
-  top: -630px;
-  right: -85px;
+  top: -636px;
+  right: -81px;
   width: 700px;
-  height: calc(100vh - 295px);
+  height: calc(100vh - 308px);
   overflow-y: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar {
-    width: 7px;
     display: none;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 30px;
-    background: var(--gray, #bcbcbc);
-    /* background-clip: padding-box;
-    border: 5px solid transparent; */
-  }
-  &::-webkit-scrollbar-track {
-    background: var(--offwhite, #efefef);
   }
 `;
 

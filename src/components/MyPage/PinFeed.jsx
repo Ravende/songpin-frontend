@@ -32,6 +32,7 @@ const PinFeed = () => {
         <PinMemoComponent />
         <PinMemoComponent />
         <PinMemoComponent />
+        <PinMemoComponent />
       </PinsSection>
     </PinFeedContainer>
   );
@@ -98,4 +99,5 @@ const PinsSection = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 32px;
+  margin-bottom: 13px;
 `;
