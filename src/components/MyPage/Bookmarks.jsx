@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import bookmark from '../../assets/images/MyPage/bookmark-black.svg';
-import Playlist from './Playlist';
+import React from "react";
+import styled from "styled-components";
+import bookmark from "../../assets/images/MyPage/bookmark-black.svg";
+import Playlist from "./Playlist";
 
 const Bookmarks = () => {
   return (

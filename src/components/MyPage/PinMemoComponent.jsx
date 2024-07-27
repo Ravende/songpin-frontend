@@ -13,13 +13,11 @@ const PinMemoComponent = () => {
         <SongInfo>
           <SongTitle>
             <SongIcon src={pinIcon} />
-            <TitleText>
-              사랑하긴 했었나요 스쳐 지나가는 인연이었나요aaaaa
-            </TitleText>
+            <TitleText>사랑하긴 했었나요 스쳐가는 인연이었나요aaaaa</TitleText>
           </SongTitle>
           <Singer>잔나비</Singer>
         </SongInfo>
-        <PinModalBox right="-163px" padding="6px" />
+        <PinModalBox top="48px" right="12px" />
       </TitleSection>
       <DetailsSection>
         <Memo>
@@ -105,41 +103,6 @@ const Singer = styled.div`
   font-weight: 400;
   line-height: 150%; /* 24px */
   padding-top: 4px;
-`;
-
-const MoreBtn = styled.img`
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  padding-left: 6px;
-  cursor: pointer;
-`;
-
-const MorePopup = styled.div`
-  display: flex;
-  /* width: 197px; */
-  padding: 18px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid var(--gray02, #747474);
-  background: var(--f8f8f8, #fcfcfc);
-  z-index: 1000;
-  position: absolute;
-  right: -163px;
-  bottom: 0;
-`;
-
-const ListItem = styled.div`
-  color: var(--light_black, #232323);
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  cursor: pointer;
 `;
 
 const DetailsSection = styled.div`

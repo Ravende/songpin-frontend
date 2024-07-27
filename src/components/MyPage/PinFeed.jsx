@@ -1,18 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import pinIconSpark from '../../assets/images/MyPage/spark-51.svg';
-import calendarIcon from '../../assets/images/MyPage/calendar.svg';
-import searchIcon from '../../assets/images/MyPage/search.svg';
-import PinMemoComponent from './PinMemoComponent';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import pinIconSpark from "../../assets/images/MyPage/spark-51.svg";
+import calendarIcon from "../../assets/images/MyPage/calendar.svg";
+import searchIcon from "../../assets/images/MyPage/search.svg";
+import PinMemoComponent from "./PinMemoComponent";
+import { useNavigate } from "react-router-dom";
 
 const PinFeed = () => {
   const navigate = useNavigate();
   const goCalendar = () => {
-    navigate('/calendar');
+    navigate("/calendar");
   };
   const goMySearch = () => {
-    navigate('/mypin-search');
+    navigate("/mypin-search");
   };
 
   return (
@@ -32,6 +32,7 @@ const PinFeed = () => {
         <PinMemoComponent />
         <PinMemoComponent />
         <PinMemoComponent />
+        <PinMemoComponent />
       </PinsSection>
     </PinFeedContainer>
   );
@@ -43,6 +44,7 @@ const PinFeedContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 25px;
+  /* width: 528px; */
 `;
 
 const PinShow = styled.div`
@@ -97,4 +99,5 @@ const PinsSection = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 32px;
+  margin-bottom: 13px;
 `;
