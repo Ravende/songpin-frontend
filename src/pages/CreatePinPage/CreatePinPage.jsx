@@ -16,6 +16,7 @@ import { ReactComponent as LocationImg } from '../../assets/images/CreatePin/loc
 import PublicToggle from '../../components/common/PublicToggle';
 import calendar_selected from '../../assets/images/CreatePin/calendar_selected.svg';
 import { post } from '../../services/api/CreatePin';
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 const CreatePinPage = () => {
     const [inputCount, setInputCount] = useState(0);
@@ -168,6 +169,25 @@ const CreatePinPage = () => {
             </CreateSection>
             {showSearchSongContainer && <SearchSongContainer onPinSelect={handlePinSelect} />}
             {showSearchPlaceContainer && (<SearchPlaceContainer onPlaceSelect={handlePlaceSelect} />)}
+            <div
+            style={{
+            position: "relative",
+            width: "100vw",
+            height: "100vh",
+            zIndex: 0,
+            }}
+        >
+            <Map
+            center={{ lat: 37.56011030387691, lng: 126.94585449321849 }} // 지도 api 연결 후 변수화
+            style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+            }}
+            ></Map>
+        </div>
         </MainContainer>
     );
 };
