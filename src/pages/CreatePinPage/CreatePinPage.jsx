@@ -163,7 +163,7 @@ const CreatePinPage = () => {
                     />
                 </IsPublic>
                 <CreateBtn
-                    onClick={handleNavigate}
+                    onClick={handleCreatePin}
                 >핀 생성하기</CreateBtn>
             </CreateSection>
             {showSearchSongContainer && <SearchSongContainer onPinSelect={handlePinSelect} />}
