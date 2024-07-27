@@ -15,6 +15,7 @@ const PlaylistPage = () => {
     const fetchData = async () => {
       try {
         const data = await getPlaylists();
+        console.log("Fetched data:", data);
         setRecentPlaylists(data.recentPlaylists);
         setFollowingPlaylists(data.followingPlaylists);
       } catch (error) {
@@ -25,10 +26,6 @@ const PlaylistPage = () => {
     };
     fetchData();
   }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   const handlePlaylistClick = (id) => {
     navigate(`/playlists/${id}`);
