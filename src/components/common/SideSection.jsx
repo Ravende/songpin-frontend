@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import arrowIcon from "../../assets/images/MyPage/arrow.svg";
 import SideBar from "../HomePage/SideBar";
+
 const SideSection = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -32,6 +33,8 @@ const SideComponent = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 100vh;
+  position: absolute;
+  z-index: 10;
   /* overflow-y: overlay; */
 `;
 
@@ -65,12 +68,14 @@ const SideBox = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: white;
 `;
 
 const BoxHandle = styled.div`
   display: flex;
   align-items: center;
-  z-index: 2;
+  height: 120px;
+  margin: auto;
 `;
 
 const CloseBar = styled.div`
@@ -84,6 +89,7 @@ const CloseBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
 `;
 
 const Arrow = styled.img`

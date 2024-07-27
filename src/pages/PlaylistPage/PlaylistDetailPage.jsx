@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import backArrow from '../../assets/images/UsersPage/arrow_back_ios.svg';
-import nobookmark from '../../assets/images/PlaylistPage/nobookmark_black.svg';
-import yesbookmark from '../../assets/images/PlaylistPage/yesbookmark_black.svg';
-import pinImage from '../../assets/images/MusicSearchPage/spark_122.svg';
-import shareImg from '../../assets/images/PlaylistPage/share.svg';
-import moreButton from '../../assets/images/PlaylistPage/more_vert.svg';
-import PinComponent from '../../components/PlaylistPage/PinComponent';
-import SideSection from '../../components/common/SideSection';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import backArrow from "../../assets/images/UsersPage/arrow_back_ios.svg";
+import nobookmark from "../../assets/images/PlaylistPage/nobookmark_black.svg";
+import yesbookmark from "../../assets/images/PlaylistPage/yesbookmark_black.svg";
+import pinImage from "../../assets/images/MusicSearchPage/spark_122.svg";
+import shareImg from "../../assets/images/PlaylistPage/share.svg";
+import moreButton from "../../assets/images/PlaylistPage/more_vert.svg";
+import PinComponent from "../../components/PlaylistPage/PinComponent";
+import SideSection from "../../components/common/SideSection";
 
-const options = ['플레이리스트 수정', '플레이리스트 삭제'];
+const options = ["플레이리스트 수정", "플레이리스트 삭제"];
 
 const PlaylistDetailPage = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const PlaylistDetailPage = () => {
     setIsOpen(!isOpen);
   };
   const toggleBookmark = () => {
-    setIsBookmarked((prev) => !prev); // 상태 반전
+    setIsBookmarked(prev => !prev); // 상태 반전
   };
   const handleBackClick = () => {
     navigate(-1);
@@ -30,13 +30,13 @@ const PlaylistDetailPage = () => {
   return (
     <SideSection>
       <DetailContainer>
-      <ContentBox>
+        <ContentBox>
           <BackBtn src={backArrow} onClick={handleBackClick} />
           {/* 나의 플레이리스트일때만 MoreBtn 보이도록 함  */}
           <MoreBtn src={moreButton} onClick={handlePopup} />
           {isOpen && (
             <MorePopup>
-              {options.map((option) => (
+              {options.map(option => (
                 <ListItem>{option}</ListItem>
               ))}
             </MorePopup>
@@ -52,17 +52,22 @@ const PlaylistDetailPage = () => {
           </SmallBoxContainer>
         </PlaylistBox>
         <PlaylistName>
-          {/*{playlistName}*/}가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
+          {/*{playlistName}*/}
+          가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
         </PlaylistName>
         <NameBox>
           <UserName>by 송송</UserName>
           <IconBox>
-            <BookmarkBtn src={isBookmarked ? yesbookmark : nobookmark} alt="북마크 버튼" onClick={toggleBookmark} />
+            <BookmarkBtn
+              src={isBookmarked ? yesbookmark : nobookmark}
+              alt="북마크 버튼"
+              onClick={toggleBookmark}
+            />
             <ShareBtn src={shareImg} alt="공유 버튼" />
           </IconBox>
         </NameBox>
         <InfoBox>
-          {' '}
+          {" "}
           <PinBox>
             <PinImg src={pinImage} alt="핀이미지" />
             <PinNum>53</PinNum>
@@ -81,25 +86,25 @@ const PlaylistDetailPage = () => {
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
-          
         </PinContainer>
-        </DetailContainer>
-      </SideSection>
+      </DetailContainer>
+    </SideSection>
   );
 };
 
 export default PlaylistDetailPage;
 
 const DetailContainer = styled.div`
-padding:34px;
-padding-top:40px;
-justify-content:center;`
+  padding: 34px;
+  padding-top: 40px;
+  justify-content: center;
+`;
 
 const ContentBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  position:relative;
+  position: relative;
 
   /* padding-left: 33px; */
   /* padding-right: 33px; */
@@ -121,7 +126,6 @@ const MoreBtn = styled.img`
   height: 40px;
   flex-shrink: 0;
   cursor: pointer;
-  
 `;
 
 const PlaylistBox = styled.div`
@@ -148,7 +152,7 @@ const SmallBoxContainer = styled.div`
 
 const SmallBox = styled.div`
   width: 155px;
-  //   background: url(${(props) => props.imageUrl}) no-repeat center center;
+  //   background: url(${props => props.imageUrl}) no-repeat center center;
   //   background-size: cover;
 
   &:first-child {
@@ -196,8 +200,8 @@ const IconBox = styled.div`
   flex-direction: row;
 `;
 const BookmarkBtn = styled.img`
-  width: 19.742px;
-  height: 25.5px;
+  width: 19px;
+  height: 25px;
   /* padding: 10px; */
   cursor: pointer;
 `;
