@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import alarmIcon from "../../assets/notification/alarm.svg";
-import ColumnComponent from "./ColumnContainer";
+import ColumnComponent from "./ColumnComponent";
 
 const Notification = () => {
   const [isOpen, setIsOpen] = useState(false);
