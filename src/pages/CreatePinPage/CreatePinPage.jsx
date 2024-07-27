@@ -15,6 +15,7 @@ import { ReactComponent as CalendarImg } from '../../assets/images/CreatePin/cal
 import { ReactComponent as LocationImg } from '../../assets/images/CreatePin/location_on.svg';
 import PublicToggle from '../../components/common/PublicToggle';
 import calendar_selected from '../../assets/images/CreatePin/calendar_selected.svg';
+import { post } from '../../services/api/CreatePin';
 
 const CreatePinPage = () => {
     const [inputCount, setInputCount] = useState(0);
@@ -26,6 +27,8 @@ const CreatePinPage = () => {
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
     const [selectedGenre, setSelectedGenre] = useState(null);
+    const [memo, setMemo] = useState("");
+    const [visibility, setVisibility] = useState("PRIVATE");
 
     const navigate = useNavigate();
 
@@ -35,6 +38,7 @@ const CreatePinPage = () => {
 
     const onInputHandler = (e) => {
         setInputCount(e.target.value.length);
+        setMemo(e.target.value);
     };
 
     const handlePinClick = () => {
@@ -62,6 +66,31 @@ const CreatePinPage = () => {
 
     const handleGenreClick = (id) => {
         setSelectedGenre(id);
+    };
+
+    const handleCreatePin = async () => {
+        const pinData = {
+            song: selectedPin,
+            listenedDate: moment(date).format("YYYY-MM-DD"),
+            place: {
+                placeName: selectedPlace,
+                address: "서울 서대문구 이화여대길 52", // 카카오 지도 실제 주소값
+                providerAddressId: 3564981, // providerAddressId 변수
+                latitude: 37.561859, // latitude 변수
+                longitude: 126.946834 // longitude 변수
+            },
+            genreName: selectedGenre,
+            memo: memo,
+            visibility: visibility
+        };
+
+        try {
+            const response = await post('/pins', pinData);
+            console.log(response);
+            navigate('/details-song');
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -129,7 +158,9 @@ const CreatePinPage = () => {
                 </TextNum>
                 <IsPublic>
                     <Title>공개 여부</Title>
-                    <PublicToggle />
+                    <PublicToggle 
+                        onChange={() => setVisibility(visibility === "PUBLIC" ? "PRIVATE" : "PUBLIC")}
+                    />
                 </IsPublic>
                 <CreateBtn
                     onClick={handleNavigate}
