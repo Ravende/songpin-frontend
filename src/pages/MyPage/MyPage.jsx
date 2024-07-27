@@ -27,63 +27,60 @@ const MyPage = () => {
   }, []);
 
   return (
-    <MyPageContainer>
-      <SideSection>
-        <MyInfoTop />
-        <TopBar>
-          <PageSelect>
-            <PageItem
-              onClick={() => handlePageClick("pinfeed")}
-              isActive={clickedPage === "pinfeed"}
-            >
-              핀 피드
-            </PageItem>
-            <PageItem
-              onClick={() => handlePageClick("playlist")}
-              isActive={clickedPage === "playlist"}
-            >
-              플레이리스트
-            </PageItem>
-            <PageItem
-              onClick={() => handlePageClick("bookmark")}
-              isActive={clickedPage === "bookmark"}
-            >
-              북마크
-            </PageItem>
-          </PageSelect>
-          <Line />
-        </TopBar>
-        {clickedPage === "playlist" && <MyPlaylists />}
-        {clickedPage === "bookmark" && <Bookmarks />}
-      </SideSection>
-      <ChosenPage>{clickedPage === "pinfeed" && <PinFeed />}</ChosenPage>
-    </MyPageContainer>
+    <SideSection>
+      <MyInfoTop />
+      <TopBar>
+        <PageSelect>
+          <PageItem
+            onClick={() => handlePageClick("pinfeed")}
+            isActive={clickedPage === "pinfeed"}
+          >
+            핀 피드
+          </PageItem>
+          <PageItem
+            onClick={() => handlePageClick("playlist")}
+            isActive={clickedPage === "playlist"}
+          >
+            플레이리스트
+          </PageItem>
+          <PageItem
+            onClick={() => handlePageClick("bookmark")}
+            isActive={clickedPage === "bookmark"}
+          >
+            북마크
+          </PageItem>
+        </PageSelect>
+        <Line />
+      </TopBar>
+      {clickedPage === "playlist" && <MyPlaylists />}
+      {clickedPage === "bookmark" && <Bookmarks />}
+      {clickedPage === "pinfeed" && <PinFeed />}
+    </SideSection>
   );
 };
 
 export default MyPage;
 
-const MyPageContainer = styled.div`
-  position: relative;
-`;
+// const MyPageContainer = styled.div`
+//   position: relative;
+// `;
 
-const ChosenPage = styled.div`
-  position: relative;
-  top: -636px;
-  right: -81px;
-  width: 700px;
-  height: calc(100vh - 308px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
+// const ChosenPage = styled.div`
+//   position: relative;
+//   top: -636px;
+//   right: -81px;
+//   width: 700px;
+//   height: calc(100vh - 308px);
+//   overflow-y: auto;
+//   overflow-x: hidden;
+//   &::-webkit-scrollbar {
+//     display: none;
+//   }
+// `;
 
 const TopBar = styled.div`
   display: flex;
   flex-direction: column;
-  /* position: relative; */
 `;
 
 const PageSelect = styled.div`

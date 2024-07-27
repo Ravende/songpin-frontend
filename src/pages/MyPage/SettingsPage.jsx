@@ -19,11 +19,18 @@ const SettingsPage = () => {
   };
 
   const navigate = useNavigate();
+
   const goMyPage = () => {
     navigate("/mypage");
   };
   const goEditPage = () => {
     navigate("/edit");
+  };
+  const goPwEditPage = () => {
+    navigate("/resetPassword");
+  };
+  const goIntroducePage = () => {
+    navigate("/introduce");
   };
 
   return (
@@ -41,8 +48,8 @@ const SettingsPage = () => {
           <ProfileEditBtn onClick={goEditPage}>프로필 편집</ProfileEditBtn>
         </UserInfoBox>
         <ClickBtnsSection>
-          <Button>비밀번호 재설정</Button>
-          <Button>로그아웃</Button>
+          <Button onClick={goPwEditPage}>비밀번호 재설정</Button>
+          <Button onClick={goIntroducePage}>로그아웃</Button>
           <Button onClick={handleModal}>회원탈퇴</Button>
           {isModalOpen && (
             <OpenQuitModal onClose={handleModal} onQuit={handleQuitBtn} />

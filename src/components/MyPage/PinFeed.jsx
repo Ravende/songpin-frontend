@@ -44,7 +44,7 @@ const PinFeedContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 25px;
-  width: 528px;
+  /* width: 528px; */
 `;
 
 const PinShow = styled.div`

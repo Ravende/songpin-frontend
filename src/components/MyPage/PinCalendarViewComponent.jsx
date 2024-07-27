@@ -17,7 +17,7 @@ const PinCalendarViewComponent = () => {
             </SongTitle>
             <Singer>잔나비</Singer>
           </SongInfo>
-          <PinModalBox top="42px" right="-163px" padding="31px" />
+          <PinModalBox top="48px" right="12px" padding="31px" />
         </TitleSection>
         <Info>
           <Date>2024.04.04</Date>
