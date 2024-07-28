@@ -6,6 +6,6 @@ export const postSignup = async userData => {
     console.log(userData);
   } catch (e) {
     console.error(e);
-    throw e;
+    throw new Error(e.response.data.message);
   }
 };
