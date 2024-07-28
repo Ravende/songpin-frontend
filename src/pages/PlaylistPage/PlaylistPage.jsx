@@ -27,8 +27,8 @@ const PlaylistPage = () => {
     fetchData();
   }, []);
 
-  const handlePlaylistClick = (id) => {
-    navigate(`/playlists/${id}`);
+  const handlePlaylistClick = (playlistId) => {
+    navigate(`/playlists/${playlistId}`);
   };
   return (
     <SideSection>

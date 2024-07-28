@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { useNavigate,useParams } from "react-router-dom";
 import { getPlaylistDetail } from "../../services/api/stats";
 import backArrow from "../../assets/images/UsersPage/arrow_back_ios.svg";
-import nobookmark from "../../assets/images/PlaylistPage/nobookmark_black.svg";
-import yesbookmark from "../../assets/images/PlaylistPage/yesbookmark_black.svg";
 import pinImage from "../../assets/images/MusicSearchPage/spark_122.svg";
 import shareImg from "../../assets/images/PlaylistPage/share.svg";
 import moreButton from "../../assets/images/PlaylistPage/more_vert.svg";
@@ -16,17 +14,19 @@ const options = ["플레이리스트 수정", "플레이리스트 삭제"];
 
 const PlaylistDetailPage = () => {
   const { playlistId } = useParams();
+  console.log(playlistId);
   const navigate = useNavigate();
   const [playlistData, setPlaylistData] = useState(null);
-  // const [isBookmarked, setIsBookmarked] = useState(false); // 예시로 초기값을 false로 설정
+  console.log(playlistData);
   const [isOpen, setIsOpen] = useState(false);
+  
 
   useEffect(() => {
     const fetchPlaylistDetail = async () => {
       try {
         const data = await getPlaylistDetail(playlistId);
         setPlaylistData(data);
-        // setIsBookmarked(!!data.bookmarkId);
+      
       } catch (error) {
         console.error("Error fetching playlist detail:", error);
       }
@@ -38,12 +38,21 @@ const PlaylistDetailPage = () => {
   const handlePopup = () => {
     setIsOpen(!isOpen);
   };
-  // const toggleBookmark = () => {
-  //   setIsBookmarked(prev => !prev); // 상태 반전
-  // };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}.${month}.${day}`;
+  };
+
   const handleBackClick = () => {
     navigate(-1);
   };
+  if (!playlistData) {
+    return <div></div>; // 데이터 로딩 중임을 표시
+  }
 
   return (
     <SideSection>
@@ -71,17 +80,11 @@ const PlaylistDetailPage = () => {
         </PlaylistBox>
         <PlaylistName>
         {playlistData.playlistName}
-          {/* 가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타 */}
-        </PlaylistName>
+         </PlaylistName>
         <NameBox>
           <UserName>by {playlistData.creatorNickname}</UserName>
           <IconBox>
-            {/* <BookmarkBtn
-              src={isBookmarked ? yesbookmark : nobookmark}
-              alt="북마크 버튼"
-              onClick={toggleBookmark}
-            /> */}
-            <BookmarkToggle playlistId={playlistData.playlistId} initialBookmarkId={playlistData.bookmarkId} color="black"/>
+            <BookmarkToggle playlistId={playlistId} initialBookmarkId={playlistData.bookmarkId} color="black"/>
             <ShareBtn src={shareImg} alt="공유 버튼" />
           </IconBox>
         </NameBox>
@@ -92,23 +95,13 @@ const PlaylistDetailPage = () => {
             <PinNum>{playlistData.pinCount}</PinNum>
           </PinBox>
           {/* 아직 등록된 노래가 없어요 */}
-          <UpdatedDate>최근 업데이트: {playlistData.updatedDate}</UpdatedDate>
+          <UpdatedDate>최근 업데이트: {formatDate(playlistData.updatedDate)}</UpdatedDate>
         </InfoBox>
         <PinContainer>
         {playlistData.pinList.map(pin => (
             <PinComponent key={pin.playlistPinId} pin={pin} selectable={false} buttonVisible={true} />
           ))}
-          <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent selectable={false} buttonVisible={true} />
-          <PinComponent selectable={false} buttonVisible={true} />
-        </PinContainer>
+          </PinContainer>
       </DetailContainer>
     </SideSection>
   );
@@ -161,8 +154,8 @@ const BigBox = styled.div`
   width: 309px;
   height: 309px;
   border-radius: 18px 0px 0px 18px;
-  /* background: #5452ff; */
-  background: url(${props => props.imageUrl || '#E7E7E7'}) no-repeat center center;
+  border-right: 1px solid var(--f8f8f8, #fcfcfc);
+  background: ${({ imageUrl }) => (imageUrl ? `url(${imageUrl}) no-repeat center center` : '#E7E7E7')};
   background-size: cover;
   display: flex;
   align-items: flex-start;
@@ -172,22 +165,21 @@ const BigBox = styled.div`
 const SmallBoxContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1px;
 `;
 
 const SmallBox = styled.div`
   width: 155px;
-  background: url(${props => props.imageUrl || '#E7E7E7'}) no-repeat center center;
+  background: ${({ imageUrl }) => (imageUrl ? `url(${imageUrl}) no-repeat center center` : '#E7E7E7')};
   background-size: cover;
 
   &:first-child {
     height: 154px;
     border-radius: 0px 18px 0px 0px;
-    /* background: #00d2d2; */
   }
   &:last-child {
     height: 155px;
     border-radius: 0px 0px 18px 0px;
-    /* background: rgba(255, 88, 138, 0.94); */
   }
 `;
 
@@ -222,6 +214,7 @@ const UserName = styled.div`
 const IconBox = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
 `;
 const BookmarkBtn = styled.img`
   width: 19px;
