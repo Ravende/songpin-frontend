@@ -1,28 +1,46 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import backArrow from '../../assets/images/UsersPage/arrow_back_ios.svg';
-import nobookmark from '../../assets/images/PlaylistPage/nobookmark_black.svg';
-import yesbookmark from '../../assets/images/PlaylistPage/yesbookmark_black.svg';
-import pinImage from '../../assets/images/MusicSearchPage/spark_122.svg';
-import shareImg from '../../assets/images/PlaylistPage/share.svg';
-import moreButton from '../../assets/images/PlaylistPage/more_vert.svg';
-import PinComponent from '../../components/PlaylistPage/PinComponent';
-import SideSection from '../../components/common/SideSection';
+import React, { useState,useEffect } from "react";
+import styled from "styled-components";
+import { useNavigate,useParams } from "react-router-dom";
+import { getPlaylistDetail } from "../../services/api/stats";
+import backArrow from "../../assets/images/UsersPage/arrow_back_ios.svg";
+import nobookmark from "../../assets/images/PlaylistPage/nobookmark_black.svg";
+import yesbookmark from "../../assets/images/PlaylistPage/yesbookmark_black.svg";
+import pinImage from "../../assets/images/MusicSearchPage/spark_122.svg";
+import shareImg from "../../assets/images/PlaylistPage/share.svg";
+import moreButton from "../../assets/images/PlaylistPage/more_vert.svg";
+import PinComponent from "../../components/PlaylistPage/PinComponent";
+import SideSection from "../../components/common/SideSection";
+import BookmarkToggle from "../../components/PlaylistPage/BookmarkToggle";
 
-const options = ['플레이리스트 수정', '플레이리스트 삭제'];
+const options = ["플레이리스트 수정", "플레이리스트 삭제"];
 
 const PlaylistDetailPage = () => {
+  const { playlistId } = useParams();
   const navigate = useNavigate();
-  const [isBookmarked, setIsBookmarked] = useState(false); // 예시로 초기값을 false로 설정
+  const [playlistData, setPlaylistData] = useState(null);
+  // const [isBookmarked, setIsBookmarked] = useState(false); // 예시로 초기값을 false로 설정
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchPlaylistDetail = async () => {
+      try {
+        const data = await getPlaylistDetail(playlistId);
+        setPlaylistData(data);
+        // setIsBookmarked(!!data.bookmarkId);
+      } catch (error) {
+        console.error("Error fetching playlist detail:", error);
+      }
+    };
+
+    fetchPlaylistDetail();
+  }, [playlistId]);
 
   const handlePopup = () => {
     setIsOpen(!isOpen);
   };
-  const toggleBookmark = () => {
-    setIsBookmarked((prev) => !prev); // 상태 반전
-  };
+  // const toggleBookmark = () => {
+  //   setIsBookmarked(prev => !prev); // 상태 반전
+  // };
   const handleBackClick = () => {
     navigate(-1);
   };
@@ -30,47 +48,56 @@ const PlaylistDetailPage = () => {
   return (
     <SideSection>
       <DetailContainer>
-      <ContentBox>
+        <ContentBox>
           <BackBtn src={backArrow} onClick={handleBackClick} />
           {/* 나의 플레이리스트일때만 MoreBtn 보이도록 함  */}
-          <MoreBtn src={moreButton} onClick={handlePopup} />
+          {playlistData.isMine && (
+            <MoreBtn src={moreButton} onClick={handlePopup} />
+          )}
           {isOpen && (
             <MorePopup>
-              {options.map((option) => (
+              {options.map(option => (
                 <ListItem>{option}</ListItem>
               ))}
             </MorePopup>
           )}
         </ContentBox>
         <PlaylistBox>
-          <BigBox />
+          <BigBox imageUrl={playlistData.imgPathList[0]}/>
           <SmallBoxContainer>
-            <SmallBox />
-            <SmallBox />
-            {/* <SmallBox imageUrl={coverImages[1]} />
-          <SmallBox imageUrl={coverImages[2]} /> */}
+          <SmallBox imageUrl={playlistData.imgPathList[1]} />
+            <SmallBox imageUrl={playlistData.imgPathList[2]} />
           </SmallBoxContainer>
         </PlaylistBox>
         <PlaylistName>
-          {/*{playlistName}*/}가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
+        {playlistData.playlistName}
+          {/* 가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타 */}
         </PlaylistName>
         <NameBox>
-          <UserName>by 송송</UserName>
+          <UserName>by {playlistData.creatorNickname}</UserName>
           <IconBox>
-            <BookmarkBtn src={isBookmarked ? yesbookmark : nobookmark} alt="북마크 버튼" onClick={toggleBookmark} />
+            {/* <BookmarkBtn
+              src={isBookmarked ? yesbookmark : nobookmark}
+              alt="북마크 버튼"
+              onClick={toggleBookmark}
+            /> */}
+            <BookmarkToggle playlistId={playlistData.playlistId} initialBookmarkId={playlistData.bookmarkId} color="black"/>
             <ShareBtn src={shareImg} alt="공유 버튼" />
           </IconBox>
         </NameBox>
         <InfoBox>
-          {' '}
+          
           <PinBox>
             <PinImg src={pinImage} alt="핀이미지" />
-            <PinNum>53</PinNum>
+            <PinNum>{playlistData.pinCount}</PinNum>
           </PinBox>
           {/* 아직 등록된 노래가 없어요 */}
-          <UpdatedDate>최근 업데이트: 20xx.xx.xx</UpdatedDate>
+          <UpdatedDate>최근 업데이트: {playlistData.updatedDate}</UpdatedDate>
         </InfoBox>
         <PinContainer>
+        {playlistData.pinList.map(pin => (
+            <PinComponent key={pin.playlistPinId} pin={pin} selectable={false} buttonVisible={true} />
+          ))}
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
@@ -81,25 +108,25 @@ const PlaylistDetailPage = () => {
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
           <PinComponent selectable={false} buttonVisible={true} />
-          
         </PinContainer>
-        </DetailContainer>
-      </SideSection>
+      </DetailContainer>
+    </SideSection>
   );
 };
 
 export default PlaylistDetailPage;
 
 const DetailContainer = styled.div`
-padding:34px;
-padding-top:40px;
-justify-content:center;`
+  padding: 34px;
+  padding-top: 40px;
+  justify-content: center;
+`;
 
 const ContentBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  position:relative;
+  position: relative;
 
   /* padding-left: 33px; */
   /* padding-right: 33px; */
@@ -121,7 +148,6 @@ const MoreBtn = styled.img`
   height: 40px;
   flex-shrink: 0;
   cursor: pointer;
-  
 `;
 
 const PlaylistBox = styled.div`
@@ -135,7 +161,9 @@ const BigBox = styled.div`
   width: 309px;
   height: 309px;
   border-radius: 18px 0px 0px 18px;
-  background: #5452ff;
+  /* background: #5452ff; */
+  background: url(${props => props.imageUrl || '#E7E7E7'}) no-repeat center center;
+  background-size: cover;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -148,18 +176,18 @@ const SmallBoxContainer = styled.div`
 
 const SmallBox = styled.div`
   width: 155px;
-  //   background: url(${(props) => props.imageUrl}) no-repeat center center;
-  //   background-size: cover;
+  background: url(${props => props.imageUrl || '#E7E7E7'}) no-repeat center center;
+  background-size: cover;
 
   &:first-child {
     height: 154px;
     border-radius: 0px 18px 0px 0px;
-    background: #00d2d2;
+    /* background: #00d2d2; */
   }
   &:last-child {
     height: 155px;
     border-radius: 0px 0px 18px 0px;
-    background: rgba(255, 88, 138, 0.94);
+    /* background: rgba(255, 88, 138, 0.94); */
   }
 `;
 
@@ -196,8 +224,8 @@ const IconBox = styled.div`
   flex-direction: row;
 `;
 const BookmarkBtn = styled.img`
-  width: 19.742px;
-  height: 25.5px;
+  width: 19px;
+  height: 25px;
   /* padding: 10px; */
   cursor: pointer;
 `;

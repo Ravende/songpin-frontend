@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import nobookmark from '../../assets/images/PlaylistPage/bookmark-no.svg';
-import yesbookmark from '../../assets/images/PlaylistPage/bookmark-yes.svg';
 import pinImage from '../../assets/images/MusicSearchPage/spark_122.svg';
+import BookmarkToggle from './BookmarkToggle';
 
 const Playlist = ({ playlist , onClick }) => {
-  const { playlistName, creatorNickname, pinCount, updatedDate, imgPathList, bookmarkId } = playlist;
+  const { playlistName, creatorNickname, pinCount, updatedDate, imgPathList, bookmarkId, playlistId } = playlist;
   const [isHovered, setIsHovered] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(!!bookmarkId); // 예시로 초기값을 false로 설정
 
-  const toggleBookmark = () => {
-    setIsBookmarked((prev) => !prev); // 상태 반전
-  };
   return (
     <PlaylistContainer >
       <PlaylistBox>
         <BigBox imageUrl={imgPathList[0]} >
-          <BookmarkBtn src={isBookmarked ? yesbookmark : nobookmark} alt="북마크 버튼" onClick={toggleBookmark} />
+          <BookmarkToggle playlistId={playlistId} initialBookmarkId={bookmarkId} color="white"/>
         </BigBox>
         <SmallBoxContainer>
           <SmallBox imageUrl={imgPathList[1]}/>
@@ -87,13 +82,13 @@ const SmallBox = styled.div`
   }
 `;
 
-const BookmarkBtn = styled.img`
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0;
-  padding: 10px;
-  cursor: pointer;
-`;
+// const BookmarkBtn = styled.img`
+//   width: 30px;
+//   height: 30px;
+//   flex-shrink: 0;
+//   padding: 10px;
+//   cursor: pointer;
+// `;
 
 const PlaylistNameContainer = styled.div`
   display: flex;
