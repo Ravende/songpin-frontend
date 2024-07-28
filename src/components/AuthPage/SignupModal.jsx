@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import { postSignup } from "../../services/api/auth";
+import { postLogin } from "../../services/api/auth";
 
 const SignupModal = ({ setCompleteLogin, setLoginModal, setSignupModal }) => {
   const modalRef = useRef(null);
@@ -46,6 +47,7 @@ const SignupModal = ({ setCompleteLogin, setLoginModal, setSignupModal }) => {
     "닉네임은 8자 이내, 한글 문자, 영어 대소문자, 숫자 조합만 허용됩니다.",
   );
   const [nicknameValid, setNicknameValid] = useState(false);
+  //const [hasError, setHasError] = useState(false);
 
   const validateEmail = email => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -91,7 +93,7 @@ const SignupModal = ({ setCompleteLogin, setLoginModal, setSignupModal }) => {
     } else setConfirmPasswordMsg("");
   }, [password, confirmPassword]);
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (!personalInfoConsent) {
       setRedConsent(true);
@@ -105,13 +107,37 @@ const SignupModal = ({ setCompleteLogin, setLoginModal, setSignupModal }) => {
       confirmPassword,
     };
 
-    postSignup(userData)
-      .then(data => {
+    // let hasErrors = false;
+    // if (email === "" || nickname === "" || password === "") {
+    //   setHasError(true);
+    // }
+    // setHasError(hasErrors);
+    // if (hasErrors) {
+    //   return;
+    // }
+
+    // postSignup(userData)
+    //   .then(data => {
+    //     handleComplete();
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+
+    try {
+      await postSignup(userData);
+
+      const token = await postLogin({ email, password });
+
+      if (token.error) {
+        console.error(token.error, "로그인 실패");
+      } else {
         handleComplete();
-      })
-      .catch(error => {
-        console.error(error);
-      });
+        console.log("로그인 성공");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
