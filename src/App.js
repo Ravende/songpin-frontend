@@ -48,7 +48,7 @@ function App() {
         <Route path="/users" element={<UsersPage />} />
         <Route path="/user-follows" element={<UserFollowPage />} />
         <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
-        <Route path="/playlists/:id" element={<PlaylistDetailPage />} />
+        <Route path="/playlists/:playlistId" element={<PlaylistDetailPage />} />
         <Route path="/playlist-edit/:id" element={<PlaylistEditPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/edit" element={<ProfileEditPage />} />
