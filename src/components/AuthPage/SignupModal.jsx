@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import Input from "../common/Input";
 import Button from "../common/Button";
+import { postSignup } from "../../services/api/auth";
 
 const SignupModal = ({ setCompleteLogin, setLoginModal, setSignupModal }) => {
   const modalRef = useRef(null);
@@ -29,6 +30,36 @@ const SignupModal = ({ setCompleteLogin, setLoginModal, setSignupModal }) => {
     setCompleteLogin(true);
   };
 
+  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState({});
+
+  const onSubmit = e => {
+    e.preventDefault();
+    const userData = {
+      email,
+      nickname,
+      password,
+      confirmPassword,
+    };
+
+    if ([email, nickname, password, confirmPassword].includes("")) {
+    }
+
+    postSignup(userData)
+      .then(data => {
+        handleComplete();
+      })
+      .catch(error => {
+        console.error(error);
+        if (error.response && error.response.data) {
+          setErrorMessage(error.response.data);
+        }
+      });
+  };
+
   return (
     <>
       {
@@ -38,16 +69,30 @@ const SignupModal = ({ setCompleteLogin, setLoginModal, setSignupModal }) => {
             <Input
               placeholder="이메일"
               infoMsg="이메일은 50자 이내여야 합니다."
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
             <Input
               placeholder="닉네임"
               infoMsg="닉네임은 8자 이내, 한글 문자, 영어 대소문자, 숫자 조합만 허용됩니다."
+              type="text"
+              value={nickname}
+              onChange={e => setNickname(e.target.value)}
             />
 
-            <Input placeholder="비밀번호" />
+            <Input
+              placeholder="비밀번호"
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
             <Input
               placeholder="비밀번호 확인"
               infoMsg="비밀번호는 20자 이내여야 합니다."
+              type="password"
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
             />
 
             <PersonalInfoConsent>
@@ -64,7 +109,7 @@ const SignupModal = ({ setCompleteLogin, setLoginModal, setSignupModal }) => {
               </div>
             </PersonalInfoConsent>
             <div className="signupButton">
-              <Button active="true" onClick={handleComplete} name="회원가입" />
+              <Button active="true" onClick={onSubmit} name="회원가입" />
             </div>
             <CheckingMember>
               <div className="checkingText">이미 회원이신가요?</div>

@@ -1,10 +1,15 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const Input = ({ placeholder, infoMsg }) => {
+const Input = ({ placeholder, infoMsg, type, value, onChange }) => {
   return (
     <>
       <InputWrapper>
-        <input type="text" placeholder={placeholder} />
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
         {infoMsg && <div className="infoMsg">{infoMsg}</div>}
       </InputWrapper>
     </>
