@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import pinImage from '../../assets/images/MusicSearchPage/spark_122.svg';
 import BookmarkToggle from './BookmarkToggle';
@@ -6,6 +6,15 @@ import BookmarkToggle from './BookmarkToggle';
 const Playlist = ({ playlist , onClick }) => {
   const { playlistName, creatorNickname, pinCount, updatedDate, imgPathList, bookmarkId, playlistId } = playlist;
   const [isHovered, setIsHovered] = useState(false);
+  const [title, setTitle] = useState(playlistName);
+  const [titleWidth, setTitleWidth] = useState(0);
+  const titleRef = useRef(null);
+  useEffect(() => {
+    if (titleRef.current) {
+      const width = titleRef.current.offsetWidth;
+      setTitleWidth(width);
+    }
+  }, [title]);
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -24,11 +33,17 @@ const Playlist = ({ playlist , onClick }) => {
           <SmallBox imageUrl={imgPathList[2]}/>
         </SmallBoxContainer>
       </PlaylistBox>
-      <PlaylistNameContainer onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onClick={onClick}>
-        <PlaylistName isHovered={isHovered}>
-        &nbsp;{playlistName}&nbsp;{playlistName}
-        </PlaylistName>
-        <FadeOut />
+      <PlaylistNameContainer onMouseEnter={() => {
+                  if (titleWidth > 210) setIsHovered(true);
+                }}
+                onMouseLeave={() => setIsHovered(false)} onClick={onClick}
+              >
+                <PlaylistName ref={titleRef} isHovered={isHovered}>
+                  {titleWidth > 210
+                    ? `${title} ${String.fromCharCode(8195)} ${String.fromCharCode(8195)} ${title}`
+                    : title}
+                </PlaylistName>
+                {titleWidth > 210 && <FadeOut />}
       </PlaylistNameContainer>
       <NameBox>
         <UserName>by {creatorNickname}</UserName>
@@ -88,23 +103,16 @@ const SmallBox = styled.div`
   }
 `;
 
-// const BookmarkBtn = styled.img`
-//   width: 30px;
-//   height: 30px;
-//   flex-shrink: 0;
-//   padding: 10px;
-//   cursor: pointer;
-// `;
-
 const PlaylistNameContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  white-space: nowrap;
   width: 210px;
   overflow: hidden;
 `;
 
-const scrollText = keyframes`
+const rotateText = keyframes`
   0% {
     transform: translateX(0%);
   }
@@ -122,7 +130,8 @@ const PlaylistName = styled.div`
   line-height: normal;
   padding: 6px 6px 6px 2px;
   white-space: nowrap;
-  animation: ${(props) => (props.isHovered ? scrollText : 'none')} 9s linear infinite;
+  display: inline-block;
+  animation: ${(props) => (props.isHovered ? rotateText : 'none')} 9s linear infinite;
 `;
 
 const FadeOut = styled.div`
