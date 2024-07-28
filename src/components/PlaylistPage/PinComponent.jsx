@@ -8,9 +8,7 @@ import PinModalBox from '../common/PinModalBox';
 
 const PinComponent = ({ pin = {}, selectable, buttonVisible }) => {
 
-  console.log(pin);
   const [image, setImage] = useState(mapIconBlack);
-  const [isOpen, setIsOpen] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const { songInfo = {} } = pin;
   const handleClick = () => {

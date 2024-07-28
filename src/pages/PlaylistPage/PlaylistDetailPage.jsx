@@ -14,10 +14,8 @@ const options = ["플레이리스트 수정", "플레이리스트 삭제"];
 
 const PlaylistDetailPage = () => {
   const { playlistId } = useParams();
-  console.log(playlistId);
   const navigate = useNavigate();
   const [playlistData, setPlaylistData] = useState(null);
-  console.log(playlistData);
   const [isOpen, setIsOpen] = useState(false);
   
 
