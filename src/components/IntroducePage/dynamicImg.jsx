@@ -71,8 +71,8 @@ const DynamicSvg = ({ imageUrl, lat, lng, id }) => {
           <foreignObject
             x="0"
             y="0"
-            width="500"
-            height="500"
+            width="400"
+            height="400"
             clip-path="url(#clipPath)"
           >
             <div
