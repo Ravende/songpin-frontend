@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import MapFilter from "../../components/HomePage/MapFilter";
 import SideBar from "../../components/HomePage/SideBar";
@@ -5,22 +6,42 @@ import SideSection from "../../components/common/SideSection";
 import styled from "styled-components";
 import PinComponent from "../../components/PlaylistPage/PinComponent";
 import PlaceComponent from "../../components/HomePage/PlaceComponent";
+import { getHomeInfo } from "../../services/api/home";
 
 const HomePage = () => {
+    const [homeInfo, setHomeInfo] = useState(null);
+
+    useEffect(() => {
+        const fetchHomeData = async () => {
+            try {
+                const Data = await getHomeInfo();
+                setHomeInfo(Data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchHomeData();
+    });
+
+    if (!homeInfo) {
+        return <div>Loading...</div>; // 로그인 토큰 
+    }
+
     return (
         <div style={{ position: "relative" }}>
         <SideBar />
         <SideSection>
             <Title>
-            닉네임님, <br></br> 무슨 노래 듣고 계세요?
+            {homeInfo.welcomeMessage}
             </Title>
-            <SongTxt>사람들은 이 노래를 듣고 있어요</SongTxt>
+            <SongTxt>{homeInfo.pinMessage}</SongTxt>
             <SongListContainer>
             <PinComponent />
             <PinComponent />
             <PinComponent />
             </SongListContainer>
-            <PlaceTxt>사람들은 이 장소에서 핀을 등록했어요</PlaceTxt>
+            <PlaceTxt>{homeInfo.placeMessage}</PlaceTxt>
             <PlaceListContainer>
             <PlaceComponent />
             <PlaceComponent />
