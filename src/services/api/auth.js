@@ -35,7 +35,7 @@ export const postLogout = async () => {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
-        withCredentials: true, // 쿠키를 함께 전송
+        withCredentials: true,
       },
     );
     localStorage.removeItem("accessToken");
@@ -56,12 +56,30 @@ const getAccessToken = () => localStorage.getItem("accessToken");
 
 export const postToken = async () => {
   try {
-    const res = await client.post("/token", { withCredentials: true });
+    const res = await client.post(
+      "/token",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+        withCredentials: true,
+      },
+    );
+
     const { accessToken } = res.data;
+    console.log(accessToken);
     localStorage.setItem("accessToken", accessToken);
+    console.log(accessToken);
+
     return accessToken;
   } catch (e) {
     console.error(e);
+
+    if (e.response.status === 401) {
+      if (e.response.errorCode === "EXPIRED_REFRESH_TOKEN")
+        window.location.href = "/login";
+    }
     throw e;
   }
 };
