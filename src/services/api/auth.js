@@ -5,6 +5,11 @@ export const postSignup = async userData => {
     const res = await client.post("/signup", userData);
     console.log(userData, "회원가입 성공");
   } catch (e) {
+    if (e.response) {
+      if (e.response.status === 409) {
+        alert("이미 가입된 이메일입니다.");
+      }
+    }
     console.error(e);
     throw new Error(e.response.data.message);
   }
