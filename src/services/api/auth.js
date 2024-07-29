@@ -16,7 +16,7 @@ export const postLogin = async userData => {
     const token = res.data.accessToken;
     localStorage.setItem("accessToken", token);
     console.log(token);
-    return token;
+    return { token };
   } catch (e) {
     if (e.response) {
       return { error: e.response.data.message, status: e.response.status };
