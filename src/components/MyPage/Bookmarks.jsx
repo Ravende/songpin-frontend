@@ -11,10 +11,10 @@ const Bookmarks = () => {
         <Num>50</Num>
       </PlaylistOverview>
       <PlaylistSection>
-        <Playlist />
-        <Playlist />
-        <Playlist />
-        <Playlist />
+        <Playlist id="1" />
+        <Playlist id="2" />
+        <Playlist id="3" />
+        <Playlist id="4" />
       </PlaylistSection>
     </BookmarkedContainer>
   );

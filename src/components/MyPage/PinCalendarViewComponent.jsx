@@ -3,14 +3,23 @@ import styled from "styled-components";
 import albumImgExample from "../../assets/images/MyPage/album-eg.png";
 import pinIcon from "../../assets/images/MyPage/vector-icon.svg";
 import PinModalBox from "../common/PinModalBox";
+import { useNavigate } from "react-router-dom";
 
 const PinCalendarViewComponent = () => {
+  const navigate = useNavigate();
+  const goMusicInfoPage = () => {
+    navigate("/details-song");
+  };
+  const goLocation = () => {
+    // 지도 위치 이동 코드 추가
+  };
+
   return (
     <PinBox>
       <AlbumImg src={albumImgExample} />
       <Content>
         <TitleSection>
-          <SongInfo>
+          <SongInfo onClick={goMusicInfoPage}>
             <SongTitle>
               <SongIcon src={pinIcon} />
               <TitleText>사랑하긴 했었나요 스쳐지나가는 인연이었나요</TitleText>
@@ -19,7 +28,7 @@ const PinCalendarViewComponent = () => {
           </SongInfo>
           <PinModalBox top="48px" right="12px" padding="31px" />
         </TitleSection>
-        <Info>
+        <Info onClick={goLocation}>
           <Date>2024.04.04</Date>
           <Place>신촌</Place>
           <PlaceText>에서</PlaceText>
@@ -42,6 +51,14 @@ const PinBox = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
+  &:hover {
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      ),
+      var(--offwhite, #efefef);
+  }
 `;
 
 const AlbumImg = styled.img`
@@ -67,6 +84,7 @@ const TitleSection = styled.div`
 const SongInfo = styled.div`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 const SongTitle = styled.div`
@@ -111,6 +129,7 @@ const Info = styled.div`
   justify-content: flex-end;
   padding-right: 11px;
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 const Date = styled.div`
