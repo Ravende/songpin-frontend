@@ -25,3 +25,43 @@ export const postLogin = async userData => {
     }
   }
 };
+
+export const postLogout = async () => {
+  try {
+    const res = await client.post(
+      "/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+        withCredentials: true, // 쿠키를 함께 전송
+      },
+    );
+    localStorage.removeItem("accessToken");
+    console.log("로그아웃 성공");
+  } catch (e) {
+    if (e.response) {
+      if (e.response.status === 401) {
+        alert("로그인 상태가 아닙니다.");
+        console.error(e.response, "로그아웃 실패");
+      }
+    } else {
+      console.error(e, "로그아웃 실패");
+    }
+  }
+};
+
+const getAccessToken = () => localStorage.getItem("accessToken");
+
+export const postToken = async () => {
+  try {
+    const res = await client.post("/token", { withCredentials: true });
+    const { accessToken } = res.data;
+    localStorage.setItem("accessToken", accessToken);
+    return accessToken;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
