@@ -21,6 +21,7 @@ export const postLogin = async userData => {
     const token = res.data.accessToken;
     localStorage.setItem("accessToken", token);
     console.log(token);
+    window.location.href = "/home";
     return { token };
   } catch (e) {
     if (e.response) {
@@ -45,6 +46,7 @@ export const postLogout = async () => {
     );
     localStorage.removeItem("accessToken");
     console.log("로그아웃 성공");
+    alert("로그아웃 되었습니다.");
   } catch (e) {
     if (e.response) {
       if (e.response.status === 401) {
@@ -83,7 +85,7 @@ export const postToken = async () => {
 
     if (e.response.status === 401) {
       if (e.response.errorCode === "EXPIRED_REFRESH_TOKEN")
-        window.location.href = "/login";
+        window.location.href = "/home";
     }
     throw e;
   }

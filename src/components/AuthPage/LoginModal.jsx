@@ -30,8 +30,8 @@ const LoginModal = ({
     setPwResetModal(true);
   };
   const handleComplete = () => {
-    setLoginModal(false);
-    setCompleteLogin(true);
+    // setLoginModal(false);
+    // setCompleteLogin(true);
   };
 
   const [email, setEmail] = useState("");
@@ -48,6 +48,7 @@ const LoginModal = ({
     if (result.token) {
       handleComplete();
       console.log("로그인 성공");
+      setInfoMsg("");
     } else if (result.status === 401 || result.status === 404) {
       setInfoMsg("이메일 또는 비밀번호가 다릅니다.");
     } else {
