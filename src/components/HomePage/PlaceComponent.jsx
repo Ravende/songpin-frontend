@@ -10,6 +10,9 @@ const PlaceComponent = (place = {}) => {
     navigate('/details-place');
   };
 
+  console.log(place.name);
+  console.log(place.cnt);
+
   return (
     <PlaceBox onClick={handleNavigate}>
       <Mark>
@@ -17,8 +20,8 @@ const PlaceComponent = (place = {}) => {
       </Mark>
         <PlaceName>{place.name}</PlaceName>
         <PinTimes>
-          <MapIcon src={mapIconSpark} />
-          <TimesNum>{place.cnt}</TimesNum>
+            <MapIcon src={mapIconSpark} />
+            <TimesNum>{place.cnt}</TimesNum>
         </PinTimes>
     </PlaceBox>
   );
@@ -54,7 +57,7 @@ const PlaceName = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  margin-right: 270.43px;
+  width: 320px;
 `;
 
 const PinTimes = styled.div`

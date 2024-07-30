@@ -43,7 +43,7 @@ const HomePage = () => {
             <PlaceTxt>사람들이 이 장소에서 핀을 등록했어요</PlaceTxt>
             <PlaceListContainer>
                 {recentPlaces && recentPlaces.map(place => (
-                <PlaceComponent key={place.placeId} name={place.placeName} cnt={place.pinCount} />
+                <PlaceComponent key={place.placeId} name={place.placeName} cnt={place.placePinCount} />
                 ))}
             </PlaceListContainer>
             </SideSection>
