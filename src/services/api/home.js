@@ -12,7 +12,7 @@ const get = async url => {
 
 export const getHomeInfo = async () => {
     try {
-        const data = await get(`/members/home`);
+        const data = await get(`/home`);
         return data;
     } catch (error) {
         throw new Error("홈 정보 로드 실패");

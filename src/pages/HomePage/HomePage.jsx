@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import MapFilter from "../../components/HomePage/MapFilter";
 import SideBar from "../../components/HomePage/SideBar";
@@ -10,64 +10,63 @@ import { getHomeInfo } from "../../services/api/home";
 
 const HomePage = () => {
     const [homeInfo, setHomeInfo] = useState(null);
+    const [recentPins, setRecentPins] = useState([]);
+    const [recentPlaces, setRecentPlaces] = useState([]);
 
     useEffect(() => {
         const fetchHomeData = async () => {
             try {
-                const Data = await getHomeInfo();
-                setHomeInfo(Data);
+            const Data = await getHomeInfo();
+            setHomeInfo(Data.welcomeMessage);
+            setRecentPins(Data.pinList);
+            setRecentPlaces(Data.placeList);
             } catch (error) {
-                console.error("Error fetching user data:", error);
+            console.error("Error fetching home data:", error);
             }
         };
-
         fetchHomeData();
-    });
-
-    if (!homeInfo) {
-        return <div>Loading...</div>; // 로그인 토큰 
-    }
+    }, []);
 
     return (
         <div style={{ position: "relative" }}>
-        <SideBar />
-        <SideSection>
+            <SideBar />
+            <SideSection>
             <Title>
-            {homeInfo.welcomeMessage}
+                {homeInfo ? homeInfo : "Loading..."}
             </Title>
-            <SongTxt>{homeInfo.pinMessage}</SongTxt>
+            <SongTxt>사람들은 이 노래를 듣고 있어요</SongTxt>
             <SongListContainer>
-            <PinComponent />
-            <PinComponent />
-            <PinComponent />
+                {recentPins && recentPins.map(pin => (
+                <PinComponent key={pin.SongId} pin={pin} selectable={false} buttonVisible={true} />
+                ))}
             </SongListContainer>
-            <PlaceTxt>{homeInfo.placeMessage}</PlaceTxt>
+            <PlaceTxt>사람들이 이 장소에서 핀을 등록했어요</PlaceTxt>
             <PlaceListContainer>
-            <PlaceComponent />
-            <PlaceComponent />
-            <PlaceComponent />
+                {recentPlaces && recentPlaces.map(place => (
+                <PlaceComponent key={place.placeId} name={place.placeName} cnt={place.pinCount} />
+                ))}
             </PlaceListContainer>
-        </SideSection>
-        <MapFilter />
-        <div
+            </SideSection>
+            <MapFilter />
+            <div
             style={{
-            position: "relative",
-            width: "100vw",
-            height: "100vh",
-            zIndex: 0,
+                position: "relative",
+                width: "100vw",
+                height: "100vh",
+                zIndex: 0,
             }}
-        >
+            >
             <Map
-            center={{ lat: 37.56011030387691, lng: 126.94585449321849 }}
-            style={{
+                center={{ lat: 37.56011030387691, lng: 126.94585449321849 }}
+                style={{
                 position: "absolute",
                 top: 0,
                 left: 0,
                 width: "100%",
                 height: "100%",
-            }}
+                }}
             ></Map>
-        </div>
+            </div>
         </div>
     );
 };
