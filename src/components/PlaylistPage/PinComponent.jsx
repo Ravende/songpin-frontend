@@ -6,14 +6,15 @@ import mapIconGray from '../../assets/images/MusicSearchPage/flower_gray.svg';
 import PinModalBox from '../common/PinModalBox';
 
 
-const PinComponent = ({ pin = {}, selectable, buttonVisible }) => {
+const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
 
   const [image, setImage] = useState(mapIconBlack);
-  const [isSelected, setIsSelected] = useState(false);
+  // const [isSelected, setIsSelected] = useState(false);
   const { songInfo = {} } = pin;
+  
   const handleClick = () => {
     if (selectable) {
-      setIsSelected((prev) => !prev);
+      onSelect(pin.playlistPinId);
     }
   };
   const formatDate = (dateString) => {
@@ -30,7 +31,7 @@ const PinComponent = ({ pin = {}, selectable, buttonVisible }) => {
       onMouseEnter={() => setImage(mapIconBallad)}
       onMouseLeave={() => setImage(mapIconBlack)}
       bgColor={
-        isSelected
+        pin.isSelected
           ? 'linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), var(--offwhite, #EFEFEF)'
           : 'var(--offwhite, #efefef)'
       }

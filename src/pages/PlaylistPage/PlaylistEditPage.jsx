@@ -1,19 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 import backArrow from '../../assets/images/UsersPage/arrow_back_ios.svg';
 import checked from '../../assets/images/PlaylistPage/checkbox_checked.svg';
 import unchecked from '../../assets/images/PlaylistPage/checkbox_unchecked.svg';
 import PinComponent from '../../components/PlaylistPage/PinComponent';
 import SideSection from '../../components/common/SideSection';
 import PublicToggle from '../../components/common/PublicToggle';
+import { getPlaylistDetail,updatePlaylist } from '../../services/api/stats';
 
 const PlaylistEditPage = () => {
+  const { playlistId } = useParams();
   const navigate = useNavigate();
+  const [playlistData, setPlaylistData] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [isPublic, setIsPublic] = useState(true); // 추가: 공개 여부 상태
-  const [inputValue, setInputValue] = useState('페스티벌에서 듣고싶은 노래');
+  const [inputValue, setInputValue] = useState('');
+  const [pinList, setPinList] = useState([]); // 추가: 핀 리스트 상태
 
+  useEffect(() => {
+    const fetchPlaylistDetail = async () => {
+      try {
+        const data = await getPlaylistDetail(playlistId);
+        setPlaylistData(data);
+        setInputValue(data.playlistName);
+        setIsPublic(data.visibility === 'PUBLIC');
+        setPinList(data.pinList.map(pin => ({ ...pin, isSelected: false }))); // 핀 데이터에 isSelected 추가
+      } catch (error) {
+        console.error("Error fetching playlist detail:", error);
+      }
+    };
+
+    fetchPlaylistDetail();
+  }, [playlistId]);
   const handleChange = (event) => {
     const { value } = event.target;
     if (value.length <= 40) {
@@ -25,12 +44,30 @@ const PlaylistEditPage = () => {
     navigate(-1);
   };
   const handleCheckClicked = () => {
-    setIsChecked(!isChecked);
+    const newIsChecked = !isChecked;
+    setIsChecked(newIsChecked);
+    setPinList(pinList.map(pin => ({ ...pin, isSelected: newIsChecked }))); // 모든 핀의 isSelected 상태 업데이트
   };
 
   const handleToggleClick = () => {
     setIsPublic((prev) => !prev);
   };
+  const handleUpdatePlaylist = async () => {
+    try {
+      const selectedPins = pinList.filter(pin => pin.isSelected);
+      await updatePlaylist(playlistId, inputValue, isPublic ? 'PUBLIC' : 'PRIVATE', pinList.length, pinList);
+      navigate(-1);
+    } catch (error) {
+      console.error("Error updating playlist:", error);
+    }
+  };
+
+  const handlePinSelect = (id) => {
+    setPinList(prev =>
+      prev.map(pin => (pin.playlistPinId === id ? { ...pin, isSelected: !pin.isSelected } : pin))
+    );
+  };
+
 
   return (
     <SideSection>
@@ -38,7 +75,8 @@ const PlaylistEditPage = () => {
         <ContentBox>
           <BackBtn src={backArrow} onClick={handleBackClick} />
           <MainText>플레이리스트 편집</MainText>
-          <BtnText isDisabled={!inputValue} onClick={handleBackClick}>완료</BtnText>
+          {/* 나중에 이부분에 모달창 추가  */}
+          <BtnText isDisabled={!inputValue} onClick={handleUpdatePlaylist}>완료</BtnText>
         </ContentBox>
         <ContentBox>
           <BodyText>플레이리스트 이름</BodyText>
@@ -52,19 +90,20 @@ const PlaylistEditPage = () => {
         </ContentBox>
         <ContentBox>
           <BodyText>공개 여부</BodyText>
-          <PublicToggle />
+          <PublicToggle setVisibility={setIsPublic}/>
         </ContentBox>
         <ContentBox>
           <SelectBox>
             <TotalIcon src={isChecked ? checked : unchecked} alt="전체선택 버튼" onClick={handleCheckClicked} />
             <SelectText>전체선택</SelectText>
           </SelectBox>
+          {/* 나중에 이부분에 삭제 모달창 추가 및 api 연결  */}
           <BtnText>삭제</BtnText>
         </ContentBox>
         <PinContainer>
-          <PinComponent selectable={true} buttonVisible={false} />
-          <PinComponent selectable={true} buttonVisible={false} />
-          <PinComponent selectable={true} buttonVisible={false} />
+        {pinList.map(pin => (
+            <PinComponent key={pin.playlistPinId} pin={pin} selectable={true} buttonVisible={false} onSelect={handlePinSelect}/>
+          ))}
         </PinContainer>
         </EditContainer>
     </SideSection>
