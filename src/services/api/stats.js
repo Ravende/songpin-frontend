@@ -10,6 +10,11 @@ const post = async (url, data) => {
   return res?.data;
 };
 
+const patch = async (url, data) => {
+  const res = await client.patch(url, data);
+  return res?.data;
+};
+
 // 플레이리스트 메인 api 연결
 export const getPlaylists = async () => {
   const url = '/playlists/main';
@@ -35,6 +40,7 @@ export const getPlaylistDetail = async (playlistId) => {
   }
 };
 
+//플레이리스트 생성 api 연결
 export const PostPlaylist = async (playlistName, visibility) => {
   const url = '/playlists'; 
   const data = {
@@ -46,6 +52,35 @@ export const PostPlaylist = async (playlistName, visibility) => {
     return result;
   } catch (error) {
     console.error("Error creating playlist:", error);
+    throw error;
+  }
+};
+
+//플레이리스트 삭제 api 연결
+export const deletePlaylist = async(playlistId) => {
+  const url = `/playlists/${playlistId}`;
+  try {
+    await client.delete(url);
+  } catch(error) {
+    console.error("Error deleting playlist:", error);
+    throw error;
+  }
+};
+
+// 플레이리스트 수정 api 연결 
+export const updatePlaylist = async (playlistId, playlistName, visibility, pinCount, pinList) => {
+  const url = `/playlists/${playlistId}`;
+  const data = {
+    playlistName,
+    visibility,
+    pinCount,
+    pinList
+  };
+  try {
+    const result = await patch(url, data);
+    return result;
+  } catch (error) {
+    console.error("Error updating playlist:", error);
     throw error;
   }
 };
