@@ -142,7 +142,7 @@ const Info = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  bottom: 120px;
+  bottom: 118px;
 `;
 
 const SignUpAndPWReSet = styled.div`

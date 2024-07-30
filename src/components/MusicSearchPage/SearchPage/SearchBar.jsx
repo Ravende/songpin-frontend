@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import search from '../../../assets/images/MusicSearchPage/search.svg';
-import arrow_dropdown from '../../../assets/images/MusicSearchPage/arrow_drop_down.svg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import search from "../../../assets/images/MusicSearchPage/search.svg";
+import arrow_dropdown from "../../../assets/images/MusicSearchPage/arrow_drop_down.svg";
+import { getExSpotify } from "../../../services/api/spotify";
 
-const options = ['노래', '장소'];
+const options = ["노래", "장소"];
 
 const SearchBar = ({ optionChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('노래');
+  const [selectedOption, setSelectedOption] = useState("노래");
 
   const toggling = () => setIsOpen(!isOpen);
 
-  const onOptionClicked = (value) => () => {
+  const onOptionClicked = value => () => {
     setSelectedOption(value);
     setIsOpen(false);
     optionChange(value);
   };
 
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     setInputValue(event.target.value);
+  };
+
+  const handleSearch = async () => {
+    const keyword = inputValue;
+    const result = await getExSpotify({ keyword });
   };
 
   return (
@@ -34,11 +40,13 @@ const SearchBar = ({ optionChange }) => {
             </DropdownHeader>
             {isOpen && (
               <DropdownList>
-                {options.map((option) => (
+                {options.map(option => (
                   <ListItem
                     onClick={onOptionClicked(option)}
                     key={option}
-                    style={{ fontWeight: selectedOption === option ? '700' : '400' }}
+                    style={{
+                      fontWeight: selectedOption === option ? "700" : "400",
+                    }}
                   >
                     {option}
                   </ListItem>
@@ -51,11 +59,15 @@ const SearchBar = ({ optionChange }) => {
               type="text"
               value={inputValue}
               onChange={handleChange}
-              placeholder={selectedOption === '장소' ? '장소명을 검색' : '노래 제목 또는 가수명을 검색'}
+              placeholder={
+                selectedOption === "장소"
+                  ? "장소명을 검색"
+                  : "노래 제목 또는 가수명을 검색"
+              }
             />
           </InputBox>
         </Search>
-        <SearchIcon src={search} alt="검색 아이콘" />
+        <SearchIcon src={search} alt="검색 아이콘" onClick={handleSearch} />
       </SearchBox>
       <Line />
     </SearchBarComponent>
@@ -136,7 +148,7 @@ const Toggle = styled.img`
   height: 24px;
   margin-left: 4px;
   cursor: pointer;
-  transform: ${(props) => (props.isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transform: ${props => (props.isOpen ? "rotate(180deg)" : "rotate(0deg)")};
 `;
 
 const InputBox = styled.div`

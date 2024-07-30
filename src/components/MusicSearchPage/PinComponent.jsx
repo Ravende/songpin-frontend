@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import pinImage from '../../assets/images/MusicSearchPage/Rectangle 217.png';
-import mapIconBallad from '../../assets/images/MusicSearchPage/flower.svg';
-import mapIconBlack from '../../assets/images/MusicSearchPage/flower_black.svg';
-import mapIconGray from '../../assets/images/MusicSearchPage/flower_gray.svg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import pinImage from "../../assets/images/MusicSearchPage/Rectangle 217.png";
+import mapIconBallad from "../../assets/images/MusicSearchPage/flower.svg";
+import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
+import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
 
 const PinComponent = () => {
   const [image, setImage] = useState(mapIconBlack);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate('/details-song');
+    navigate("/details-song");
   };
 
   return (
@@ -49,7 +49,12 @@ const PinBox = styled.div`
   margin-bottom: 12px;
   &:active {
     border-radius: 8px;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), var(--offwhite, #efefef);
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      ),
+      var(--offwhite, #efefef);
   }
 `;
 
@@ -64,7 +69,7 @@ const PinImg = styled.img`
 const TextBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 16px 15px 10px 29px;
+  margin: 16px 15px 10px 12px;
   width: 100%;
 `;
 
