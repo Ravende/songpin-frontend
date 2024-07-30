@@ -86,6 +86,8 @@ const Title = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 40px;
+    white-space: pre-wrap;
+    line-height: 1.5em;
 `;
 
 const SongTxt = styled.div`
