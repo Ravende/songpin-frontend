@@ -17,7 +17,7 @@ const patch = async (url, data) => {
 
 // 플레이리스트 메인 api 연결
 export const getPlaylists = async () => {
-  const url = '/playlists/main';
+  const url = "/playlists/main";
   try {
     const result = await get(url);
     // console.log(result);
@@ -28,8 +28,25 @@ export const getPlaylists = async () => {
   }
 };
 
-// 플레이리스트 상세정보 api 연결 
-export const getPlaylistDetail = async (playlistId) => {
+//플레이리스트 검색 api 연결
+export const searchPlaylists = async (
+  keyword,
+  sortBy = "ACCURACY",
+  page = 0,
+  size = 20,
+) => {
+  const url = `/playlists?keyword=${keyword}&sortBy=${sortBy}&page=${page}&size=${size}`;
+  try {
+    const result = await client.get(url);
+    return result?.data;
+  } catch (error) {
+    console.error("Error searching playlists:", error);
+    throw error;
+  }
+};
+
+// 플레이리스트 상세정보 api 연결
+export const getPlaylistDetail = async playlistId => {
   const url = `/playlists/${playlistId}`;
   try {
     const result = await get(url);
@@ -42,10 +59,10 @@ export const getPlaylistDetail = async (playlistId) => {
 
 //플레이리스트 생성 api 연결
 export const PostPlaylist = async (playlistName, visibility) => {
-  const url = '/playlists'; 
+  const url = "/playlists";
   const data = {
     playlistName,
-    visibility
+    visibility,
   };
   try {
     const result = await post(url, data);
@@ -57,24 +74,30 @@ export const PostPlaylist = async (playlistName, visibility) => {
 };
 
 //플레이리스트 삭제 api 연결
-export const deletePlaylist = async(playlistId) => {
+export const deletePlaylist = async playlistId => {
   const url = `/playlists/${playlistId}`;
   try {
     await client.delete(url);
-  } catch(error) {
+  } catch (error) {
     console.error("Error deleting playlist:", error);
     throw error;
   }
 };
 
-// 플레이리스트 수정 api 연결 
-export const updatePlaylist = async (playlistId, playlistName, visibility, pinCount, pinList) => {
+// 플레이리스트 수정 api 연결
+export const updatePlaylist = async (
+  playlistId,
+  playlistName,
+  visibility,
+  pinCount,
+  pinList,
+) => {
   const url = `/playlists/${playlistId}`;
   const data = {
     playlistName,
     visibility,
     pinCount,
-    pinList
+    pinList,
   };
   try {
     const result = await patch(url, data);
@@ -86,8 +109,8 @@ export const updatePlaylist = async (playlistId, playlistName, visibility, pinCo
 };
 
 //북마크 추가
-export const addBookmark = async (playlistId) => {
-  const url = '/bookmarks';
+export const addBookmark = async playlistId => {
+  const url = "/bookmarks";
   const data = { playlistId };
   try {
     const response = await client.post(url, data);
@@ -98,8 +121,8 @@ export const addBookmark = async (playlistId) => {
   }
 };
 
-//북마크 취소 
-export const deleteBookmark = async (bookmarkId) => {
+//북마크 취소
+export const deleteBookmark = async bookmarkId => {
   const url = `/bookmarks/${bookmarkId}`;
   try {
     await client.delete(url);
