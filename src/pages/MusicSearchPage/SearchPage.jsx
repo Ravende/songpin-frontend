@@ -6,7 +6,7 @@ import SearchBar from "../../components/MusicSearchPage/SearchPage/SearchBar";
 import SearchSongs from "../../components/MusicSearchPage/SearchPage/SearchSongs";
 import SearchPlaces from "../../components/MusicSearchPage/SearchPage/SearchPlaces";
 
-const values = ["정확도순", "핀 등록 많은순", "최근 핀 등록순"];
+const values = ["정확도순", "등록 핀  많은순", "최근 핀 등록순"];
 
 const SearchContainer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +27,12 @@ const SearchContainer = () => {
 
   const handleSearch = newKeyword => {
     setKeyword(newKeyword);
+  };
+
+  const sortOptions = {
+    정확도순: "ACCURACY",
+    "등록 핀 많은순": "COUNT",
+    "최근 핀 등록순": "NEWEST",
   };
 
   return (
@@ -57,7 +63,12 @@ const SearchContainer = () => {
         </Sorting>
         <SearchResult>
           {selectedOption === "노래" && <SearchSongs />}
-          {selectedOption === "장소" && <SearchPlaces keyword={keyword} />}
+          {selectedOption === "장소" && (
+            <SearchPlaces
+              keyword={keyword}
+              sortBy={sortOptions[selectedValue]}
+            />
+          )}
         </SearchResult>
       </Content>
     </SideSection>

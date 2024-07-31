@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PlaceComponent from "./PlaceComponent";
 import { getPlaces } from "../../../services/api/place";
 
-const SearchPlaces = ({ keyword }) => {
+const SearchPlaces = ({ keyword, sortBy }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [isInitialSearch, setIsInitialSearch] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,7 @@ const SearchPlaces = ({ keyword }) => {
 
           const placesData = await getPlaces({
             keyword,
-            sortBy: "ACCURACY",
+            sortBy,
             page: 0,
             size: 20,
           });
