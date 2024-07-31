@@ -13,12 +13,24 @@ const PlainSearchBar = ({ onSearch }) => {
     onSearch(inputValue);
   };
 
+  const handleEnterKeySearch = event => {
+    if (event.key === "Enter") {
+      handleSearchClick();
+    }
+  };
+
   return (
     <SearchBarComponent>
       <SearchBox>
         <Search>
           <InputBox>
-            <Input type="text" value={inputValue} onChange={handleChange} />
+            <Input
+              type="text"
+              value={inputValue}
+              onChange={handleChange}
+              placeholder="노래 제목 또는 가수명을 검색"
+              onKeyPress={handleEnterKeySearch}
+            />
           </InputBox>
         </Search>
         <SearchIcon
@@ -55,9 +67,7 @@ const Search = styled.div`
   align-items: center;
 `;
 
-const InputBox = styled.div`
-  padding-left: 8px;
-`;
+const InputBox = styled.div``;
 
 const Input = styled.input`
   color: var(--light_black, #232323);
@@ -68,6 +78,9 @@ const Input = styled.input`
   line-height: normal;
   border: none;
   outline: none;
+  &::placeholder {
+    color: var(--gray, #bcbcbc);
+  }
 `;
 
 const SearchIcon = styled.img`

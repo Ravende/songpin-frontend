@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import pinImage from "../../assets/images/MusicSearchPage/Rectangle 217.png";
 
 const PinComponent = ({ onPinClick, imgPath, title, artist }) => {
   return (

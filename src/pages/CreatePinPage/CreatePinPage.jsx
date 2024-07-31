@@ -39,7 +39,7 @@ const CreatePinPage = () => {
   };
 
   const handlePinClick = () => {
-    setShowSearchSongContainer(true);
+    setShowSearchSongContainer(!showSearchSongContainer);
   };
 
   const handlePinSelect = pinInfo => {

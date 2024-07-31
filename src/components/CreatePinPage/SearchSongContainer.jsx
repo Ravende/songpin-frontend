@@ -41,6 +41,13 @@ const SearchSongContainer = ({ onPinSelect }) => {
               onPinClick={() => handlePinClick(result)}
             />
           ))}
+          {searchResults.length === 0 && (
+            <EmptySearchResult>
+              <EmptyMessage>
+                노래를 검색해 다른 사람들의 핀을 확인해보세요
+              </EmptyMessage>
+            </EmptySearchResult>
+          )}
         </SearchResult>
       </Content>
     </SideSection>
@@ -57,3 +64,20 @@ const Content = styled.div`
 `;
 
 const SearchResult = styled.div``;
+
+const EmptySearchResult = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 213px);
+`;
+
+const EmptyMessage = styled.div`
+  color: var(--gray, #bcbcbc);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 28px */
+`;
