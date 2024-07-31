@@ -106,9 +106,9 @@ const SearchSongContainer = ({ onPinSelect }) => {
           ))}
           {searchResults.length === 0 && isInitialSearch && (
             <EmptySearchResult>
-              <EmptyMessage>
+              <BeforeMessage>
                 노래를 검색해 다른 사람들의 핀을 확인해보세요
-              </EmptyMessage>
+              </BeforeMessage>
             </EmptySearchResult>
           )}
           {searchResults.length === 0 && !isInitialSearch && !isLoading && (
@@ -141,7 +141,7 @@ const EmptySearchResult = styled.div`
   height: calc(100vh - 213px);
 `;
 
-const EmptyMessage = styled.div`
+const BeforeMessage = styled.div`
   color: var(--gray, #bcbcbc);
   text-align: center;
   font-family: Pretendard;
@@ -149,4 +149,8 @@ const EmptyMessage = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 28px */
+`;
+
+const EmptyMessage = styled(BeforeMessage)`
+  color: var(--gray02, #747474);
 `;

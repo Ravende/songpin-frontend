@@ -6,9 +6,10 @@ import { getExSpotify } from "../../../services/api/spotify";
 
 const options = ["노래", "장소"];
 
-const SearchBar = ({ optionChange }) => {
+const SearchBar = ({ optionChange, onSearch }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("노래");
+  const [inputValue, setInputValue] = useState("");
 
   const toggling = () => setIsOpen(!isOpen);
 
@@ -18,15 +19,18 @@ const SearchBar = ({ optionChange }) => {
     optionChange(value);
   };
 
-  const [inputValue, setInputValue] = useState("");
-
   const handleChange = event => {
     setInputValue(event.target.value);
   };
 
-  const handleSearch = async () => {
-    const keyword = inputValue;
-    const result = await getExSpotify({ keyword });
+  const handleSearchClick = () => {
+    onSearch(inputValue);
+  };
+
+  const handleEnterKeySearch = event => {
+    if (event.key === "Enter") {
+      handleSearchClick();
+    }
   };
 
   return (
@@ -64,10 +68,15 @@ const SearchBar = ({ optionChange }) => {
                   ? "장소명을 검색"
                   : "노래 제목 또는 가수명을 검색"
               }
+              onKeyPress={handleEnterKeySearch}
             />
           </InputBox>
         </Search>
-        <SearchIcon src={search} alt="검색 아이콘" onClick={handleSearch} />
+        <SearchIcon
+          src={search}
+          alt="검색 아이콘"
+          onClick={handleSearchClick}
+        />
       </SearchBox>
       <Line />
     </SearchBarComponent>
