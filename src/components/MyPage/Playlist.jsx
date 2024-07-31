@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import nobookmark from '../../assets/images/MyPage/bookmark-no.svg';
-import yesbookmark from '../../assets/images/MyPage/bookmark-yes.svg';
-import pinImage from '../../assets/images/MusicSearchPage/spark_122.svg';
+import React, { useState } from "react";
+import styled, { keyframes } from "styled-components";
+import nobookmark from "../../assets/images/MyPage/bookmark-no.svg";
+import yesbookmark from "../../assets/images/MyPage/bookmark-yes.svg";
+import pinImage from "../../assets/images/MusicSearchPage/spark_122.svg";
+import { useNavigate } from "react-router-dom";
 
-const Playlist = (/* { playlist }*/) => {
+const Playlist = ({ id }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   const toggleBookmark = () => {
-    setIsBookmarked((prev) => !prev);
+    setIsBookmarked(prev => !prev);
+  };
+
+  const navigate = useNavigate();
+
+  const handlePlaylistClick = () => {
+    navigate(`/playlist/${id}`);
   };
 
   return (
     <PlaylistContainer>
       <PlaylistBox>
         <BigBox>
-          <BookmarkBtn src={isBookmarked ? yesbookmark : nobookmark} alt="북마크 버튼" onClick={toggleBookmark} />
+          <BookmarkBtn
+            src={isBookmarked ? yesbookmark : nobookmark}
+            alt="북마크 버튼"
+            onClick={toggleBookmark}
+          />
         </BigBox>
         <SmallBoxContainer>
           <SmallBox />
@@ -25,9 +36,14 @@ const Playlist = (/* { playlist }*/) => {
           <SmallBox imageUrl={coverImages[2]} /> */}
         </SmallBoxContainer>
       </PlaylistBox>
-      <PlaylistNameContainer onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+      <PlaylistNameContainer
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={handlePlaylistClick}
+      >
         <PlaylistName isHovered={isHovered}>
-          {/*{playlistName}*/}가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
+          {/*{playlistName}*/}
+          가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
           &nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
         </PlaylistName>
         <FadeOut />
@@ -95,7 +111,7 @@ const BookmarkBtn = styled.img`
   padding: 10px;
   cursor: pointer;
   fill: #f8f8f8;
-  /* fill: ${(props) => (props.onClick ? '#f8f8f8' : 'none')}; */
+  /* fill: ${props => (props.onClick ? "#f8f8f8" : "none")}; */
   /* &:hover {
     fill: #f8f8f8;
   } */
@@ -107,6 +123,7 @@ const PlaylistNameContainer = styled.div`
   position: relative;
   width: 210px;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const scrollText = keyframes`
@@ -126,7 +143,8 @@ const PlaylistName = styled.div`
   font-weight: 600;
   line-height: normal;
   white-space: nowrap;
-  animation: ${(props) => (props.isHovered ? scrollText : 'none')} 9s linear infinite;
+  animation: ${props => (props.isHovered ? scrollText : "none")} 9s linear
+    infinite;
 `;
 
 const FadeOut = styled.div`

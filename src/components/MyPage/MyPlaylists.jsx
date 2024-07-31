@@ -3,6 +3,7 @@ import styled from "styled-components";
 import musicLibraryIcon from "../../assets/images/MyPage/music-library.svg";
 import Playlist from "./Playlist";
 import CreatePlaylistModal from "../common/Modal/CreatePlaylistModal";
+import { useNavigate } from "react-router-dom";
 
 const MyPlaylists = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,10 +25,10 @@ const MyPlaylists = () => {
         {isOpen && <CreatePlaylistModal setModalCommon={openCreatePlaylist} />}
       </PlaylistOverview>
       <PlaylistSection>
-        <Playlist />
-        <Playlist />
-        <Playlist />
-        <Playlist />
+        <Playlist id="1" />
+        <Playlist id="2" />
+        <Playlist id="3" />
+        <Playlist id="4" />
       </PlaylistSection>
     </PlaylistsContainer>
   );
