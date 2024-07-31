@@ -6,6 +6,7 @@ import PinModalBox from "../common/PinModalBox";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { GenreList } from "../../constants/GenreList";
+import { useNavigate } from "react-router-dom";
 
 const PinCalendarViewComponent = ({
   title,
@@ -19,6 +20,14 @@ const PinCalendarViewComponent = ({
     locale: ko,
   });
 
+  const navigate = useNavigate();
+  const goMusicInfoPage = () => {
+    navigate("/details-song");
+  };
+  const goLocation = () => {
+    // 지도 위치 이동 코드 추가
+  };
+
   const genreIcon = GenreList.find(it => it.EngName === genre)?.imgSrc;
   useEffect(() => {
     console.log(listenedDate);
@@ -28,7 +37,7 @@ const PinCalendarViewComponent = ({
       <AlbumImg src={imgPath} />
       <Content>
         <TitleSection>
-          <SongInfo>
+          <SongInfo onClick={goMusicInfoPage}>
             <SongTitle>
               {genreIcon && <SongIcon src={genreIcon} />}
               <TitleText>{title}</TitleText>
@@ -37,7 +46,7 @@ const PinCalendarViewComponent = ({
           </SongInfo>
           <PinModalBox top="48px" right="12px" padding="31px" />
         </TitleSection>
-        <Info>
+        <Info onClick={goLocation}>
           <CalendarDate>{formattedCalendarDate}</CalendarDate>
           <Place>{placeName}</Place>
           <PlaceText>에서</PlaceText>
