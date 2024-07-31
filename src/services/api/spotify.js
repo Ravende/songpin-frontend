@@ -1,11 +1,14 @@
 import client from "./client";
 
-export const getExSpotify = async ({ keyword }) => {
+export const getExSpotify = async ({ keyword, offset = 0 }) => {
   try {
-    const res = await client.get(`/external/songs?keyword=${keyword}`);
+    const res = await client.get(
+      `/external/songs?keyword=${keyword}&offset=${offset}`,
+    );
     console.log(res);
     return res.data;
   } catch (e) {
     console.error(e);
+    return [];
   }
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import SideSection from "./SideSection";
 import PlainSearchBar from "./PlainSearchBar";
@@ -7,14 +7,34 @@ import { getExSpotify } from "../../services/api/spotify";
 
 const SearchSongContainer = ({ onPinSelect }) => {
   const [searchResults, setSearchResults] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [offset, setOffset] = useState(0);
+  const [isInitialSearch, setIsInitialSearch] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const loaderRef = useRef(null);
 
   const handleSearch = async query => {
     try {
-      const data = await getExSpotify({ keyword: query });
+      setKeyword(query.trim());
+      setOffset(0);
+      setSearchResults([]); // 검색 결과 초기화
+      setIsInitialSearch(false);
+      setHasMore(true);
+      setIsLoading(true);
+
+      const data = await getExSpotify({
+        keyword: query.trim(),
+        offset: 0,
+      });
+
       console.log(data);
       setSearchResults(data);
+      setHasMore(data.length > 0);
+      setIsLoading(false);
     } catch (error) {
       console.error("검색 에러: ", error);
+      setIsLoading(false);
     }
   };
 
@@ -26,6 +46,49 @@ const SearchSongContainer = ({ onPinSelect }) => {
     };
     onPinSelect(pinInfo);
   };
+
+  const loadMoreResults = async () => {
+    if (!hasMore || isLoading) return;
+
+    try {
+      const data = await getExSpotify({
+        keyword,
+        offset,
+      });
+
+      setSearchResults(prevResults => [...prevResults, ...data]);
+      setOffset(prevOffset => prevOffset + 20); // offset 20 증가
+      setHasMore(data.length > 0);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("검색 에러: ", error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
+          loadMoreResults(); // 스크롤 끝까지 내릴 때 추가 데이터 요청
+        }
+      },
+      {
+        root: null, // 기본값 viewport
+        rootMargin: "100px 0px 0px 0px",
+        threshold: 1.0, // 100%에서 호출
+      },
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [offset, keyword, hasMore, isLoading]);
 
   return (
     <SideSection>
@@ -41,13 +104,19 @@ const SearchSongContainer = ({ onPinSelect }) => {
               onPinClick={() => handlePinClick(result)}
             />
           ))}
-          {searchResults.length === 0 && (
+          {searchResults.length === 0 && isInitialSearch && (
             <EmptySearchResult>
               <EmptyMessage>
                 노래를 검색해 다른 사람들의 핀을 확인해보세요
               </EmptyMessage>
             </EmptySearchResult>
           )}
+          {searchResults.length === 0 && !isInitialSearch && !isLoading && (
+            <EmptySearchResult>
+              <EmptyMessage>검색 결과가 없습니다.</EmptyMessage>
+            </EmptySearchResult>
+          )}
+          <div ref={loaderRef} style={{ height: "20px" }}></div>
         </SearchResult>
       </Content>
     </SideSection>
