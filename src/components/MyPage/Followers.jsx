@@ -1,27 +1,56 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { getMyProfile } from "../../services/api/myPage";
+import { useQuery } from "@tanstack/react-query";
 
 const Followers = () => {
+  // const [followerCount, setFollowerCount] = useState();
+  // const [followingCount, setFollowingCount] = useState();
+
+  const { data } = useQuery({
+    queryKey: ["getMyProfile"],
+    queryFn: getMyProfile,
+  });
+
+  const followerCount = data.followerCount;
+  const followingCount = data.followingCount;
+
+  // useEffect(() => {
+  //   const getProfile = async () => {
+  //     try {
+  //       const res = await getMyProfile();
+  //       console.log(res);
+  //       if (res) {
+  //         setFollowerCount(res.followerCount);
+  //         setFollowingCount(res.followingCount);
+  //       }
+  //     } catch (error) {
+  //       console.log("Login Failed", error);
+  //     }
+  //   };
+  //   getProfile();
+  // }, []);
+
   const navigate = useNavigate();
 
-  const handleNavigation = (menu) => {
+  const handleNavigation = menu => {
     navigate(`/user-follows?menu=${menu}`);
   };
 
   const goEditPage = () => {
-    navigate('/edit');
+    navigate("/edit");
   };
 
   return (
     <FollowerComponent>
       <FollowInfoBox>
-        <FollowBox onClick={() => handleNavigation('followers')}>
-          <FollowNumberBox>9999</FollowNumberBox>
+        <FollowBox onClick={() => handleNavigation("followers")}>
+          <FollowNumberBox>{followerCount}</FollowNumberBox>
           <FollowTextBox>팔로워</FollowTextBox>
         </FollowBox>
-        <FollowBox onClick={() => handleNavigation('following')}>
-          <FollowNumberBox>9999</FollowNumberBox>
+        <FollowBox onClick={() => handleNavigation("following")}>
+          <FollowNumberBox>{followingCount}</FollowNumberBox>
           <FollowTextBox>팔로잉</FollowTextBox>
         </FollowBox>
       </FollowInfoBox>

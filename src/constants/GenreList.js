@@ -14,6 +14,22 @@ import whiteHiphopIcon from "../assets/common/whiteHiphopIcon.svg";
 import whiteLoFiIcon from "../assets/common/whiteLoFiIcon.svg";
 import whiteDanceIcon from "../assets/common/whiteDanceIcon.svg";
 import whiteEtcIcon from "../assets/common/whiteEtcIcon.svg";
+import popIcon from "../assets/common/pop_Icon.svg";
+import rockIcon from "../assets/common/rock_Icon.svg";
+import balladeIcon from "../assets/common/ballade_Icon.svg";
+import jazzIcon from "../assets/common/jazz_Icon.svg";
+import hiphopIcon from "../assets/common/hiphop_Icon.svg";
+import lofiIcon from "../assets/common/lo_fi_Icon.svg";
+import danceIcon from "../assets/common/dance_Icon.svg";
+import etcIcon from "../assets/common/etc_Icon.svg";
+import popStroke from "../assets/images/UsersPage/stroke-icon-pop.svg";
+import rockStroke from "../assets/images/UsersPage/stroke-icon-rock.svg";
+import balladeStroke from "../assets/images/UsersPage/stroke-icon-ballade.svg";
+import hiphopStroke from "../assets/images/UsersPage/stroke-icon-hiphop.svg";
+import jazzStroke from "../assets/images/UsersPage/stroke-icon-jazz.svg";
+import lofiStroke from "../assets/images/UsersPage/stroke-icon-lofi.svg";
+import danceStroke from "../assets/images/UsersPage/stroke-icon-dance.svg";
+import etcStroke from "../assets/images/UsersPage/stroke-icon-etc.svg";
 
 export const GenreList = [
   {
@@ -22,6 +38,8 @@ export const GenreList = [
     EngName: "POP",
     imgSrc: smallPopIcon,
     whiteImgSrc: whitePopIcon,
+    iconSrc: popIcon,
+    strokeIconSrc: popStroke,
     width: 78,
     bgColor: "#4EDE76",
   },
@@ -32,6 +50,9 @@ export const GenreList = [
 
     imgSrc: smallRockIcon,
     whiteImgSrc: whiteRockIcon,
+    iconSrc: rockIcon,
+    strokeIconSrc: rockStroke,
+
     width: 119,
     bgColor: "#FF5862",
   },
@@ -42,6 +63,9 @@ export const GenreList = [
 
     imgSrc: smallBalladeIcon,
     whiteImgSrc: whiteBalladeIcon,
+    iconSrc: balladeIcon,
+    strokeIconSrc: balladeStroke,
+
     width: 113,
     bgColor: "#17C1D8",
   },
@@ -52,6 +76,9 @@ export const GenreList = [
 
     imgSrc: smallJazzIcon,
     whiteImgSrc: whiteJazzIcon,
+    iconSrc: jazzIcon,
+    strokeIconSrc: jazzStroke,
+
     width: 95,
     bgColor: "#E866BC",
   },
@@ -62,6 +89,9 @@ export const GenreList = [
 
     imgSrc: smallHiphopIcon,
     whiteImgSrc: whiteHiphopIcon,
+    iconSrc: hiphopIcon,
+    strokeIconSrc: hiphopStroke,
+
     width: 95,
     bgColor: "#5452FF",
   },
@@ -72,6 +102,9 @@ export const GenreList = [
 
     imgSrc: smallLofiIcon,
     whiteImgSrc: whiteLoFiIcon,
+    iconSrc: lofiIcon,
+    strokeIconSrc: lofiStroke,
+
     width: 107,
     bgColor: "#FE60A2",
   },
@@ -82,6 +115,9 @@ export const GenreList = [
 
     imgSrc: smallDanceIcon,
     whiteImgSrc: whiteDanceIcon,
+    iconSrc: danceIcon,
+    strokeIconSrc: danceStroke,
+
     width: 95,
     bgColor: "#A64EEC",
   },
@@ -92,6 +128,9 @@ export const GenreList = [
 
     imgSrc: smallEtcIcon,
     whiteImgSrc: whiteEtcIcon,
+    iconSrc: etcIcon,
+    strokeIconSrc: etcStroke,
+
     width: 95,
     bgColor: "#FFCD1D",
   },

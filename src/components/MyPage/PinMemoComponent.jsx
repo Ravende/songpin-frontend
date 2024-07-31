@@ -1,21 +1,40 @@
-import react, { useState } from "react";
+import react, { useEffect, useState } from "react";
 import styled from "styled-components";
 import albumImgExample from "../../assets/images/MyPage/album-eg.png";
 import pinIcon from "../../assets/images/MyPage/vector-icon.svg";
 import lockIcon from "../../assets/images/MyPage/lock.svg";
 import PinModalBox from "../common/PinModalBox";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
+import { GenreList } from "../../constants/GenreList";
 
-const PinMemoComponent = () => {
+const PinMemoComponent = ({
+  title,
+  artist,
+  imgPath,
+  listenedDate,
+  placeName,
+  genre,
+}) => {
+  useEffect(() => {
+    console.log(title);
+  });
+
+  const formattedDate = format(new Date(listenedDate), "yy.MM.dd", {
+    locale: ko,
+  });
+
+  const genreIcon = GenreList.find(it => it.EngName === genre)?.imgSrc;
   return (
     <PinBox>
       <TitleSection>
-        <AlbumImg src={albumImgExample} />
+        <AlbumImg src={imgPath} />
         <SongInfo>
           <SongTitle>
-            <SongIcon src={pinIcon} />
-            <TitleText>사랑하긴 했었나요 스쳐가는 인연이었나요aaaaa</TitleText>
+            <SongIcon src={genreIcon} />
+            <TitleText>{title}</TitleText>
           </SongTitle>
-          <Singer>잔나비</Singer>
+          <Singer>{artist}</Singer>
         </SongInfo>
         <PinModalBox top="48px" right="12px" />
       </TitleSection>
@@ -28,8 +47,8 @@ const PinMemoComponent = () => {
           </Text>
         </Memo>
         <Info>
-          <Date>2024.04.04</Date>
-          <Place>이화여대 학문관</Place>
+          <PinDate>{formattedDate}</PinDate>
+          <Place>{placeName}</Place>
           <PlaceText>에서</PlaceText>
         </Info>
       </DetailsSection>
@@ -66,6 +85,7 @@ const SongInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-right: 250px;
 `;
 
 const SongTitle = styled.div`
@@ -150,7 +170,7 @@ const Info = styled.div`
   white-space: nowrap;
 `;
 
-const Date = styled.div`
+const PinDate = styled.div`
   color: var(--gray02, #747474);
   text-overflow: ellipsis;
   font-family: Pretendard;
@@ -160,7 +180,13 @@ const Date = styled.div`
   line-height: 150%; /* 24px */
 `;
 
-const Place = styled(Date)`
+const Place = styled.div`
+  color: var(--gray02, #747474);
+  text-align: right;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
   max-width: 218px;
   white-space: nowrap;
   overflow: hidden;
@@ -169,7 +195,13 @@ const Place = styled(Date)`
   padding-left: 8px;
 `;
 
-const PlaceText = styled(Date)`
+const PlaceText = styled.div`
+  color: var(--gray02, #747474);
+  text-align: right;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
   white-space: nowrap;
   flex-shrink: 0;
   padding-right: 2px;

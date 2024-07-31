@@ -5,10 +5,28 @@ const client = axios.create({
   withCredentials: true,
 });
 
-const token = localStorage.getItem("songpinToken");
+client.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    return error.response;
+  },
+);
 
-if (token) {
-  client.defaults.headers.common["Authorization"] = token;
-}
+client.interceptors.request.use(async config => {
+  try {
+    const token =
+      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkdWR0ajkzMjZAZXdoYWluLm5ldCIsImlhdCI6MTcyMjM5MjQ4MCwiZXhwIjoxNzIyNDc4ODgwfQ.leB7W8UR7QHDQryQ-FZKpg9McWMpOk9VwU9ZDh1bs0E";
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  } catch (e) {
+    return null;
+  }
+
+  return config;
+});
 
 export default client;
