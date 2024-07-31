@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import search from '../../assets/images/MusicSearchPage/search.svg';
-import arrow_dropdown from '../../assets/images/MusicSearchPage/arrow_drop_down.svg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import search from "../../assets/images/MusicSearchPage/search.svg";
 
-const options = ['노래', '장소'];
+const PlainSearchBar = ({ onSearch }) => {
+  const [inputValue, setInputValue] = useState("");
 
-const PlainSearchBar = () => {
-  const [inputValue, setInputValue] = useState('');
-
-  const handleChange = (event) => {
+  const handleChange = event => {
     setInputValue(event.target.value);
+  };
+
+  const handleSearchClick = () => {
+    onSearch(inputValue);
   };
 
   return (
@@ -20,7 +21,11 @@ const PlainSearchBar = () => {
             <Input type="text" value={inputValue} onChange={handleChange} />
           </InputBox>
         </Search>
-        <SearchIcon src={search} alt="검색 아이콘" />
+        <SearchIcon
+          src={search}
+          alt="검색 아이콘"
+          onClick={handleSearchClick}
+        />
       </SearchBox>
       <Line />
     </SearchBarComponent>
