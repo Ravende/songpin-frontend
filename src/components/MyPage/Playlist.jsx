@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { addBookmarkOne, deleteBookmarkOne } from "../../services/api/myPage";
 import { queryClient } from "../../services/api/reactQuery/queryClient";
+import { useNavigate } from "react-router-dom";
 
 const Playlist = ({
   playlistId,
@@ -16,6 +17,7 @@ const Playlist = ({
   updateDate,
   bookmarkId,
 }) => {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(bookmarkId ? true : false);
 
@@ -32,9 +34,14 @@ const Playlist = ({
     }
   };
 
+  const handlePlaylistClick = () => {
+    navigate(`/playlist/${playlistId}`);
+  };
+
   const formattedUpdateDate = format(new Date(updateDate), "yy.MM.dd", {
     locale: ko,
   });
+
   return (
     <PlaylistContainer>
       <PlaylistBox>
@@ -56,7 +63,10 @@ const Playlist = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <PlaylistName isHovered={isHovered}>{playlistName}</PlaylistName>
+        <PlaylistName onClick={handlePlaylistClick} isHovered={isHovered}>
+          {playlistName}
+        </PlaylistName>
+
         <FadeOut />
       </PlaylistNameContainer>
       <NameBox>
