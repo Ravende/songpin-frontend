@@ -6,7 +6,6 @@ import pinImage from "../../assets/images/MusicSearchPage/spark_122.svg";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { addBookmarkOne, deleteBookmarkOne } from "../../services/api/myPage";
-import { queryClient } from "../../services/api/reactQuery/queryClient";
 import { useNavigate } from "react-router-dom";
 
 const Playlist = ({
@@ -62,6 +61,7 @@ const Playlist = ({
       <PlaylistNameContainer
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onClick={handlePlaylistClick}
       >
         <PlaylistName onClick={handlePlaylistClick} isHovered={isHovered}>
           {playlistName}
@@ -133,6 +133,7 @@ const BookmarkBtn = styled.img`
   cursor: pointer;
   fill: #f8f8f8;
   /* fill: ${props => (props.onClick ? "#f8f8f8" : "none")}; */
+  /* fill: ${props => (props.onClick ? "#f8f8f8" : "none")}; */
   /* &:hover {
     fill: #f8f8f8;
   } */
@@ -144,6 +145,7 @@ const PlaylistNameContainer = styled.div`
   position: relative;
   width: 210px;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const scrollText = keyframes`
@@ -163,6 +165,8 @@ const PlaylistName = styled.div`
   font-weight: 600;
   line-height: normal;
   white-space: nowrap;
+  animation: ${props => (props.isHovered ? scrollText : "none")} 9s linear
+    infinite;
   animation: ${props => (props.isHovered ? scrollText : "none")} 9s linear
     infinite;
 `;

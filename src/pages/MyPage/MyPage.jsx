@@ -5,7 +5,6 @@ import PinFeed from "../../components/MyPage/PinFeed";
 import MyPlaylists from "../../components/MyPage/MyPlaylists";
 import Bookmarks from "../../components/MyPage/Bookmarks";
 import SideSection from "../../components/common/SideSection";
-import useBookmarkStore from "../../store/useBookmarkStore";
 
 const MyPage = () => {
   const [clickedPage, setClickedPage] = useState(

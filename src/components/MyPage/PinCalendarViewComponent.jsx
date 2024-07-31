@@ -32,6 +32,7 @@ const PinCalendarViewComponent = ({
   useEffect(() => {
     console.log(listenedDate);
   }, []);
+
   return (
     <PinBox>
       <AlbumImg src={imgPath} />
@@ -69,6 +70,14 @@ const PinBox = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
+  &:hover {
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      ),
+      var(--offwhite, #efefef);
+  }
 `;
 
 const AlbumImg = styled.img`
@@ -95,6 +104,7 @@ const TitleSection = styled.div`
 const SongInfo = styled.div`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 const SongTitle = styled.div`
@@ -138,6 +148,7 @@ const Info = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 const CalendarDate = styled.div`

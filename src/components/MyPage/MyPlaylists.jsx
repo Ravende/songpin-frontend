@@ -5,6 +5,7 @@ import Playlist from "./Playlist";
 import CreatePlaylistModal from "../common/Modal/CreatePlaylistModal";
 import { getMyPlaylist } from "../../services/api/myPage";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const MyPlaylists = () => {
   const [isOpen, setIsOpen] = useState(false);

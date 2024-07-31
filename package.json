@@ -25,7 +25,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:windows": "set HTTPS=true&&set SSL_CRT_FILE=cert/localhost.pem&&set SSL_KEY_FILE=cert/localhost-key.pem&&npm run start"
   },
   "eslintConfig": {
     "extends": [

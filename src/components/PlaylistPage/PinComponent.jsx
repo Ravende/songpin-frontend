@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import albumImage from '../../assets/images/UsersPage/Rectangle 205.svg';
-import mapIconBallad from '../../assets/images/MusicSearchPage/flower.svg';
-import mapIconBlack from '../../assets/images/MusicSearchPage/flower_black.svg';
-import mapIconGray from '../../assets/images/MusicSearchPage/flower_gray.svg';
-import moreMenu from '../../assets/images/UsersPage/more_vert.svg';
-import PinModalBox from '../common/PinModalBox';
-const options = ['핀 수정', '핀 삭제'];
+import React, { useState } from "react";
+import styled from "styled-components";
+import albumImage from "../../assets/images/UsersPage/Rectangle 205.svg";
+import mapIconBallad from "../../assets/images/MusicSearchPage/flower.svg";
+import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
+import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
+import moreMenu from "../../assets/images/UsersPage/more_vert.svg";
+import PinModalBox from "../common/PinModalBox";
+const options = ["핀 수정", "핀 삭제"];
 
 const PinComponent = ({ selectable, buttonVisible }) => {
   const [image, setImage] = useState(mapIconBlack);
@@ -15,7 +15,7 @@ const PinComponent = ({ selectable, buttonVisible }) => {
 
   const handleClick = () => {
     if (selectable) {
-      setIsSelected((prev) => !prev);
+      setIsSelected(prev => !prev);
     }
   };
 
@@ -29,8 +29,8 @@ const PinComponent = ({ selectable, buttonVisible }) => {
       onMouseLeave={() => setImage(mapIconBlack)}
       bgColor={
         isSelected
-          ? 'linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), var(--offwhite, #EFEFEF)'
-          : 'var(--offwhite, #efefef)'
+          ? "linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), var(--offwhite, #EFEFEF)"
+          : "var(--offwhite, #efefef)"
       }
     >
       <SongBox>
@@ -39,16 +39,24 @@ const PinComponent = ({ selectable, buttonVisible }) => {
           <PinTitle>
             <MapIcon src={image} alt="지도 아이콘" />
             <TitleText>
-              사랑하긴 했었나요 스쳐가는 인연이었나요 짧지않은 우리 함께했던 시간들이 자꾸 내 마음을 가둬두네
+              사랑하긴 했었나요 스쳐가는 인연이었나요 짧지않은 우리 함께했던
+              시간들이 자꾸 내 마음을 가둬두네
             </TitleText>
-            {/* {buttonVisible && <MoreIcon src={moreMenu} alt="더보기 아이콘" onClick={handlePopup} />}
+            {/* {buttonVisible && (
+              <MoreIcon
+                src={moreMenu}
+                alt="더보기 아이콘"
+                onClick={handlePopup}
+              />
+            )}
             {isOpen && (
               <MorePopup>
-                {options.map((option) => (
+                {options.map(option => (
                   <ListItem>{option}</ListItem>
                 ))}
               </MorePopup>
             )} */}
+            <PinModalBox right="80px" />
             {buttonVisible && <PinModalBox />}
           </PinTitle>
           <PinSinger>잔나비</PinSinger>
@@ -68,16 +76,16 @@ export default PinComponent;
 const PinBox = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   width: 462px;
   height: 100px;
   flex-shrink: 0;
   border-radius: 8px;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 
   /* background: linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), var(--offwhite, #EFEFEF); */
   /* background: var(--offwhite, #efefef); */
-  background: ${({ bgColor }) => bgColor || 'var(--offwhite, #efefef)'};
+  background: ${({ bgColor }) => bgColor || "var(--offwhite, #efefef)"};
   cursor: pointer;
   margin-bottom: 12px;
 `;
@@ -86,7 +94,7 @@ const PinImg = styled.img`
   width: 78px;
   height: 78px;
   flex-shrink: 0;
-  /* padding-left: 12px; */
+  padding-left: 12px;
   border-radius: 4px;
 `;
 
@@ -107,6 +115,7 @@ const PinTitle = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: 28px;
 `;
 
 const MapIcon = styled.img`
@@ -149,6 +158,8 @@ const InfoBox = styled.div`
   justify-content: flex-end;
   align-items: center;
   white-space: nowrap;
+  /* padding-right: 23px; */
+  width: 350px;
 `;
 
 const InfoText = styled.div`
@@ -159,12 +170,12 @@ const InfoText = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 24px */
-  padding-right: 12px;
   white-space: nowrap;
   flex-shrink: 0;
 `;
 
 const PlaceText = styled.div`
+  padding-left: 8px;
   color: var(--gray02, #747474);
   text-align: right;
   font-family: Pretendard;

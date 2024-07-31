@@ -7,11 +7,15 @@ import { useQuery } from "@tanstack/react-query";
 const Followers = () => {
   // const [followerCount, setFollowerCount] = useState();
   // const [followingCount, setFollowingCount] = useState();
+  const navigate = useNavigate();
 
-  const { data } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["getMyProfile"],
     queryFn: getMyProfile,
   });
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (error) return <div>오류 발생: {error.message}</div>;
 
   const followerCount = data.followerCount;
   const followingCount = data.followingCount;
@@ -31,8 +35,6 @@ const Followers = () => {
   //   };
   //   getProfile();
   // }, []);
-
-  const navigate = useNavigate();
 
   const handleNavigation = menu => {
     navigate(`/user-follows?menu=${menu}`);
