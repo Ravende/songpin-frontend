@@ -152,7 +152,7 @@ const SignUpAndPWReSet = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 28px */
-  margin-top: 30px;
+  margin-top: 74px;
 `;
 const SignUpAndPWReSetText = styled.div`
   color: var(--gray02, #747474);
