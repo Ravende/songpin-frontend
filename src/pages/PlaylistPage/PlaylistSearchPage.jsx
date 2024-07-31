@@ -58,7 +58,7 @@ const PlaylistSearchPage = () => {
   }, [selectedValue]); // 정렬 기준이 변경될 때마다 검색 수행
 
   const handlePlaylistClick = id => {
-    navigate(`/playlist/${id}`);
+    navigate(`/playlists/${id}`);
   };
 
   return (
