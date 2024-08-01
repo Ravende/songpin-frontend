@@ -14,8 +14,8 @@ const Bookmarks = () => {
     queryFn: getMyPlaylistBookmark,
   });
 
-  const bookmarkCount = data.bookmarkCount;
-  const bookmarkList = data.bookmarkList;
+  const bookmarkCount = data?.bookmarkCount || 0;
+  const bookmarkList = data?.bookmarkList || [];
 
   // useEffect(() => {
   //   const getBookmark = async () => {
@@ -39,17 +39,18 @@ const Bookmarks = () => {
         <Num>{bookmarkCount}</Num>
       </PlaylistOverview>
       <PlaylistSection>
-        {bookmarkList.map(it => (
-          <Playlist
-            playlistId={it.playlistId}
-            playlistName={it.playlistName}
-            creatorNickname={it.creatorNickname}
-            pinCount={it.pinCount}
-            updateDate={it.updatedDate}
-            bookmarkId={it.bookmarkId}
-            refetch={refetch}
-          />
-        ))}
+        {bookmarkList &&
+          bookmarkList.map(it => (
+            <Playlist
+              playlistId={it.playlistId}
+              playlistName={it.playlistName}
+              creatorNickname={it.creatorNickname}
+              pinCount={it.pinCount}
+              updateDate={it.updatedDate}
+              bookmarkId={it.bookmarkId}
+              refetch={refetch}
+            />
+          ))}
       </PlaylistSection>
     </BookmarkedContainer>
   );

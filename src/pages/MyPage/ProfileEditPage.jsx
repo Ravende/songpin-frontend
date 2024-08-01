@@ -14,15 +14,6 @@ const ProfileEditPage = () => {
   const [profileImg, setProfileImg] = useState();
   const [email, setEmail] = useState();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: editProfile => editMyProfile(editProfile),
-    onSuccess: () => {
-      queryClient.invalidateQueries("diaries");
-      navigate("/mypage");
-    },
-  });
 
   const completeEditProfile = async () => {
     const selectedGenre = GenreList.find(it => it.id === selected);
@@ -31,8 +22,10 @@ const ProfileEditPage = () => {
       nickname,
       handle,
     };
-
-    mutation.mutate(editProfile);
+    console.log(editProfile);
+    const res = await editMyProfile(editProfile);
+    console.log(res);
+    navigate("/mypage");
   };
 
   useEffect(() => {
