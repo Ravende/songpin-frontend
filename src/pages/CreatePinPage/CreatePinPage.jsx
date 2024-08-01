@@ -282,7 +282,7 @@ const CreateBtn = styled.button`
     background: var(--black, #000000);
     color: var(--white, #FFFFFF);
     font-family: Pretendard;
-    font-size: 18px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
