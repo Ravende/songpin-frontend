@@ -49,6 +49,7 @@ const SideBox = styled.div`
   flex-shrink: 0;
   height: 100vh;
   overflow-x: hidden;
+  background-color: white;
   /* overflow-y: overlay; */
 
   &::-webkit-scrollbar {
