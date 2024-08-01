@@ -3,10 +3,10 @@ import styled from "styled-components";
 import mapIconSpark from "../../../assets/images/MusicSearchPage/spark_gray.svg";
 import { useNavigate } from "react-router-dom";
 
-const PlaceComponent = ({ placeName, placePinCount }) => {
+const PlaceComponent = ({ placeId, placeName, placePinCount }) => {
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate("/details-place");
+    navigate(`/details-place/${placeId}`);
   };
 
   return (

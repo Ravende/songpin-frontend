@@ -109,7 +109,7 @@ const SearchPlaces = ({ keyword, sortBy }) => {
           <Line />
           {searchResults.map(result => (
             <PlaceComponent
-              key={result.placeId}
+              placeId={result.placeId}
               placeName={result.placeName}
               placePinCount={result.placePinCount}
             />
