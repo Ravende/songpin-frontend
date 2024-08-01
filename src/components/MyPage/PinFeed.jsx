@@ -29,8 +29,8 @@ const PinFeed = () => {
     queryFn: getMyPinFeed,
   });
 
-  const totalPinNum = data.totalElements;
-  const pinFeedList = data.pinFeedList;
+  const totalPinNum = data?.totalElements || 0;
+  const pinFeedList = data?.pinFeedList || [];
 
   useEffect(() => {
     console.log(pinFeedList);
