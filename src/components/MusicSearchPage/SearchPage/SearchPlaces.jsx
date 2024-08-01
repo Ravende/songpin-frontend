@@ -33,7 +33,7 @@ const SearchPlaces = ({ keyword, sortBy }) => {
       }
     };
     fetchPlaces();
-  }, [keyword]);
+  }, [keyword, sortBy]);
 
   return (
     <PlacesList>
