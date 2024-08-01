@@ -16,8 +16,7 @@ client.interceptors.response.use(
 
 client.interceptors.request.use(async config => {
   try {
-    const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkdWR0ajkzMjZAZXdoYWluLm5ldCIsImlhdCI6MTcyMjQ2ODMzNiwiZXhwIjoxNzIyNTU0NzM2fQ.GXnRC7jYp-_Xp81NgyG01T-WfswAANjV95dMNAHcQjY";
+    const token = "";
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

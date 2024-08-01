@@ -1,31 +1,56 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { withdrawal } from "../../../services/api/myPage";
+import { useNavigate } from "react-router-dom";
 
-const MemberQuitModal = ({ onClose, onQuit }) => {
+const MemberQuitModal = ({ onClose, setIsModalOpen }) => {
   const [inputValue, setInputValue] = useState("");
-
+  const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
   const handleInput = event => {
     setInputValue(event.target.value);
   };
 
+  const handleQuit = async () => {
+    const confirmPassword = {
+      password: inputValue,
+    };
+    try {
+      const res = await withdrawal(confirmPassword);
+      console.log(res);
+      if (!res.data) {
+        setIsModalOpen(false);
+        navigate("/");
+      } else {
+        setErrorMsg(res.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("탈퇴 처리에 실패하였습니다.");
+    }
+  };
   return (
     <BackGround>
       <ModalComponent>
         <Message>회원탈퇴</Message>
         <InputBox>
           <Input
-            type="text"
+            type="password"
             value={inputValue}
             onChange={handleInput}
             placeholder="비밀번호 입력"
           />
         </InputBox>
-        <WrongAlert>비밀번호가 일치하지 않습니다.</WrongAlert>
+        {
+          <WrongAlert>
+            {errorMsg ? "비밀번호가 일치하지 않습니다." : ""}
+          </WrongAlert>
+        }
         <Buttons>
           <CancelBtn onClick={onClose}>
             <CancelText>취소</CancelText>
           </CancelBtn>
-          <DecideBtn onClick={onQuit}>
+          <DecideBtn onClick={handleQuit}>
             <DecideText>탈퇴</DecideText>
           </DecideBtn>
         </Buttons>

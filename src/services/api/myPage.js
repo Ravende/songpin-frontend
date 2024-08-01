@@ -103,3 +103,21 @@ export const searchPin = async ({ keyword }) => {
     throw new Error("데이터 불러오기에 실패하였습니다.");
   }
 };
+
+export const resetPassword = async resetPw => {
+  try {
+    const data = await client.patch(`/me/pw`, resetPw);
+    return data;
+  } catch (error) {
+    throw new Error("데이터 불러오기에 실패하였습니다.");
+  }
+};
+
+export const withdrawal = async passwordConfirm => {
+  try {
+    const data = await client.patch(`/me/status`, passwordConfirm);
+    return data;
+  } catch (error) {
+    throw new Error("데이터 불러오기에 실패하였습니다.");
+  }
+};
