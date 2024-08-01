@@ -17,7 +17,7 @@ const HomePage = () => {
         const fetchHomeData = async () => {
             try {
             const Data = await getHomeInfo();
-            setHomeInfo(Data.welcomeMessage);
+            setHomeInfo(Data.nickname);
             setRecentPins(Data.pinList);
             setRecentPlaces(Data.placeList);
             } catch (error) {
@@ -32,7 +32,7 @@ const HomePage = () => {
             <SideBar />
             <SideSection>
             <Title>
-                {homeInfo ? homeInfo : "Loading..."}
+                {homeInfo}님, <br />무슨 노래 듣고 계세요?
             </Title>
             <SongTxt>사람들은 이 노래를 듣고 있어요</SongTxt>
             <SongListContainer>

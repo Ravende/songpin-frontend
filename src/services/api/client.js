@@ -17,7 +17,7 @@ client.interceptors.response.use(
 client.interceptors.request.use(async config => {
     try {
         const token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnQGciLCJpYXQiOjE3MjIzMTgwNTUsImV4cCI6MTcyMjQwNDQ1NX0.XDNc17ETurSUJ55jJ_ZpV7EcqjkxC2hI4X58TsQRKEY";
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnQGciLCJpYXQiOjE3MjI1MjUzNjIsImV4cCI6MTcyMjYxMTc2Mn0.vuDWqnIHojyFWpFZvJwh74t-cwI5_HUWNfsHueZxhlw";
 
         if (token) {
         config.headers.Authorization = `Bearer ${token}`;
