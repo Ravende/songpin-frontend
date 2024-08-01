@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import search from '../../assets/images/MusicSearchPage/search.svg';
-import arrow_dropdown from '../../assets/images/MusicSearchPage/arrow_drop_down.svg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import search from "../../assets/images/MusicSearchPage/search.svg";
 
-const options = ['노래', '장소'];
+const PlainSearchBar = ({ onSearch }) => {
+  const [inputValue, setInputValue] = useState("");
 
-const PlainSearchBar = () => {
-  const [inputValue, setInputValue] = useState('');
-
-  const handleChange = (event) => {
+  const handleChange = event => {
     setInputValue(event.target.value);
+  };
+
+  const handleSearchClick = () => {
+    onSearch(inputValue);
+  };
+
+  const handleEnterKeySearch = event => {
+    if (event.key === "Enter") {
+      handleSearchClick();
+    }
   };
 
   return (
@@ -17,10 +24,20 @@ const PlainSearchBar = () => {
       <SearchBox>
         <Search>
           <InputBox>
-            <Input type="text" value={inputValue} onChange={handleChange} />
+            <Input
+              type="text"
+              value={inputValue}
+              onChange={handleChange}
+              placeholder="노래 제목 또는 가수명을 검색"
+              onKeyPress={handleEnterKeySearch}
+            />
           </InputBox>
         </Search>
-        <SearchIcon src={search} alt="검색 아이콘" />
+        <SearchIcon
+          src={search}
+          alt="검색 아이콘"
+          onClick={handleSearchClick}
+        />
       </SearchBox>
       <Line />
     </SearchBarComponent>
@@ -50,9 +67,7 @@ const Search = styled.div`
   align-items: center;
 `;
 
-const InputBox = styled.div`
-  padding-left: 8px;
-`;
+const InputBox = styled.div``;
 
 const Input = styled.input`
   color: var(--light_black, #232323);
@@ -63,6 +78,9 @@ const Input = styled.input`
   line-height: normal;
   border: none;
   outline: none;
+  &::placeholder {
+    color: var(--gray, #bcbcbc);
+  }
 `;
 
 const SearchIcon = styled.img`
