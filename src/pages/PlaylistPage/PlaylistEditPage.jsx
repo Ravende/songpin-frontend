@@ -8,7 +8,7 @@ import PinComponent from "../../components/PlaylistPage/PinComponent";
 import SideSection from "../../components/common/SideSection";
 import PublicToggle from "../../components/common/PublicToggle";
 import SmallModal from "../../components/common/Modal/SmallModal";
-import { getPlaylistDetail, editPlaylist } from "../../services/api/stats";
+import { getPlaylistDetail, editPlaylist } from "../../services/api/playlist";
 
 const PlaylistEditPage = () => {
   const { playlistId } = useParams();

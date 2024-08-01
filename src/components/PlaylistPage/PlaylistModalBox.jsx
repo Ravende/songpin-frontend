@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SmallModal from "../common/Modal/SmallModal";
 import moreButton from "../../assets/images/MyPage/more-icon.svg";
 import { useNavigate } from "react-router-dom";
-import { deletePlaylist } from "../../services/api/stats";
+import { deletePlaylist } from "../../services/api/playlist";
 
 const options = ["플레이리스트 편집", "플레이리스트 삭제"];
 
@@ -35,9 +35,7 @@ const PlaylistModalBox = ({ top, right, padding, playlistId }) => {
     deletePlaylist(playlistId);
     navigate(-1);
     // window.location.reload();
-
   };
-
 
   const navigate = useNavigate();
   const goPlaylistEditPage = () => {

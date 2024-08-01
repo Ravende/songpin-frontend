@@ -5,7 +5,7 @@ import SearchBar from "../../components/UsersPage/SearchBar";
 import arrowDown from "../../assets/images/MusicSearchPage/arrow_down.svg";
 import Playlist from "../../components/PlaylistPage/Playlist";
 import SideSection from "../../components/common/SideSection";
-import { searchPlaylists } from "../../services/api/stats";
+import { searchPlaylists } from "../../services/api/playlist";
 import queryString from "query-string";
 
 const values = ["정확도순", "핀 등록 많은순", "업데이트순"];
