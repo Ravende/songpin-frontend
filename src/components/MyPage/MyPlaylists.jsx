@@ -1,23 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import musicLibraryIcon from "../../assets/images/MyPage/music-library.svg";
 import Playlist from "./Playlist";
 import CreatePlaylistModal from "../common/Modal/CreatePlaylistModal";
+import { getMyPlaylist } from "../../services/api/myPage";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const MyPlaylists = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [myPlaylistCount, setMyPlaylistCount] = useState();
+  const [myPlaylist, setMyPlaylist] = useState([]);
   const openCreatePlaylist = () => {
     setIsOpen(prevState => !prevState);
   };
+  // const { data, refetch } = useQuery({
+  //   queryKey: ["getMyPlaylist"],
+  //   queryFn: getMyPlaylist,
+  // });
+
+  // const myPlaylistCount = data.playlistCount;
+  // const myPlaylist = data.playlistList;
+
+  useEffect(() => {
+    const getPlaylist = async () => {
+      try {
+        const res = await getMyPlaylist();
+        console.log(res);
+        if (res) {
+          setMyPlaylistCount(res.playlistCount);
+          setMyPlaylist(res.playlistList);
+        }
+      } catch (error) {
+        console.log("데이터 불러오기에 실패했습니다.", error);
+      }
+    };
+    getPlaylist();
+  }, []);
 
   return (
     <PlaylistsContainer>
       <PlaylistOverview>
         <PlaylistTimes>
           <PlaylistIcon src={musicLibraryIcon} />
-          <Num>50</Num>
+          <Num>{myPlaylistCount}</Num>
         </PlaylistTimes>
         <CreateNewPlaylist onClick={openCreatePlaylist}>
           새 플레이리스트 만들기
@@ -25,10 +51,18 @@ const MyPlaylists = () => {
         {isOpen && <CreatePlaylistModal setModalCommon={openCreatePlaylist} />}
       </PlaylistOverview>
       <PlaylistSection>
-        <Playlist id="1" />
-        <Playlist id="2" />
-        <Playlist id="3" />
-        <Playlist id="4" />
+        {myPlaylist &&
+          myPlaylist.map(it => (
+            <Playlist
+              key={it.playlistId}
+              playlistId={it.playlistId}
+              playlistName={it.playlistName}
+              creatorNickname={it.creatorNickname}
+              pinCount={it.pinCount}
+              updateDate={it.updatedDate}
+              bookmarkId={it.bookmarkId}
+            />
+          ))}
       </PlaylistSection>
     </PlaylistsContainer>
   );

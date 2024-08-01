@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import userLogoPop from '../../assets/images/UsersPage/user-logo-pop.svg'; //임시 유저 프로필
+import React from "react";
+import styled from "styled-components";
+import userLogoPop from "../../assets/images/UsersPage/user-logo-pop.svg"; //임시 유저 프로필
 
 const UserInfo = () => {
   return (
@@ -31,7 +31,6 @@ const UserLogo = styled.img`
 const UserNameBox = styled.div`
   flex-direction: column;
   margin-left: 28px;
- 
 `;
 
 const UserName = styled.div`
