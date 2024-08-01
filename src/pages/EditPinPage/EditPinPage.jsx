@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
+import SideBar from '../../components/HomePage/SideBar';
 import EditSection from '../../components/CreatePinPage/CreateSection';
 import SearchSongContainer from '../../components/CreatePinPage/SearchSongContainer';
 import SearchPlaceContainer from '../../components/CreatePinPage/SearchPlaceContainer';
@@ -71,6 +72,7 @@ const EditPinPage = () => {
 
     return (
         <MainContainer>
+            <SideBar></SideBar>
             <EditSection>
                 <Arrow src={arrowIcon} onClick={handleModal}/>
                 {/* {showModal && (<EditModal></EditModal>)} */}

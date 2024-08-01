@@ -28,7 +28,7 @@ const MusicInfoPinPreview = () => {
         <PinContent>
           <UserView>
             <UserName onClick={goUsersPage}>채연</UserName>
-            <PinModalBox top="30px" right="-177px" />
+            <PinModalBox top="32px" right="0px" />
           </UserView>
           <PinMemo
             onClick={isTruncated ? () => {} : toggleTruncation}

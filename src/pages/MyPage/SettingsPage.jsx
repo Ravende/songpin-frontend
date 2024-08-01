@@ -5,6 +5,7 @@ import SideSection from "../../components/common/SideSection";
 import backIcon from "../../assets/images/MusicSearchPage/arrow_back.svg";
 import userLogoPop from "../../assets/images/MyPage/user-logo-pop.svg"; //임시 유저 프로필
 import OpenQuitModal from "../../components/common/Modal/MemberQuitModal";
+import { postLogout } from "../../services/api/auth";
 
 const SettingsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,11 +20,20 @@ const SettingsPage = () => {
   };
 
   const navigate = useNavigate();
+
   const goMyPage = () => {
     navigate("/mypage");
   };
   const goEditPage = () => {
     navigate("/edit");
+  };
+  const goPwEditPage = () => {
+    navigate("/resetPassword");
+  };
+
+  const onLogout = async () => {
+    await postLogout();
+    navigate("/introduce");
   };
 
   return (
@@ -41,8 +51,8 @@ const SettingsPage = () => {
           <ProfileEditBtn onClick={goEditPage}>프로필 편집</ProfileEditBtn>
         </UserInfoBox>
         <ClickBtnsSection>
-          <Button>비밀번호 재설정</Button>
-          <Button>로그아웃</Button>
+          <Button onClick={goPwEditPage}>비밀번호 재설정</Button>
+          <Button onClick={onLogout}>로그아웃</Button>
           <Button onClick={handleModal}>회원탈퇴</Button>
           {isModalOpen && (
             <OpenQuitModal onClose={handleModal} onQuit={handleQuitBtn} />

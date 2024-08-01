@@ -1,9 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import musicLibraryIcon from '../../assets/images/MyPage/music-library.svg';
-import Playlist from './Playlist';
+import React, { useState } from "react";
+import styled from "styled-components";
+import musicLibraryIcon from "../../assets/images/MyPage/music-library.svg";
+import Playlist from "./Playlist";
+import CreatePlaylistModal from "../common/Modal/CreatePlaylistModal";
+import { useNavigate } from "react-router-dom";
 
 const MyPlaylists = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openCreatePlaylist = () => {
+    setIsOpen(prevState => !prevState);
+  };
+
   return (
     <PlaylistsContainer>
       <PlaylistOverview>
@@ -11,13 +19,16 @@ const MyPlaylists = () => {
           <PlaylistIcon src={musicLibraryIcon} />
           <Num>50</Num>
         </PlaylistTimes>
-        <CreateNewPlaylist>새 플레이리스트 만들기</CreateNewPlaylist>
+        <CreateNewPlaylist onClick={openCreatePlaylist}>
+          새 플레이리스트 만들기
+        </CreateNewPlaylist>
+        {isOpen && <CreatePlaylistModal setModalCommon={openCreatePlaylist} />}
       </PlaylistOverview>
       <PlaylistSection>
-        <Playlist />
-        <Playlist />
-        <Playlist />
-        <Playlist />
+        <Playlist id="1" />
+        <Playlist id="2" />
+        <Playlist id="3" />
+        <Playlist id="4" />
       </PlaylistSection>
     </PlaylistsContainer>
   );

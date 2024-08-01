@@ -6,6 +6,9 @@
 /.pnp
 .pnp.js
 
+# key files
+/cert
+
 # testing
 /coverage
 

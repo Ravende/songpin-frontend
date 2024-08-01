@@ -4,32 +4,56 @@ import albumImgExample from "../../assets/images/MyPage/album-eg.png";
 import pinIcon from "../../assets/images/MyPage/vector-icon.svg";
 import lockIcon from "../../assets/images/MyPage/lock.svg";
 import PinModalBox from "../common/PinModalBox";
+import { useNavigate } from "react-router-dom";
 
 const PinMemoComponent = () => {
+  const [isTruncated, setIsTruncated] = useState(true);
+
+  const toggleTruncation = () => {
+    setIsTruncated(!isTruncated);
+  };
+
+  const text =
+    "사랑하긴 했었나요 스쳐가는 인연이었나요 누가 내 가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나 그대의 눈빛은 날 얼어붙게 하네";
+  const maxLength = 59;
+  const showMoreBtn = text.length > maxLength;
+  const displayText = showMoreBtn && isTruncated ? text.substring(0, 55) : text;
+
+  const navigate = useNavigate();
+  const goMusicInfoPage = () => {
+    navigate("/details-song");
+  };
+  const goLocation = () => {
+    // 지도 위치 이동 코드 추가
+  };
+
   return (
     <PinBox>
       <TitleSection>
         <AlbumImg src={albumImgExample} />
-        <SongInfo>
+        <SongInfo onClick={goMusicInfoPage}>
           <SongTitle>
             <SongIcon src={pinIcon} />
-            <TitleText>
-              사랑하긴 했었나요 스쳐 지나가는 인연이었나요aaaaa
-            </TitleText>
+            <TitleText>사랑하긴 했었나요 스쳐가는 인연이었나요aaaaa</TitleText>
           </SongTitle>
           <Singer>잔나비</Singer>
         </SongInfo>
-        <PinModalBox right="-163px" padding="6px" />
+        <PinModalBox top="48px" right="12px" />
       </TitleSection>
       <DetailsSection>
         <Memo>
-          <Text>
+          <Text
+            onClick={isTruncated ? () => {} : toggleTruncation}
+            isTruncated={isTruncated}
+          >
             <SecretPin src={lockIcon} />
-            사랑하긴 했었나요 스쳐가는 인연이었나요 누가 내 가슴에다 불을 질렀나
-            누가 내 심장에다 못을 박았나 그대의 눈빛은 날 얼어붙게 해 그대의
+            {displayText}
+            {showMoreBtn && isTruncated && (
+              <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>
+            )}
           </Text>
         </Memo>
-        <Info>
+        <Info onClick={goLocation}>
           <Date>2024.04.04</Date>
           <Place>이화여대 학문관</Place>
           <PlaceText>에서</PlaceText>
@@ -68,6 +92,7 @@ const SongInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
 `;
 
 const SongTitle = styled.div`
@@ -107,41 +132,6 @@ const Singer = styled.div`
   padding-top: 4px;
 `;
 
-const MoreBtn = styled.img`
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  padding-left: 6px;
-  cursor: pointer;
-`;
-
-const MorePopup = styled.div`
-  display: flex;
-  /* width: 197px; */
-  padding: 18px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid var(--gray02, #747474);
-  background: var(--f8f8f8, #fcfcfc);
-  z-index: 1000;
-  position: absolute;
-  right: -163px;
-  bottom: 0;
-`;
-
-const ListItem = styled.div`
-  color: var(--light_black, #232323);
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  cursor: pointer;
-`;
-
 const DetailsSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -162,12 +152,8 @@ const Text = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 24px */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
   align-items: center;
+  cursor: ${props => (props.isTruncated ? "auto" : "pointer")};
 `;
 
 const SecretPin = styled.img`
@@ -179,12 +165,23 @@ const SecretPin = styled.img`
   vertical-align: calc(-12%);
 `;
 
+const MoreBtn = styled.span`
+  color: var(--gray02, #747474);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  cursor: pointer;
+`;
+
 const Info = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   padding-top: 4px;
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 const Date = styled.div`

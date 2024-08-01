@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import mapIconBallad from '../../assets/images/MusicSearchPage/flower.svg';
-import mapIconBlack from '../../assets/images/MusicSearchPage/flower_black.svg';
-import mapIconGray from '../../assets/images/MusicSearchPage/flower_gray.svg';
-import PinModalBox from '../common/PinModalBox';
+import React, { useState } from "react";
+import styled from "styled-components";
+import albumImage from "../../assets/images/UsersPage/Rectangle 205.svg";
+import mapIconBallad from "../../assets/images/MusicSearchPage/flower.svg";
+import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
+import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
+import moreMenu from "../../assets/images/UsersPage/more_vert.svg";
+import PinModalBox from "../common/PinModalBox";
+
 
 
 const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
@@ -15,6 +18,7 @@ const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
   const handleClick = () => {
     if (selectable) {
       onSelect(pin.playlistPinId);
+
     }
   };
   const formatDate = (dateString) => {
@@ -34,6 +38,7 @@ const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
         pin.isSelected
           ? 'linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), var(--offwhite, #EFEFEF)'
           : 'var(--offwhite, #efefef)'
+
       }
     >
       <SongBox>
@@ -46,6 +51,7 @@ const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
               {songInfo.title}
              </TitleText>
             {buttonVisible && <PinModalBox top="30px" right="0px"/>}
+
           </PinTitle>
           <PinSinger>{songInfo.artist}</PinSinger>
           <InfoBox>
@@ -64,16 +70,16 @@ export default PinComponent;
 const PinBox = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   width: 462px;
   height: 100px;
   flex-shrink: 0;
   border-radius: 8px;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 
   /* background: linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), var(--offwhite, #EFEFEF); */
   /* background: var(--offwhite, #efefef); */
-  background: ${({ bgColor }) => bgColor || 'var(--offwhite, #efefef)'};
+  background: ${({ bgColor }) => bgColor || "var(--offwhite, #efefef)"};
   cursor: pointer;
   margin-bottom: 12px;
 `;
@@ -82,7 +88,7 @@ const PinImg = styled.img`
   width: 78px;
   height: 78px;
   flex-shrink: 0;
-  /* padding-left: 12px; */
+  padding-left: 12px;
   border-radius: 4px;
 `;
 
@@ -104,6 +110,7 @@ const PinTitle = styled.div`
   flex-direction: row;
   align-items: center;
   position:relative;
+  height: 28px;
 `;
 
 const MapIcon = styled.img`
@@ -146,6 +153,8 @@ const InfoBox = styled.div`
   justify-content: flex-end;
   align-items: center;
   white-space: nowrap;
+  /* padding-right: 23px; */
+  width: 350px;
 `;
 
 const InfoText = styled.div`
@@ -156,12 +165,12 @@ const InfoText = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 24px */
-  padding-right: 12px;
   white-space: nowrap;
   flex-shrink: 0;
 `;
 
 const PlaceText = styled.div`
+  padding-left: 8px;
   color: var(--gray02, #747474);
   text-align: right;
   font-family: Pretendard;

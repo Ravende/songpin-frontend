@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
+import SideBar from '../../components/HomePage/SideBar';
 import CreateSection from '../../components/CreatePinPage/CreateSection';
 import SearchSongContainer from '../../components/CreatePinPage/SearchSongContainer';
 import SearchPlaceContainer from '../../components/CreatePinPage/SearchPlaceContainer';
@@ -65,6 +66,7 @@ const CreatePinPage = () => {
 
     return (
         <MainContainer>
+            <SideBar></SideBar>
             <CreateSection>
                 <Content>
                     {!isSongSelected ? (
@@ -280,7 +282,7 @@ const CreateBtn = styled.button`
     background: var(--black, #000000);
     color: var(--white, #FFFFFF);
     font-family: Pretendard;
-    font-size: 18px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 700;
     line-height: 150%;

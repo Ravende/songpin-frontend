@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,11 +11,13 @@ import SideSection from "../../components/common/SideSection";
 import BookmarkToggle from "../../components/PlaylistPage/BookmarkToggle";
 import PlaylistModalBox from "../../components/PlaylistPage/PlaylistModalBox";
 
+
 const PlaylistDetailPage = () => {
   const { playlistId } = useParams();
   const navigate = useNavigate();
   const [playlistData, setPlaylistData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchPlaylistDetail = async () => {
@@ -35,6 +38,7 @@ const PlaylistDetailPage = () => {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}.${month}.${day}`;
+
   };
 
   const handleBackClick = () => {
@@ -62,6 +66,7 @@ const PlaylistDetailPage = () => {
           </SmallBoxContainer>
         </PlaylistBox>
         <PlaylistName>{playlistData.playlistName}</PlaylistName>
+
         <NameBox>
           <UserName>by {playlistData.creatorNickname}</UserName>
           <IconBox>
@@ -84,6 +89,7 @@ const PlaylistDetailPage = () => {
           </UpdatedDate>
         </InfoBox>
         <PinContainer>
+
           {playlistData.pinList.map(pin => (
             <PinComponent
               key={pin.playlistPinId}
