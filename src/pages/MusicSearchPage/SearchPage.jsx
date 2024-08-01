@@ -27,6 +27,7 @@ const SearchContainer = () => {
 
   const handleSearch = newKeyword => {
     setKeyword(newKeyword);
+    setSelectedValue("정확도순");
   };
 
   const sortOptions = {
