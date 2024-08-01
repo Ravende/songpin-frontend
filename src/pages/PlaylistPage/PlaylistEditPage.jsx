@@ -24,7 +24,6 @@ const PlaylistEditPage = () => {
     const fetchPlaylistDetail = async () => {
       try {
         const data = await getPlaylistDetail(playlistId);
-        console.log("Fetched Playlist Data:", data); // 콘솔에 데이터 출력
         setPlaylistData(data);
         setInputValue(data.playlistName);
         setIsPublic(data.visibility === "PUBLIC");
