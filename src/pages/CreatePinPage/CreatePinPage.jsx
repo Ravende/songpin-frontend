@@ -15,6 +15,8 @@ import { ReactComponent as CalendarImg } from "../../assets/images/CreatePin/cal
 import { ReactComponent as LocationImg } from "../../assets/images/CreatePin/location_on.svg";
 import PublicToggle from "../../components/common/PublicToggle";
 import calendar_selected from "../../assets/images/CreatePin/calendar_selected.svg";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
+import Notification from '../../components/common/Notification';
 
 const CreatePinPage = () => {
   const [inputCount, setInputCount] = useState(0);
@@ -146,6 +148,7 @@ const CreatePinPage = () => {
       {showSearchPlaceContainer && (
         <SearchPlaceContainer onPlaceSelect={handlePlaceSelect} />
       )}
+        <Notification></Notification>
     </MainContainer>
   );
 };

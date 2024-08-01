@@ -22,6 +22,8 @@ const SideComponent = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 100vh;
+  position: absolute;
+  z-index: 10;
   /* overflow-y: overlay; */
 `;
 
@@ -55,4 +57,5 @@ const SideBox = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: white;
 `;

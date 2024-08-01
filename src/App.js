@@ -39,7 +39,7 @@ function App() {
           element={<PwResetCompletePage />}
         />
         <Route path="*" element={<h1>Not Found</h1>} />
-                                 
+
         <Route element={<MapLayout />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
@@ -93,9 +93,10 @@ function MapLayout() {
           position: "absolute",
           top: 0,
           left: 0,
-          width: "100%",
+          width: "80px",
           height: "100%",
           zIndex: 1,
+          // pointerEvents: "none",
         }}
       >
         <Routes>
