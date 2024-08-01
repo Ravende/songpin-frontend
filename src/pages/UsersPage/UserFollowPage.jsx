@@ -5,12 +5,18 @@ import FollowList from "../../components/UsersPage/FollowList";
 import backArrow from "../../assets/images/UsersPage/arrow_back_ios.svg";
 import SideSection from "../../components/common/SideSection";
 import { useQuery } from "@tanstack/react-query";
-import { getMyProfile } from "../../services/api/myPage";
+import {
+  getFollowerList,
+  getFollowingList,
+  getMyProfile,
+} from "../../services/api/myPage";
 
 const UserFollowPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedMenu, setSelectedMenu] = useState("followers");
+  const [followerList, setFollowerList] = useState([]);
+  const [followingList, setFollowingList] = useState([]);
 
   const { isError, data, error } = useQuery({
     queryKey: ["getMyProfile"],
@@ -26,7 +32,29 @@ const UserFollowPage = () => {
   }
   const profileData = data;
   const handle = profileData.handle;
+  const memberId = data.memberId;
 
+  const handleFollowerList = async () => {
+    setSelectedMenu("followers");
+    try {
+      const res = await getFollowerList(memberId);
+      console.log(res);
+      setFollowerList(res.followingList);
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
+  const handleFollowingList = async () => {
+    setSelectedMenu("following");
+    try {
+      const res = await getFollowingList(memberId);
+      console.log(res);
+      setFollowingList(res.followingList);
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
   // useEffect(() => {
   //   const params = new URLSearchParams(location.search);
   //   const menu = params.get("menu");
@@ -50,19 +78,23 @@ const UserFollowPage = () => {
         <MenuBox>
           <MenuText
             isSelected={selectedMenu === "followers"}
-            onClick={() => setSelectedMenu("followers")}
+            onClick={handleFollowerList}
           >
             팔로워
           </MenuText>
           <MenuText
             isSelected={selectedMenu === "following"}
-            onClick={() => setSelectedMenu("following")}
+            onClick={handleFollowingList}
           >
             팔로잉
           </MenuText>
         </MenuBox>
       </ContentBox>
-      <FollowList selectedMenu={selectedMenu} />
+      <FollowList
+        followerList={followerList}
+        followingList={followingList}
+        selectedMenu={selectedMenu}
+      />
     </SideSection>
   );
 };
