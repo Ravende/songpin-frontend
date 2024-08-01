@@ -6,7 +6,7 @@ export const getExSpotify = async ({ keyword, offset = 0 }) => {
       `/external/songs?keyword=${keyword}&offset=${offset}`,
     );
     console.log(res);
-    return res.data;
+    return Array.isArray(res.data) ? res.data : [];
   } catch (e) {
     console.error(e);
     return [];
