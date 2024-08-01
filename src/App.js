@@ -25,6 +25,7 @@ import MyPinSearchPage from "./pages/MyPage/MyPinSearchPage";
 import PwResetPage from "./pages/AuthPages/PwResetPage";
 import PwResetCompletePage from "./pages/AuthPages/PwResetCompletePage";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import Notification from './components/common/Notification';
 
 function App() {
   return (
@@ -120,6 +121,7 @@ function MapLayout() {
           <Route path="/mypin-search" element={<MyPinSearchPage />} />
         </Routes>
       </div>
+      <Notification></Notification>
     </div>
   );
 }

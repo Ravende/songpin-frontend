@@ -4,7 +4,6 @@ import SideSection from "../../components/common/SideSection";
 import styled from "styled-components";
 import PinComponent from "../../components/PlaylistPage/PinComponent";
 import PlaceComponent from "../../components/HomePage/PlaceComponent";
-import Notification from '../../components/common/Notification';
 
 const HomePage = () => {
     return (
@@ -28,7 +27,6 @@ const HomePage = () => {
             </PlaceListContainer>
         </SideSection>
         <MapFilter />
-        <Notification></Notification>
         </div>
     );
 };
