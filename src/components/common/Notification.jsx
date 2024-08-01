@@ -1,14 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import alarmIcon from "../../assets/notification/alarm.svg";
 import ColumnComponent from "./ColumnComponent";
+import { showAlarms, getNewAlarms } from '../../services/api/alarm';
 
 const Notification = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [alarms, setAlarms] = useState([]);
+  const [isNewAlarm, setIsNewAlarm] = useState(false);
 
   const handleNotice = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(()=> {
+    const fetchAlarmData = async () => {
+      try {
+      const Data = await showAlarms();
+      setAlarms(Data.alarmList);
+      } catch (error) {
+      console.error("Error fetching alarm data:", error);
+      }
+    };
+    fetchAlarmData();
+    
+    const eventSource = new EventSource("https://api.songpin.n-e.kr/alarms/subscribe")
+
+    eventSource.onopen = async () => {
+      await console.log("sse opened!")
+    }
+
+    eventSource.addEventListener('sse-alarm', (event) => {
+      console.log("sse-alarm")
+      const data = JSON.parse(event.data);
+      console.log(data)
+    });
+
+    eventSource.onerror = async (e) => {
+      await console.log(e)
+    }
+
+    return () => {
+      eventSource.close()
+    }
+  }, [])
 
   return (
     <NotifComponent>
@@ -19,10 +54,9 @@ const Notification = () => {
           <NoticeBox>
             <AlarmTitle>알림</AlarmTitle>
             <ContentSection>
-              <ColumnComponent />
-              <ColumnComponent />
-              <ColumnComponent />
-              <ColumnComponent />
+              {alarms && alarms.map(alarm => (
+                <ColumnComponent read={alarm.isRead} message={alarm.message} time={alarm.createdTime} id={alarm.senderId} />
+                ))}
             </ContentSection>
           </NoticeBox>
         </NoticePopup>

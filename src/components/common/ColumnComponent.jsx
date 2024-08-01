@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const ColumnComponent = () => {
+const ColumnComponent = (alarm = {}) => {
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
     setIsClicked(true);
@@ -10,9 +10,9 @@ const ColumnComponent = () => {
   return (
     <Column onClick={handleClick} isClicked={isClicked}>
       <Alarm isClicked={isClicked}>
-        김김김김김이이이이이(@ABCDEABCDEAB) 님이 팔로우했어요
+        {alarm.message}
       </Alarm>
-      <Time>2시간 전</Time>
+      <Time>{alarm.createdTime}</Time>
     </Column>
   );
 };
