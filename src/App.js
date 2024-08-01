@@ -39,27 +39,24 @@ function App() {
           element={<PwResetCompletePage />}
         />
         <Route path="*" element={<h1>Not Found</h1>} />
-                                 
-        <Route element={<MapLayout />}>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/details-song" element={<MusicInfoPage />} />
-          <Route path="/details-place/:placeId" element={<PlaceInfoPage />} />
-          <Route path="/create" element={<CreatePinPage />} />
-          <Route path="/pin-edit" element={<EditPinPage />} />
-          <Route path="/playlist" element={<PlaylistPage />} />
-          <Route path="/usersearch" element={<UserSearchPage />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/user-follows" element={<UserFollowPage />} />
-          <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
-          <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
-          <Route path="/playlist-edit/:id" element={<PlaylistEditPage />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/edit" element={<ProfileEditPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/calendar" element={<CalendarViewPage />} />
-          <Route path="/mypin-search" element={<MyPinSearchPage />} />
-        </Route>
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/details-song" element={<MusicInfoPage />} />
+        <Route path="/details-place/:placeId" element={<PlaceInfoPage />} />
+        <Route path="/create" element={<CreatePinPage />} />
+        <Route path="/pin-edit" element={<EditPinPage />} />
+        <Route path="/playlist" element={<PlaylistPage />} />
+        <Route path="/usersearch" element={<UserSearchPage />} />
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/user-follows" element={<UserFollowPage />} />
+        <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
+        <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
+        <Route path="/playlist-edit/:id" element={<PlaylistEditPage />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/edit" element={<ProfileEditPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/calendar" element={<CalendarViewPage />} />
+        <Route path="/mypin-search" element={<MyPinSearchPage />} />
       </Routes>
     </Router>
   );
