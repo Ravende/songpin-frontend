@@ -15,7 +15,6 @@ const PlaylistPage = () => {
     const fetchData = async () => {
       try {
         const data = await getPlaylists();
-        console.log("Fetched data:", data);
         setRecentPlaylists(data.recentPlaylists);
         setFollowingPlaylists(data.followingPlaylists);
       } catch (error) {
