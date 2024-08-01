@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ReactSwitch from 'react-switch';
 
 const PublicToggle = () => {
-    const [isPublic, setIsPublic] = useState(false);
+    const [isPublic, setIsPublic] = useState(true);
 
     const handleToggle = (checked) => {
         setIsPublic(checked);

@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import search from '../../assets/images/MusicSearchPage/search.svg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import search from "../../assets/images/MusicSearchPage/search.svg";
 
-const MyPageSearchBar = () => {
-  const [inputValue, setInputValue] = useState('');
-
-  const handleChange = (event) => {
+const MyPageSearchBar = ({ inputValue, setInputValue, completeSearch }) => {
+  const handleChange = event => {
     setInputValue(event.target.value);
   };
 
@@ -17,7 +15,7 @@ const MyPageSearchBar = () => {
             <Input type="text" value={inputValue} onChange={handleChange} />
           </InputBox>
         </Search>
-        <SearchIcon src={search} alt="검색 아이콘" />
+        <SearchIcon onClick={completeSearch} src={search} alt="검색 아이콘" />
       </SearchBox>
       <Line />
     </SearchBarComponent>

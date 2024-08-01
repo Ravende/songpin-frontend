@@ -45,6 +45,7 @@ const LoginModal = ({
     };
 
     const result = await postLogin(userData);
+    console.log(result);
     if (result.token) {
       handleComplete();
       console.log("로그인 성공");
