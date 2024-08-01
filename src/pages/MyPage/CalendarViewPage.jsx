@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import PinCalendarViewComponent from '../../components/MyPage/PinCalendarViewComponent';
-import SideSection from '../../components/common/SideSection';
-import backIcon from '../../assets/images/MusicSearchPage/arrow_back.svg';
-import dropdownIcon from '../../assets/images/MyPage/arrow-down.svg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import PinCalendarViewComponent from "../../components/MyPage/PinCalendarViewComponent";
+import SideSection from "../../components/common/SideSection";
+import backIcon from "../../assets/images/MusicSearchPage/arrow_back.svg";
+import dropdownIcon from "../../assets/images/MyPage/arrow-down.svg";
+import { getCalendarPin } from "../../services/api/myPage";
+import { useQuery } from "@tanstack/react-query";
 
 const startYear = 1980;
 const endYear = 2024;
-const years = [...Array(endYear - startYear + 1).keys()].map((i) => i + startYear);
+const years = [...Array(endYear - startYear + 1).keys()].map(
+  i => i + startYear,
+);
 const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const CalendarViewPage = () => {
@@ -16,11 +20,30 @@ const CalendarViewPage = () => {
   const [isMonthOpen, setIsMonthOpen] = useState(false);
   const [selectedYear, setSelectedYear] = useState(2024); // 현재 날짜 반영
   const [selectedMonth, setSelectedMonth] = useState(7); // 현재 날짜 반영
+  const navigate = useNavigate();
+
+  const { isError, data, error } = useQuery({
+    queryKey: ["getCalendarPin", selectedYear, selectedMonth],
+    queryFn: () => getCalendarPin({ year: selectedYear, month: selectedMonth }),
+    keepPreviousData: true, // 데이터가 로딩 중에도 이전 데이터를 유지
+  });
+
+  if (!data) {
+    return <div>데이터가 없습니다.</div>;
+  }
+
+  if (isError) {
+    console.error("Error fetching user info:", error);
+    return <div>오류 발생: {error.message}</div>;
+  }
+
+  const calendarData = data;
+  const pinList = calendarData.pinList;
 
   const togglingYear = () => {
     setIsYearOpen(!isYearOpen);
   };
-  const onYearClicked = (value) => () => {
+  const onYearClicked = value => () => {
     setSelectedYear(value);
     setIsYearOpen(false);
   };
@@ -28,14 +51,13 @@ const CalendarViewPage = () => {
   const togglingMonth = () => {
     setIsMonthOpen(!isMonthOpen);
   };
-  const onMonthClicked = (value) => () => {
+  const onMonthClicked = value => () => {
     setSelectedMonth(value);
     setIsMonthOpen(false);
   };
 
-  const navigate = useNavigate();
   const goMyPage = () => {
-    navigate('/mypage');
+    navigate("/mypage");
   };
 
   return (
@@ -52,12 +74,17 @@ const CalendarViewPage = () => {
               {isYearOpen && (
                 <YearCalendarDropdown>
                   <DatesList>
-                    {years.map((year) => (
+                    {years.map(year => (
                       <ListItem
                         key={year}
                         value={year}
                         onClick={onYearClicked(year)}
-                        style={{ color: selectedYear === year ? 'var(--light_black, #232323)' : 'auto' }}
+                        style={{
+                          color:
+                            selectedYear === year
+                              ? "var(--light_black, #232323)"
+                              : "auto",
+                        }}
                       >
                         {year}년
                       </ListItem>
@@ -74,10 +101,15 @@ const CalendarViewPage = () => {
               {isMonthOpen && (
                 <MonthCalendarDropdown>
                   <DatesList>
-                    {months.map((month) => (
+                    {months.map(month => (
                       <ListItem
                         onClick={onMonthClicked(month)}
-                        style={{ color: selectedMonth === month ? 'var(--light_black, #232323)' : 'auto' }}
+                        style={{
+                          color:
+                            selectedMonth === month
+                              ? "var(--light_black, #232323)"
+                              : "auto",
+                        }}
                       >
                         {month}월
                       </ListItem>
@@ -87,17 +119,22 @@ const CalendarViewPage = () => {
               )}
             </DateChoice>
           </Calendar>
-          <PinCalendarViewComponent />
-          <PinCalendarViewComponent />
-          <PinCalendarViewComponent />
-          <PinCalendarViewComponent />
-          <PinCalendarViewComponent />
-          <PinCalendarViewComponent />
-          <PinCalendarViewComponent />
-          <PinCalendarViewComponent />
-          {/* <Empty>
-            <EmptyMessage>해당 월에 등록한 핀이 없습니다.</EmptyMessage>
-          </Empty> */}
+          {pinList.length === 0 ? (
+            <Empty>
+              <EmptyMessage>"해당 월에 들은 송핀이 없습니다"</EmptyMessage>
+            </Empty>
+          ) : (
+            pinList.map(it => (
+              <PinCalendarViewComponent
+                title={it.songInfo.title}
+                artist={it.songInfo.artist}
+                imgPath={it.songInfo.imgPath}
+                genre={it.genreName}
+                listenedDate={it.listenedDate}
+                placeName={it.placeName}
+              />
+            ))
+          )}
         </Content>
       </CalendarView>
     </SideSection>
@@ -159,7 +196,7 @@ const Dropdown = styled.img`
   height: 24px;
   flex-shrink: 0;
   margin-left: 4px;
-  transform: ${(props) => (props.isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transform: ${props => (props.isOpen ? "rotate(180deg)" : "rotate(0deg)")};
 `;
 
 const YearCalendarDropdown = styled.div`

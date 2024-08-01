@@ -1,23 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import nobookmark from "../../assets/images/MyPage/bookmark-no.svg";
 import yesbookmark from "../../assets/images/MyPage/bookmark-yes.svg";
 import pinImage from "../../assets/images/MusicSearchPage/spark_122.svg";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
+import { addBookmarkOne, deleteBookmarkOne } from "../../services/api/myPage";
 import { useNavigate } from "react-router-dom";
 
-const Playlist = ({ id }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
-  const toggleBookmark = () => {
-    setIsBookmarked(prev => !prev);
-  };
-
+const Playlist = ({
+  playlistId,
+  playlistName,
+  creatorNickname,
+  pinCount,
+  updateDate,
+  bookmarkId,
+}) => {
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(bookmarkId ? true : false);
+
+  const toggleBookmark = async () => {
+    try {
+      if (isBookmarked) {
+        await deleteBookmarkOne(bookmarkId);
+      } else {
+        await addBookmarkOne({ playlistId });
+      }
+      setIsBookmarked(!isBookmarked);
+    } catch (error) {
+      console.error("북마크 변경에 실패했습니다.", error);
+    }
+  };
 
   const handlePlaylistClick = () => {
-    navigate(`/playlist/${id}`);
+    navigate(`/playlist/${playlistId}`);
   };
+
+  const formattedUpdateDate = format(new Date(updateDate), "yy.MM.dd", {
+    locale: ko,
+  });
 
   return (
     <PlaylistContainer>
@@ -41,21 +63,20 @@ const Playlist = ({ id }) => {
         onMouseLeave={() => setIsHovered(false)}
         onClick={handlePlaylistClick}
       >
-        <PlaylistName isHovered={isHovered}>
-          {/*{playlistName}*/}
-          가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
-          &nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
+        <PlaylistName onClick={handlePlaylistClick} isHovered={isHovered}>
+          {playlistName}
         </PlaylistName>
+
         <FadeOut />
       </PlaylistNameContainer>
       <NameBox>
-        <UserName>by 송송</UserName>
+        <UserName>by {creatorNickname}</UserName>
         <PinBox>
           <PinImg src={pinImage} alt="핀이미지" />
-          <PinNum>53</PinNum>
+          <PinNum>{pinCount}</PinNum>
         </PinBox>
       </NameBox>
-      <UpdatedDate>최근 업데이트: 20xx.xx.xx</UpdatedDate>
+      <UpdatedDate>최근 업데이트: {formattedUpdateDate}</UpdatedDate>
     </PlaylistContainer>
   );
 };
@@ -112,6 +133,7 @@ const BookmarkBtn = styled.img`
   cursor: pointer;
   fill: #f8f8f8;
   /* fill: ${props => (props.onClick ? "#f8f8f8" : "none")}; */
+  /* fill: ${props => (props.onClick ? "#f8f8f8" : "none")}; */
   /* &:hover {
     fill: #f8f8f8;
   } */
@@ -143,6 +165,8 @@ const PlaylistName = styled.div`
   font-weight: 600;
   line-height: normal;
   white-space: nowrap;
+  animation: ${props => (props.isHovered ? scrollText : "none")} 9s linear
+    infinite;
   animation: ${props => (props.isHovered ? scrollText : "none")} 9s linear
     infinite;
 `;
