@@ -39,6 +39,14 @@ const MusicInfoPinPreview = ({ pin }) => {
   const showMoreBtn = text.length > maxLength;
   const displayText = showMoreBtn && isTruncated ? text.substring(0, 55) : text;
 
+  const formatDate = dateString => {
+    const date = new window.Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
+
   return (
     <PinsContainer>
       <PinPreview>
@@ -60,7 +68,7 @@ const MusicInfoPinPreview = ({ pin }) => {
             )}
           </PinMemo>
           <Details>
-            <Date>{listenedDate}</Date>
+            <Date>{formatDate(listenedDate)}</Date>
             <Place>{placeName}</Place>
             <PlaceText>에서</PlaceText>
           </Details>
