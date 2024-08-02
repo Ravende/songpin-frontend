@@ -1,5 +1,10 @@
 import client from "./client";
 
+const post = async (url, data) => {
+  const res = await client.post(url, data);
+  return res?.data;
+};
+
 export const postSignup = async userData => {
   try {
     const res = await client.post("/signup", userData);
@@ -17,8 +22,10 @@ export const postSignup = async userData => {
 
 export const postLogin = async userData => {
   try {
-    const res = await client.post("/login", userData);
-    const token = res.data.accessToken;
+    const res = await post("/login", userData);
+    console.log(userData);
+    console.log(res);
+    const token = res.accessToken;
     localStorage.setItem("accessToken", token);
     console.log(token);
     window.location.href = "/home";

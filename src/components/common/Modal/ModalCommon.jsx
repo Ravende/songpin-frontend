@@ -14,9 +14,12 @@ const ModalCommon = ({
   setModalCommon,
   active,
   setActive,
+  inputValue,
+  setInputValue,
+  isPublic,
+  setIsPublic,
 }) => {
   const modalRef = useRef(null);
-  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -57,7 +60,7 @@ const ModalCommon = ({
                   <AlarmMessage>{inputValue.length}/40</AlarmMessage>
                 </EditBox>
               </Edit>
-              <PublicToggle />
+              <PublicToggle isPublic={isPublic} setIsPublic={setIsPublic} />
             </CreatePlaylistBox>
           )}
           <Button active={active} name={buttonName} onClick={handleButton} />
