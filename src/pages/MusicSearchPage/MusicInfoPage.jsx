@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/MusicSearchPage/arrow_back.svg";
-import mapIconSpark from "../../assets/images/MusicSearchPage/spark_green.svg";
 import mapIconSparkBlack from "../../assets/images/MusicSearchPage/spark_black.svg";
 import uncheckedBox from "../../assets/images/MusicSearchPage/checkbox.svg";
 import checkedBox from "../../assets/images/MusicSearchPage/checkbox-oncheck.svg";
@@ -188,9 +187,6 @@ const AlbumImg = styled.img`
   height: 450px;
   flex-shrink: 0;
   border-radius: 18px;
-  /* background:
-    linear-gradient(0deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%),
-    url(<path-to-image>) lightgray 50% / cover no-repeat; */
   margin-top: 34px;
 `;
 
