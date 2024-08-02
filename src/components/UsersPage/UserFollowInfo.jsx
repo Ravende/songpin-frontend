@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import UserInfo from "./UserInfo";
-import { deleteFollowing } from "../../services/api/myPage";
+import { addFollowing, deleteFollowing } from "../../services/api/myPage";
 
 // myFollowId props 전달 받아야 함
 const UserFollowInfo = ({
   profileImg,
   nickname,
   handle,
-  isFollowing,
+  isFollowing: initialIsFollowing,
   followId,
 }) => {
+  const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
+
   const handleFollow = async () => {
     try {
       if (isFollowing) {
         const res = await deleteFollowing(followId);
-        console.log(res);
+        console.log(res, " 팔로잉 삭제");
+        setIsFollowing(!isFollowing);
+      } else {
+        const addFollowingId = {
+          targetMemberId: followId,
+        };
+        const res = await addFollowing(addFollowingId);
+        console.log(res, "팔로잉 추가");
+        setIsFollowing(!isFollowing);
       }
     } catch (error) {
       console.error("Error", error);

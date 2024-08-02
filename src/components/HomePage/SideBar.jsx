@@ -51,7 +51,7 @@ const SideBar = () => {
           <Create src={sidebar_create} alt="Create" />
         </StyledButton>
         <StyledButton
-          onClick={() => onItemClick("/playlists")}
+          onClick={() => onItemClick("/playlist")}
           isActive={activePath === "/playlist"}
         >
           <Playlist src={sidebar_playlist} alt="Playlist" />
