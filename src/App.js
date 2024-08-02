@@ -185,7 +185,7 @@ function MapLayout({ allPins, recentPins, handleFilterChange }) {
           left: 0,
           width: "80px",
           height: "100%",
-          zIndex: 1,
+          zIndex: 2,
         }}
       >
         <Routes>
@@ -209,7 +209,18 @@ function MapLayout({ allPins, recentPins, handleFilterChange }) {
           <Route path="/mypin-search" element={<MyPinSearchPage />} />
         </Routes>
       </div>
-      <MapFilter onFilterChange={handleFilterChange}/>
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          //width: "50px",
+          height: "100%",
+          zIndex: 1,
+        }}
+      >
+        <MapFilter onFilterChange={handleFilterChange}/>
+      </div>
       <Notification />
     </div>
   );
