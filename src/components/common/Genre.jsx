@@ -30,7 +30,7 @@ const GenreWrapper = styled.div`
       ? "1px solid rgba(0, 0, 0, 0)"
       : "1px solid var(--light_black, #232323)"};
   display: flex;
-  padding: 8px 16px;
+  padding: 8px 12px;
   justify-content: center;
   align-items: center;
   gap: 8px;

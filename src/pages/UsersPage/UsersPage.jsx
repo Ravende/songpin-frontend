@@ -72,11 +72,7 @@ const UsersPage = () => {
               handle={userData.handle}
               profileImg={userData.profileImg}
             />
-            <Followers
-              myFollowId={userData.followId}
-              followerCount={userData.followerCount}
-              followingCount={userData.followingCount}
-            />
+            <Followers myFollowId={userData.followId} userData={userData} />
           </>
         ) : (
           <div></div>

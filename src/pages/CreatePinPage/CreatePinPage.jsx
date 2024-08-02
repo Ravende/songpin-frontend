@@ -120,7 +120,7 @@ const CreatePinPage = () => {
               }
               bgColor={selectedGenre === genre.id ? genre.bgColor : null}
               onClick={() => handleGenreClick(genre.id)}
-              height={40}
+              height="24px"
             />
           ))}
         </GenreContainer>
@@ -278,25 +278,25 @@ const IsPublic = styled.div`
 `;
 
 const CreateBtn = styled.button`
-    display: flex;
-    width: 462px;
-    padding: 16px 0px;
-    margin-left: 30px;
-    margin-top: 53px;
-    margin-bottom: 42px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    border: none;
-    border-radius: 8px;
-    background: var(--black, #000000);
-    color: var(--white, #FFFFFF);
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%;
-    cursor: pointer;
+  display: flex;
+  width: 462px;
+  padding: 16px 0px;
+  margin-left: 30px;
+  margin-top: 53px;
+  margin-bottom: 42px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 8px;
+  background: var(--black, #000000);
+  color: var(--white, #ffffff);
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+  cursor: pointer;
 `;
 
 const CalendarContainer = styled.div`
