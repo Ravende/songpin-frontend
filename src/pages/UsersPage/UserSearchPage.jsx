@@ -4,7 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import SideSection from "../../components/common/SideSection";
 import SearchBar from "../../components/UsersPage/SearchBar";
 import UserInfo from "../../components/UsersPage/UserInfo";
-import { searchUsers } from "../../services/api/user";
+import { searchUsers, getUserDetail } from "../../services/api/user";
+import { getMyProfile } from "../../services/api/myPage";
 import Main from "../IntroducePage/Main";
 
 const UserSearchPage = () => {
@@ -13,9 +14,23 @@ const UserSearchPage = () => {
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
   const navigate = useNavigate();
-  const handleUserClick = id => {
-    navigate(`/users/${id}`);
+
+  const handleUserClick = async memberId => {
+    try {
+      // 로그인된 사용자 ID 가져오기
+      const myProfile = await getMyProfile();
+      const isMe = myProfile.memberId === memberId;
+
+      // 프로필 정보를 가져오는 API 호출
+      const userDetail = isMe ? myProfile : await getUserDetail(memberId);
+
+      // 해당 유저 페이지로 이동
+      navigate(`/users/${memberId}`, { state: { isMe } });
+    } catch (err) {
+      console.error("Error fetching user detail:", err);
+    }
   };
+
   const handleSearch = async keyword => {
     if (!keyword.trim()) return; // 빈 검색어일 경우 무시
 

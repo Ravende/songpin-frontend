@@ -50,7 +50,7 @@ function App() {
           <Route path="/pin-edit" element={<EditPinPage />} />
           <Route path="/playlists" element={<PlaylistPage />} />
           <Route path="/usersearch" element={<UserSearchPage />} />
-          <Route path="/users/:userId" element={<UsersPage />} />
+          <Route path="/users/:memberId" element={<UsersPage />} />
           <Route path="/user-follows" element={<UserFollowPage />} />
           <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
           <Route
@@ -115,7 +115,7 @@ function MapLayout() {
           <Route path="/pin-edit" element={<EditPinPage />} />
           <Route path="/playlists" element={<PlaylistPage />} />
           <Route path="/usersearch" element={<UserSearchPage />} />
-          <Route path="/users" element={<UsersPage />} />
+          <Route path="/users/:memberId" element={<UsersPage />} />
           <Route path="/user-follows" element={<UserFollowPage />} />
           <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
           <Route
