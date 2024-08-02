@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import MapFilter from "../../components/HomePage/MapFilter";
 import SideBar from "../../components/HomePage/SideBar";
 import SideSection from "../../components/common/SideSection";
@@ -45,8 +44,8 @@ const HomePage = () => {
                 <PlaceComponent key={place.placeId} name={place.placeName} cnt={place.placePinCount} />
                 ))}
             </PlaceListContainer>
-            </SideSection>
-            <MapFilter />
+        </SideSection>
+        <MapFilter />
         </div>
     );
 };

@@ -35,7 +35,9 @@ export default Notification;
 
 const NotifComponent = styled.div`
   z-index: 1000;
-  position: relative;
+  position: absolute;
+  top: 840px;
+  right: 74px;
 `;
 
 const NotifBtn = styled.img`

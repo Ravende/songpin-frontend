@@ -1,18 +1,43 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import backIcon from '../../assets/images/MusicSearchPage/arrow_back.svg';
-import location from '../../assets/images/MusicSearchPage/location_icon.svg';
-import shareButton from '../../assets/images/MusicSearchPage/sharing_button.svg';
-import sparkIcon from '../../assets/images/MusicSearchPage/spark_122.svg';
-import PinComponent from '../../components/MusicSearchPage/PinComponent';
-import SideSection from '../../components/common/SideSection';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+import backIcon from "../../assets/images/MusicSearchPage/arrow_back.svg";
+import location from "../../assets/images/MusicSearchPage/location_icon.svg";
+import shareButton from "../../assets/images/MusicSearchPage/sharing_button.svg";
+import sparkIcon from "../../assets/images/MusicSearchPage/spark_122.svg";
+import PinComponent from "../../components/MusicSearchPage/PinComponent";
+import SideSection from "../../components/common/SideSection";
+import { getPlaceDetails } from "../../services/api/place";
 
 const PlaceInfoPage = () => {
   const navigate = useNavigate();
+  const { placeId } = useParams();
+  const [placeInfo, setPlaceInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const handleNavigate = () => {
-    navigate('/search');
+    navigate("/search");
   };
+
+  useEffect(() => {
+    const fetchPlaceDetails = async () => {
+      if (placeId) {
+        try {
+          const res = await getPlaceDetails(placeId);
+          setPlaceInfo(res.data);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    fetchPlaceDetails();
+  }, [placeId]);
+
+  if (loading) {
+    return <SideSection />; // 로딩 중
+  }
 
   return (
     <SideSection>
@@ -21,23 +46,28 @@ const PlaceInfoPage = () => {
         <PlaceDetails>
           <PlaceTitle>
             <LocationIcon src={location} />
-            <Name>신촌역</Name>
+            <Name>{placeInfo.placeName}</Name>
           </PlaceTitle>
           <SharingBtn src={shareButton} />
         </PlaceDetails>
-        <LocationInfo>서울 서대문구 신촌로 90</LocationInfo>
+        <LocationInfo>{placeInfo.address}</LocationInfo>
         <PinSection>
           <InfoSection>
             <PinCount>
               <PinIcon src={sparkIcon} />
-              <Num>53</Num>
+              <Num>{placeInfo.placePinCount}</Num>
             </PinCount>
-            <RecentDate>최근 등록 일자: 2020.3.20</RecentDate>
+            <RecentDate>최근 등록 일자: {placeInfo.updatedDate}</RecentDate>
           </InfoSection>
           <PinsContainer>
-            <PinComponent />
-            <PinComponent />
-            <PinComponent />
+            {placeInfo?.songList.map(song => (
+              <PinComponent
+                key={song.songId}
+                avgGenreName={song.avgGenreName}
+                pinCount={song.pinCount}
+                songInfo={song.songInfo}
+              />
+            ))}
           </PinsContainer>
         </PinSection>
       </PlaceInfo>

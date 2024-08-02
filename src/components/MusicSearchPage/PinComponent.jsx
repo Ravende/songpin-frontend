@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import pinImage from '../../assets/images/MusicSearchPage/Rectangle 217.png';
-import mapIconBallad from '../../assets/images/MusicSearchPage/flower.svg';
-import mapIconBlack from '../../assets/images/MusicSearchPage/flower_black.svg';
-import mapIconGray from '../../assets/images/MusicSearchPage/flower_gray.svg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import mapIconBallad from "../../assets/images/MusicSearchPage/flower.svg";
+import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
+import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
 
-const PinComponent = () => {
+const PinComponent = ({ songInfo, avgGenreName, pinCount }) => {
   const [image, setImage] = useState(mapIconBlack);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate('/details-song');
+    navigate("/details-song");
   };
 
   return (
@@ -20,16 +19,16 @@ const PinComponent = () => {
       onMouseLeave={() => setImage(mapIconBlack)}
       onClick={handleNavigate}
     >
-      <PinImg src={pinImage} alt="앨범 이미지" />
+      <PinImg src={songInfo?.imgPath} alt="앨범 이미지" />
       <TextBox>
         <PinTitle>
           <MapIcon src={image} alt="지도 아이콘" />
-          <TitleText>사랑</TitleText>
+          <TitleText>{songInfo?.title || "로딩 중..."}</TitleText>
         </PinTitle>
-        <PinSinger>임재범</PinSinger>
+        <PinSinger>{songInfo?.artist || "로딩 중..."}</PinSinger>
         <PinTimes>
           <MapIconGray src={mapIconGray} />
-          <TimesNum>5</TimesNum>
+          <TimesNum>{pinCount || "로딩 중..."}</TimesNum>
         </PinTimes>
       </TextBox>
     </PinBox>
@@ -49,7 +48,12 @@ const PinBox = styled.div`
   margin-bottom: 12px;
   &:active {
     border-radius: 8px;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), var(--offwhite, #efefef);
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      ),
+      var(--offwhite, #efefef);
   }
 `;
 
@@ -64,7 +68,7 @@ const PinImg = styled.img`
 const TextBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 16px 15px 10px 29px;
+  margin: 16px 15px 10px 12px;
   width: 100%;
 `;
 

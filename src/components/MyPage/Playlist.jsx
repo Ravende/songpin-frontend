@@ -1,22 +1,55 @@
-import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import nobookmark from '../../assets/images/MyPage/bookmark-no.svg';
-import yesbookmark from '../../assets/images/MyPage/bookmark-yes.svg';
-import pinImage from '../../assets/images/MusicSearchPage/spark_122.svg';
+import React, { useEffect, useState } from "react";
+import styled, { keyframes } from "styled-components";
+import nobookmark from "../../assets/images/MyPage/bookmark-no.svg";
+import yesbookmark from "../../assets/images/MyPage/bookmark-yes.svg";
+import pinImage from "../../assets/images/MusicSearchPage/spark_122.svg";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
+import { addBookmarkOne, deleteBookmarkOne } from "../../services/api/myPage";
+import { useNavigate } from "react-router-dom";
 
-const Playlist = (/* { playlist }*/) => {
+const Playlist = ({
+  playlistId,
+  playlistName,
+  creatorNickname,
+  pinCount,
+  updateDate,
+  bookmarkId,
+}) => {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(bookmarkId ? true : false);
 
-  const toggleBookmark = () => {
-    setIsBookmarked((prev) => !prev);
+  const toggleBookmark = async () => {
+    try {
+      if (isBookmarked) {
+        await deleteBookmarkOne(bookmarkId);
+      } else {
+        await addBookmarkOne({ playlistId });
+      }
+      setIsBookmarked(!isBookmarked);
+    } catch (error) {
+      console.error("북마크 변경에 실패했습니다.", error);
+    }
   };
+
+  const handlePlaylistClick = () => {
+    navigate(`/playlists/${playlistId}`);
+  };
+
+  const formattedUpdateDate = format(new Date(updateDate), "yy.MM.dd", {
+    locale: ko,
+  });
 
   return (
     <PlaylistContainer>
       <PlaylistBox>
         <BigBox>
-          <BookmarkBtn src={isBookmarked ? yesbookmark : nobookmark} alt="북마크 버튼" onClick={toggleBookmark} />
+          <BookmarkBtn
+            src={isBookmarked ? yesbookmark : nobookmark}
+            alt="북마크 버튼"
+            onClick={toggleBookmark}
+          />
         </BigBox>
         <SmallBoxContainer>
           <SmallBox />
@@ -25,21 +58,25 @@ const Playlist = (/* { playlist }*/) => {
           <SmallBox imageUrl={coverImages[2]} /> */}
         </SmallBoxContainer>
       </PlaylistBox>
-      <PlaylistNameContainer onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-        <PlaylistName isHovered={isHovered}>
-          {/*{playlistName}*/}가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
-          &nbsp;가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타
+      <PlaylistNameContainer
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={handlePlaylistClick}
+      >
+        <PlaylistName onClick={handlePlaylistClick} isHovered={isHovered}>
+          {playlistName}
         </PlaylistName>
+
         <FadeOut />
       </PlaylistNameContainer>
       <NameBox>
-        <UserName>by 송송</UserName>
+        <UserName>by {creatorNickname}</UserName>
         <PinBox>
           <PinImg src={pinImage} alt="핀이미지" />
-          <PinNum>53</PinNum>
+          <PinNum>{pinCount}</PinNum>
         </PinBox>
       </NameBox>
-      <UpdatedDate>최근 업데이트: 20xx.xx.xx</UpdatedDate>
+      <UpdatedDate>최근 업데이트: {formattedUpdateDate}</UpdatedDate>
     </PlaylistContainer>
   );
 };
@@ -95,7 +132,8 @@ const BookmarkBtn = styled.img`
   padding: 10px;
   cursor: pointer;
   fill: #f8f8f8;
-  /* fill: ${(props) => (props.onClick ? '#f8f8f8' : 'none')}; */
+  /* fill: ${props => (props.onClick ? "#f8f8f8" : "none")}; */
+  /* fill: ${props => (props.onClick ? "#f8f8f8" : "none")}; */
   /* &:hover {
     fill: #f8f8f8;
   } */
@@ -107,6 +145,7 @@ const PlaylistNameContainer = styled.div`
   position: relative;
   width: 210px;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const scrollText = keyframes`
@@ -126,7 +165,10 @@ const PlaylistName = styled.div`
   font-weight: 600;
   line-height: normal;
   white-space: nowrap;
-  animation: ${(props) => (props.isHovered ? scrollText : 'none')} 9s linear infinite;
+  animation: ${props => (props.isHovered ? scrollText : "none")} 9s linear
+    infinite;
+  animation: ${props => (props.isHovered ? scrollText : "none")} 9s linear
+    infinite;
 `;
 
 const FadeOut = styled.div`
