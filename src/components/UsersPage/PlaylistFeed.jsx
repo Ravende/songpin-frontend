@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import pinImage from "../../assets/images/UsersPage/library_music.svg";
 import Playlist from "../PlaylistPage/Playlist";
 
-const PlaylistFeed = () => {
+const PlaylistFeed = ({ playlists, playlistCount }) => {
   const navigate = useNavigate();
 
   const handlePlaylistClick = id => {
@@ -14,12 +14,17 @@ const PlaylistFeed = () => {
     <PlaylistFeedContainer>
       <PinBox>
         <PinImg src={pinImage} alt="핀이미지" />
-        <PinNum>50</PinNum>
+        <PinNum>{playlistCount}</PinNum>
       </PinBox>
       <PlaylistContainer>
-        <Playlist onClick={() => handlePlaylistClick(1)} />
-        <Playlist onClick={() => handlePlaylistClick(2)} />
-        <Playlist onClick={() => handlePlaylistClick(3)} />
+        {playlists.map(playlist => (
+          <Playlist
+            key={playlist.playlistId}
+            onClick={() => handlePlaylistClick(playlist.playlistId)}
+            playlist={playlist} // 플레이리스트 정보를 전달
+          />
+        ))}
+
       </PlaylistContainer>
     </PlaylistFeedContainer>
   );

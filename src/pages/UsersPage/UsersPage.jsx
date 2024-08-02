@@ -1,49 +1,116 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import UserInfo from '../../components/UsersPage/UserInfo';
-import Followers from '../../components/UsersPage/Followers';
-import backArrow from '../../assets/images/UsersPage/arrow_back_ios.svg';
-import PinFeed from '../../components/UsersPage/PinFeed';
-import PlaylistFeed from '../../components/UsersPage/PlaylistFeed';
-import SideSection from '../../components/common/SideSection';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  getUserDetail,
+  getUserPlaylists,
+  getUserPins,
+  getUserFollowers,
+  getUserFollowings,
+} from "../../services/api/user";
+import UserInfo from "../../components/UsersPage/UserInfo";
+import Followers from "../../components/UsersPage/Followers";
+import backArrow from "../../assets/images/UsersPage/arrow_back_ios.svg";
+import PinFeed from "../../components/UsersPage/PinFeed";
+import PlaylistFeed from "../../components/UsersPage/PlaylistFeed";
+import SideSection from "../../components/common/SideSection";
 
 const UsersPage = () => {
-  const [selectedMenu, setSelectedMenu] = useState('pinFeed');
+  const { memberId } = useParams();
+  const [userData, setUserData] = useState(null);
+  const [playlists, setPlaylists] = useState([]);
+  const [playlistCount, setPlaylistCount] = useState(0);
+  const [pins, setPins] = useState([]);
+  const [totalElements, setTotalElements] = useState(0);
+  const [selectedMenu, setSelectedMenu] = useState("pinFeed");
+  const [followersData, setFollowersData] = useState(null);
+  const [followingsData, setFollowingsData] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await getUserDetail(memberId);
+        setUserData(response.data);
+
+        // 타 유저 플레이리스트 가져오기
+        const playlistsResponse = await getUserPlaylists(memberId);
+        setPlaylists(playlistsResponse.playlistList); // 플레이리스트 상태 업데이트
+        setPlaylistCount(playlistsResponse.playlistCount);
+
+        //타유저 핀피드 가져오기
+        const pinsResponse = await getUserPins(memberId);
+        setPins(pinsResponse.pinFeedList);
+        setTotalElements(pinsResponse.totalElements);
+
+        const followersResponse = await getUserFollowers(memberId); // 추가된 API 호출
+        setFollowersData(followersResponse);
+
+        const followingsResponse = await getUserFollowings(memberId); // 추가된 API 호출
+        setFollowingsData(followingsResponse);
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+      }
+    };
+
+    fetchUserData();
+  }, [memberId]);
 
   const handleBackClick = () => {
     navigate(-1);
   };
   return (
-      <SideSection>
-<ContentBox>
-          <BackBtn src={backArrow} onClick={handleBackClick} />
-        </ContentBox>
-        <ContentBox>
-          {/* 글자 크기 24px로 바꿔야 함  */}
-          <UserInfo />
-          <Followers />
-        </ContentBox>
-        <ContentBox>
-          <MenuBox>
-            <MenuText isSelected={selectedMenu === 'pinFeed'} onClick={() => setSelectedMenu('pinFeed')}>
-              핀 피드
-            </MenuText>
-            <MenuText isSelected={selectedMenu === 'playlist'} onClick={() => setSelectedMenu('playlist')}>
-              플레이리스트
-            </MenuText>
-          </MenuBox>
-        </ContentBox>
-        <Line />
-        <FeedBox>{selectedMenu === 'pinFeed' ? <PinFeed /> : <PlaylistFeed />}</FeedBox>
-      
-      </SideSection>
+    <SideSection>
+      <ContentBox>
+        <BackBtn src={backArrow} onClick={handleBackClick} />
+      </ContentBox>
+      <ContentBox>
+        {userData ? (
+          <>
+            <UserInfo
+              nickname={userData.nickname}
+              handle={userData.handle}
+              profileImg={userData.profileImg}
+            />
+            <Followers
+              myFollowId={userData.followId}
+              followerCount={userData.followerCount}
+              followingCount={userData.followingCount}
+            />
+          </>
+        ) : (
+          <div></div>
+        )}
+      </ContentBox>
+      <ContentBox>
+        <MenuBox>
+          <MenuText
+            isSelected={selectedMenu === "pinFeed"}
+            onClick={() => setSelectedMenu("pinFeed")}
+          >
+            핀 피드
+          </MenuText>
+          <MenuText
+            isSelected={selectedMenu === "playlist"}
+            onClick={() => setSelectedMenu("playlist")}
+          >
+            플레이리스트
+          </MenuText>
+        </MenuBox>
+      </ContentBox>
+      <Line />
+      <FeedBox>
+        {selectedMenu === "pinFeed" ? (
+          <PinFeed totalElements={totalElements} pins={pins} />
+        ) : (
+          <PlaylistFeed playlistCount={playlistCount} playlists={playlists} />
+        )}
+      </FeedBox>
+    </SideSection>
   );
 };
 
 export default UsersPage;
-
 
 const ContentBox = styled.div`
   display: flex;
@@ -76,7 +143,8 @@ const MenuText = styled.div`
   padding-left: 7px;
   padding-right: 7px;
   cursor: pointer;
-  border-bottom: ${(props) => (props.isSelected ? '3px solid var(--light_black, #232323)' : 'none')};
+  border-bottom: ${props =>
+    props.isSelected ? "3px solid var(--light_black, #232323)" : "none"};
 `;
 
 const MenuBox = styled.div`
@@ -93,7 +161,6 @@ const FeedBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 
   padding-top: 30px;
 

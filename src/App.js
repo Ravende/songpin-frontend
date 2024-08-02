@@ -48,6 +48,7 @@ const genreImages = {
   "EXTRA": extra,
 };
 
+
 function App() {
 
   const [allPins, setAllPins] = useState([]);
@@ -86,7 +87,7 @@ function App() {
           <Route path="/pin-edit" element={<EditPinPage />} />
           <Route path="/playlists" element={<PlaylistPage />} />
           <Route path="/usersearch" element={<UserSearchPage />} />
-          <Route path="/users" element={<UsersPage />} />
+          <Route path="/users/:memberId" element={<UsersPage />} />
           <Route path="/user-follows" element={<UserFollowPage />} />
           <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
           <Route
@@ -175,7 +176,7 @@ function MapLayout({ allPins }) {
           <Route path="/pin-edit" element={<EditPinPage />} />
           <Route path="/playlists" element={<PlaylistPage />} />
           <Route path="/usersearch" element={<UserSearchPage />} />
-          <Route path="/users" element={<UsersPage />} />
+          <Route path="/users/:memberId" element={<UsersPage />} />
           <Route path="/user-follows" element={<UserFollowPage />} />
           <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
           <Route
