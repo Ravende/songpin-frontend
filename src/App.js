@@ -26,7 +26,7 @@ import PwResetPage from "./pages/AuthPages/PwResetPage";
 import PwResetCompletePage from "./pages/AuthPages/PwResetCompletePage";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import Notification from "./components/common/Notification";
-import { postMarkers } from './services/api/map';
+import { postAllMarkers, postRecentMarkers } from './services/api/map';
 
 import pop from './assets/map/glowing_map_pop.svg';
 import ballad from './assets/map/glowing_map_ballad.svg';
@@ -55,14 +55,13 @@ function App() {
   useEffect(()=> {
     const fetchAllPinData = async () => {
       try {
-      const Data = await postMarkers();
+      const Data = await postAllMarkers();
       setAllPins(Data.mapPlaceSet);
       } catch (error) {
       console.error("Error fetching all pin data:", error);
       }
     };
     fetchAllPinData();
-    console.log(allPins);
   }, [])
 
   return (
@@ -141,8 +140,8 @@ function MapLayout({ allPins }) {
             image={{
               src: genreImages[pin.latestGenreName] || extra,
               size: {
-                width: 85,
-                height: 85,
+                width: 114,
+                height: 114,
               },
             }}
             onClick={() => {

@@ -10,7 +10,7 @@ const post = async (url, data) => {
     return res?.data;
 };
 
-export const postMarkers = async (request) => {
+export const postAllMarkers = async () => {
     try {
         const request = {
                 "boundCoords": {
@@ -25,5 +25,16 @@ export const postMarkers = async (request) => {
         return data;
     } catch (error) {
         throw new Error("전체 기간 핀 로드 실패");
+    }
+};
+
+export const postRecentMarkers = async (request) => {
+    try {
+        console.log('Sending Request:', request);
+        const data = await post(`/map/period/recent`, request);
+        console.log('Received Data:', data);
+        return data;
+    } catch (error) {
+        throw new Error("최근 기간 핀 로드 실패");
     }
 };
