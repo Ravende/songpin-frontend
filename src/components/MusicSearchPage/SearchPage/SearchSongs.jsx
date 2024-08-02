@@ -28,16 +28,11 @@ const SearchSongs = ({ keyword, sortBy }) => {
           });
 
           console.log(data);
-
-          if (Array.isArray(data)) {
-            setSearchResults(data);
-            setPage(1);
-            setHasMore(data.length === 20);
-          }
+          setSearchResults(data);
+          setPage(1);
+          setHasMore(data.length === 20);
         } catch (error) {
           console.error(error);
-          setSearchResults([]);
-          setHasMore(false);
         } finally {
           setIsLoading(false);
         }
@@ -115,7 +110,7 @@ const SearchSongs = ({ keyword, sortBy }) => {
         <>
           {searchResults.map(result => (
             <PinComponent
-              songId={result.songInfo?.songId}
+              key={result.songInfo?.songId}
               songInfo={result.songInfo}
               avgGenreName={result.avgGenreName}
               pinCount={result.pinCount}
@@ -123,6 +118,7 @@ const SearchSongs = ({ keyword, sortBy }) => {
           ))}
         </>
       )}
+      <div ref={loaderRef} style={{ height: "15px" }}></div>
     </SongsList>
   );
 };
