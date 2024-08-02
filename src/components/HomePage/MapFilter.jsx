@@ -200,7 +200,8 @@ const FilterContainer = styled.div`
   justify-content: flex-end;
   width: 90%;
   height: 44px;
-  margin-top: 20px;
+  top: 34px;
+  right: 73px;
   border: none;
   background: none;
   z-index: 100; // 지도 위로 출력

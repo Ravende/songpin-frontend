@@ -283,6 +283,7 @@ const CreateBtn = styled.button`
     padding: 16px 0px;
     margin-left: 30px;
     margin-top: 53px;
+    margin-bottom: 42px;
     justify-content: center;
     align-items: center;
     gap: 8px;

@@ -1,28 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import alarmIcon from "../../assets/notification/alarm.svg";
 import ColumnComponent from "./ColumnComponent";
+import { showAlarms, postNewAlarms } from '../../services/api/alarm';
 
 const Notification = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [alarms, setAlarms] = useState([]);
+  const [isNewAlarm, setIsNewAlarm] = useState(false);
 
   const handleNotice = () => {
     setIsOpen(!isOpen);
+    setIsNewAlarm(false);
   };
+
+  useEffect(()=> {
+    const fetchAlarmData = async () => {
+      try {
+      const Data = await showAlarms();
+      setAlarms(Data.data.alarmList);
+      } catch (error) {
+      console.error("Error fetching alarm data:", error);
+      }
+    };
+    fetchAlarmData();
+    
+    const eventSource = new EventSource("https://api.songpin.n-e.kr/alarms/subscribe")
+
+    eventSource.onopen = async () => {
+      console.log("sse opened!")
+    }
+
+    eventSource.addEventListener('sse-alarm', (event) => {
+      console.log("sse-alarm")
+      const data = JSON.parse(event.data);
+      console.log(data);
+      setIsNewAlarm(true);
+    });
+
+    eventSource.onerror = async (e) => {
+      console.log(e)
+    }
+
+    return () => {
+      eventSource.close()
+    }
+  }, [])
 
   return (
     <NotifComponent>
       <NotifBtn src={alarmIcon} onClick={handleNotice} />
-      <RedDot />
+      {isNewAlarm && <RedDot />}
       {isOpen && (
         <NoticePopup>
           <NoticeBox>
             <AlarmTitle>알림</AlarmTitle>
             <ContentSection>
-              <ColumnComponent />
-              <ColumnComponent />
-              <ColumnComponent />
-              <ColumnComponent />
+              {alarms && alarms.map(alarm => (
+                <ColumnComponent 
+                  key={alarm.alarmId} 
+                  read={alarm.isRead} 
+                  message={alarm.message} 
+                  time={alarm.createdTime} 
+                  id={alarm.senderId} 
+                />
+                ))}
             </ContentSection>
           </NoticeBox>
         </NoticePopup>

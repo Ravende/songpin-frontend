@@ -34,7 +34,7 @@ const Playlist = ({
   };
 
   const handlePlaylistClick = () => {
-    navigate(`/playlist/${playlistId}`);
+    navigate(`/playlists/${playlistId}`);
   };
 
   const formattedUpdateDate = format(new Date(updateDate), "yy.MM.dd", {
