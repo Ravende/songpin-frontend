@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import arrowDown from "../../assets/images/MusicSearchPage/arrow_down.svg";
 import SideSection from "../../components/common/SideSection";
@@ -11,8 +11,14 @@ const values = ["정확도순", "등록 핀 많은순", "최근 핀 등록순"];
 const SearchContainer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("정확도순");
-  const [selectedOption, setSelectedOption] = useState("노래");
+  const [selectedOption, setSelectedOption] = useState(() => {
+    return sessionStorage.getItem("selectedOption") || "노래";
+  });
   const [keyword, setKeyword] = useState("");
+
+  useEffect(() => {
+    sessionStorage.setItem("selectedOption", selectedOption);
+  }, [selectedOption]);
 
   const onValueClicked = value => () => {
     setSelectedValue(value);
