@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import userLogoPop from "../../assets/images/UsersPage/user-logo-pop.svg"; //임시 유저 프로필
 import { useQuery } from "@tanstack/react-query";
@@ -35,6 +35,7 @@ const UserInfo = ({
   return (
     <UserInfoBox onClick={onClick}>
       <UserLogo src={profileImg} alt="User logo pop" />
+
       <UserNameBox>
         <UserName>{nickname || profileData.nickname}</UserName>
         <UserId>@{handle || profileData.handle}</UserId>

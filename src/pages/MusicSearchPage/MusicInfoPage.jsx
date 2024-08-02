@@ -1,20 +1,33 @@
-import React, { useEffect, useState, useRef } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import backIcon from '../../assets/images/MusicSearchPage/arrow_back.svg';
-import mapIconSpark from '../../assets/images/MusicSearchPage/spark_green.svg';
-import mapIconSparkBlack from '../../assets/images/MusicSearchPage/spark_black.svg';
-import uncheckedBox from '../../assets/images/MusicSearchPage/checkbox.svg';
-import checkedBox from '../../assets/images/MusicSearchPage/checkbox-oncheck.svg';
-import MusicInfoPinPreview from '../../components/MusicSearchPage/MusicInfoPinPreview';
-import SideSection from '../../components/common/SideSection';
+import React, { useEffect, useState, useRef } from "react";
+import styled, { keyframes } from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+import backIcon from "../../assets/images/MusicSearchPage/arrow_back.svg";
+import mapIconSparkBlack from "../../assets/images/MusicSearchPage/spark_black.svg";
+import uncheckedBox from "../../assets/images/MusicSearchPage/checkbox.svg";
+import checkedBox from "../../assets/images/MusicSearchPage/checkbox-oncheck.svg";
+import MusicInfoPinPreview from "../../components/MusicSearchPage/MusicInfoPinPreview";
+import SideSection from "../../components/common/SideSection";
+import { getMySongPins, getSongDetails } from "../../services/api/song";
+import { getSongPins } from "../../services/api/song";
+import { GenreList } from "../../constants/GenreList";
 
 const MusicInfoPage = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [title, setTitle] = useState('Yes, and? aaaaaaaaaaaaaaaaaa');
+  const [title, setTitle] = useState("");
   const [titleWidth, setTitleWidth] = useState(0);
   const titleRef = useRef(null);
+  const { songId } = useParams();
+  const [songInfo, setSongInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [pins, setPins] = useState([]);
+  const [myPins, setMyPins] = useState([]);
+
+  useEffect(() => {
+    if (songInfo?.title) {
+      setTitle(songInfo.title);
+    }
+  }, [songInfo]);
 
   useEffect(() => {
     if (titleRef.current) {
@@ -23,24 +36,83 @@ const MusicInfoPage = () => {
     }
   }, [title]);
 
-  const handleCheckboxChange = () => {
+  const handleCheckboxChange = async () => {
     setIsChecked(!isChecked);
+    if (!isChecked) {
+      fetchMySongPins();
+    }
   };
 
   const navigate = useNavigate();
   const goSearchPage = () => {
-    navigate('/search');
+    navigate("/search");
   };
+
+  useEffect(() => {
+    const fetchSongDetails = async () => {
+      if (songId) {
+        try {
+          const res = await getSongDetails(songId);
+          setSongInfo(res.data);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    fetchSongDetails();
+  }, [songId]);
+
+  useEffect(() => {
+    const fetchSongPins = async () => {
+      if (songId) {
+        try {
+          const pinsRes = await getSongPins(songId);
+          setPins(pinsRes);
+        } catch (err) {
+          console.error(err);
+          setPins([]);
+        }
+      }
+    };
+    fetchSongPins();
+  }, [songId]);
+
+  const fetchMySongPins = async () => {
+    if (songId) {
+      try {
+        const myPinsRes = await getMySongPins(songId);
+        setMyPins(myPinsRes);
+      } catch (err) {
+        console.error(err);
+        setMyPins([]);
+      }
+    }
+  };
+
+  const displayedPins = isChecked ? myPins : pins;
+
+  const getGenreIcon = genreName => {
+    const genre = GenreList.find(item => item.EngName === genreName);
+    return genre ? genre.strokeIconSrc : null;
+  };
+
+  const iconSrc = getGenreIcon(songInfo?.avgGenreName || null);
+
+  if (loading) {
+    return <SideSection />; // 로딩 중
+  }
 
   return (
     <SideSection>
       <MusicInfo>
         <SongInfo>
           <BackIcon src={backIcon} onClick={goSearchPage} />
-          <AlbumImg src="https://s3-alpha-sig.figma.com/img/676f/30fc/fd783e275b3ebcc7a70f49a291035300?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=epOzyXB0QMYKi8SRhdRvKZzyq58YSvoNaJMLg5VD4PIP6zYLrTOk5-N-m3LlpmMlVR7sLVNT4wRpabkXf9P9t~4xLPLerwxPrC8EMAR7GviyOGXwVxblJpAqq4T5Do2jjUmZqwz8TzzWl196AIz6~obC1gCyQqY-ZySx8b2b-77qhxSQJuXFo6ivLTsgQ9c2YtvTr6hLA~JFhwrkuRnBBy0Ip1310J-WCl4TTAvgVu7qH3NeSbQAtKjACccyFkrBGkPF5Gf9URd2qXP37uK7COCblCKbvvwosb86TAARTglVtwSCJRaFlKS0HRsBYIOS51Gn0gjdT9W~LoTrMEDT8Q__" />
+          <AlbumImg src={songInfo.imgPath} alt="앨범 이미지" />
           <SongDetail>
             <SongTitle>
-              <MapIcon src={mapIconSpark} />
+              <MapIcon src={iconSrc} alt="장르 아이콘" />
               <RotateBox
                 onMouseEnter={() => {
                   if (titleWidth > 424) setIsHovered(true);
@@ -55,23 +127,33 @@ const MusicInfoPage = () => {
                 {titleWidth > 424 && <FadeOut />}
               </RotateBox>
             </SongTitle>
-            <Singer>Ariana Grande</Singer>
+            <Singer>{songInfo.artist}</Singer>
             <PinCount>
               <MapIconBlack src={mapIconSparkBlack} />
-              <Num>50</Num>
+              <Num>{songInfo.pinCount}</Num>
             </PinCount>
           </SongDetail>
           <PinInfo>
-            <ListenedTimes>최근 들은 날짜: 2020.3.20</ListenedTimes>
+            <ListenedTimes>
+              {songInfo.lastListenedDate
+                ? `최근 들은 날짜: ${songInfo.lastListenedDate}`
+                : "아직 듣지 않았어요"}
+            </ListenedTimes>
             <CheckMyPin>
               <CheckText>나의 핀 보기</CheckText>
-              <Checkbox src={isChecked ? checkedBox : uncheckedBox} onClick={handleCheckboxChange} />
+              <Checkbox
+                src={isChecked ? checkedBox : uncheckedBox}
+                onClick={handleCheckboxChange}
+              />
             </CheckMyPin>
           </PinInfo>
-          <MusicInfoPinPreview />
-          <MusicInfoPinPreview />
-          {/* <NoPinMessage>아직 공개된 핀 메모가 없습니다.</NoPinMessage> */}
-          {/* <NoMyPinMessage>아직 이 음악에 대해 핀을 등록하지 않았습니다.</NoMyPinMessage> */}
+          {displayedPins.length > 0 ? (
+            displayedPins.map(pin => (
+              <MusicInfoPinPreview key={pin.pinId} pin={pin} />
+            ))
+          ) : (
+            <NoPinMessage>아직 생성된 핀이 없습니다.</NoPinMessage>
+          )}
         </SongInfo>
       </MusicInfo>
     </SideSection>
@@ -105,9 +187,6 @@ const AlbumImg = styled.img`
   height: 450px;
   flex-shrink: 0;
   border-radius: 18px;
-  /* background:
-    linear-gradient(0deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%),
-    url(<path-to-image>) lightgray 50% / cover no-repeat; */
   margin-top: 34px;
 `;
 
@@ -157,7 +236,8 @@ const TitleText = styled.div`
   font-weight: 700;
   line-height: 40px; /* 125% */
   display: inline-block;
-  animation: ${(props) => (props.isHovered ? rotateText : 'none')} 9s linear infinite;
+  animation: ${props => (props.isHovered ? rotateText : "none")} 9s linear
+    infinite;
 `;
 
 const FadeOut = styled.div`
@@ -189,7 +269,7 @@ const MapIconBlack = styled.img`
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  /* opacity: 0.8; */
+  opacity: 0.8;
   margin-right: 8px;
 `;
 
@@ -250,9 +330,5 @@ const NoPinMessage = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 28px */
-  margin: 142px 107px 142px 105px;
-`;
-
-const NoMyPinMessage = styled(NoPinMessage)`
-  margin: 142px 49px 142px 49px;
+  padding: 126px 125px 170px 126px;
 `;

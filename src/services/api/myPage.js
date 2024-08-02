@@ -64,6 +64,33 @@ export const addFollowing = async followId => {
   }
 };
 
+export const getFollowerList = async memberId => {
+  try {
+    const data = await get(`/members/${memberId}/followers`);
+    return data;
+  } catch (error) {
+    throw new Error("데이터 불러오기에 실패하였습니다.");
+  }
+};
+
+export const getFollowingList = async memberId => {
+  try {
+    const data = await get(`/members/${memberId}/followings`);
+    return data;
+  } catch (error) {
+    throw new Error("데이터 불러오기에 실패하였습니다.");
+  }
+};
+
+export const deleteFollowing = async followId => {
+  try {
+    const data = await client.delete(`/follows/${followId}`);
+    return data;
+  } catch (error) {
+    throw new Error("데이터 불러오기에 실패하였습니다.");
+  }
+};
+
 export const getCalendarPin = async ({ year, month }) => {
   try {
     const data = await get(`/me/calendar?year=${year}&month=${month}`);

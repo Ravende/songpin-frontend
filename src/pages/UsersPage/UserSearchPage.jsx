@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -78,6 +79,7 @@ const UserSearchPage = () => {
       ) : searched ? (
         <NoUser>검색 결과가 없습니다.</NoUser>
       ) : null}
+
     </SideSection>
   );
 };
@@ -116,3 +118,4 @@ const NoUser = styled.div`
   line-height: 140%; /* 28px */
   margin-top: 448px;
 `;
+

@@ -13,27 +13,41 @@ const ProfileEditPage = () => {
   const [selected, setSelected] = useState();
   const [profileImg, setProfileImg] = useState();
   const [email, setEmail] = useState();
+  const [originImg, setOriginImg] = useState("");
+  const [infoMsgNickname, setInfoMsgNickname] = useState("");
+  const [infoMsgHandle, setInfoMsgHandle] = useState("");
+
   const navigate = useNavigate();
 
   const completeEditProfile = async () => {
     const selectedGenre = GenreList.find(it => it.id === selected);
     const editProfile = {
-      profileImg: selectedGenre ? selectedGenre.EngName : "",
+      profileImg: selectedGenre ? selectedGenre.EngName : originImg,
       nickname,
       handle,
     };
     console.log(editProfile);
     const res = await editMyProfile(editProfile);
     console.log(res);
-    navigate("/mypage");
+    if (res.data && res.data.message) {
+      const message = res.data.message;
+      if (message.startsWith("nickname")) {
+        setInfoMsgNickname(message.slice(9));
+      } else {
+        setInfoMsgHandle(message.slice(7));
+      }
+    }
+    if (!res.data) navigate("/mypage");
   };
+  //if (message.startsWith("handle"))
 
   useEffect(() => {
     const getProfile = async () => {
       try {
         const res = await getMyProfile();
+        setOriginImg(res.profileImg);
         const img = ProfileImg.find(it => it.EngName === res.profileImg);
-
+        setSelected(img.id);
         console.log(res);
         if (res) {
           setNickname(res.nickname);
@@ -88,7 +102,7 @@ const ProfileEditPage = () => {
                 placeholder="닉네임을 입력하세요"
               />
               <Line />
-              <AlarmMessage>닉네임은 8자 이내로 작성해주세요.</AlarmMessage>
+              <AlarmMessage>{infoMsgNickname}</AlarmMessage>
             </Edit>
           </NickName>
           <Handle>
@@ -101,7 +115,7 @@ const ProfileEditPage = () => {
                 placeholder="핸들을 입력하세요"
               />
               <Line />
-              <AlarmMessage>이미 사용 중인 핸들입니다.</AlarmMessage>
+              <AlarmMessage>{infoMsgHandle}</AlarmMessage>
             </Edit>
           </Handle>
           <Email>

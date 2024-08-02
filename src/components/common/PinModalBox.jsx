@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const options = ["담기", "수정", "삭제"];
 
-const PinModalBox = ({ top, right, padding }) => {
+const PinModalBox = ({ top, right, padding, pinId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [clickedOption, setClickedOption] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -67,7 +67,10 @@ const PinModalBox = ({ top, right, padding }) => {
         />
       )}
       {isAddPlaylistModalOpen && clickedOption === "담기" && (
-        <AddPlaylistModal setModalCommon={handleAddPlaylistModal} />
+        <AddPlaylistModal
+          pinId={pinId}
+          setModalCommon={handleAddPlaylistModal}
+        />
       )}
       {clickedOption === "수정" && { goPinEditPage }}
     </PinModal>

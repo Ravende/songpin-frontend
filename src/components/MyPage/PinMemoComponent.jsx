@@ -16,6 +16,7 @@ const PinMemoComponent = ({
   listenedDate,
   placeName,
   genre,
+  pinId,
 }) => {
   const [isTruncated, setIsTruncated] = useState(true);
   const toggleTruncation = () => {
@@ -55,7 +56,7 @@ const PinMemoComponent = ({
           </SongTitle>
           <Singer>{artist}</Singer>
         </SongInfo>
-        <PinModalBox top="48px" right="12px" />
+        <PinModalBox top="48px" right="12px" pinId={pinId} />
       </TitleSection>
       <DetailsSection>
         <Memo>

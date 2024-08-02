@@ -8,7 +8,7 @@ const PlaylistFeed = ({ playlists, playlistCount }) => {
   const navigate = useNavigate();
 
   const handlePlaylistClick = id => {
-    navigate(`/playlist/${id}`);
+    navigate(`/playlists/${id}`);
   };
   return (
     <PlaylistFeedContainer>
@@ -24,9 +24,7 @@ const PlaylistFeed = ({ playlists, playlistCount }) => {
             playlist={playlist} // 플레이리스트 정보를 전달
           />
         ))}
-        {/* <Playlist onClick={() => handlePlaylistClick(1)} />
-          <Playlist onClick={() => handlePlaylistClick(2)} />
-          <Playlist onClick={() => handlePlaylistClick(3)} /> */}
+
       </PlaylistContainer>
     </PlaylistFeedContainer>
   );

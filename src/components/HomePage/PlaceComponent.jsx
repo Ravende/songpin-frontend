@@ -4,21 +4,24 @@ import mapIconSpark from '../../assets/images/MusicSearchPage/spark_gray.svg';
 import { ReactComponent as LocationMark } from '../../assets/images/HomePage/location_on.svg';
 import { useNavigate } from 'react-router-dom';
 
-const PlaceComponent = () => {
+const PlaceComponent = (place = {}) => {
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate('/details-place');
   };
+
+  console.log(place.name);
+  console.log(place.cnt);
 
   return (
     <PlaceBox onClick={handleNavigate}>
       <Mark>
         <LocationMark />
       </Mark>
-        <PlaceName>신촌역</PlaceName>
+        <PlaceName>{place.name}</PlaceName>
         <PinTimes>
-          <MapIcon src={mapIconSpark} />
-          <TimesNum>5</TimesNum>
+            <MapIcon src={mapIconSpark} />
+            <TimesNum>{place.cnt}</TimesNum>
         </PinTimes>
     </PlaceBox>
   );
@@ -54,7 +57,7 @@ const PlaceName = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  margin-right: 270.43px;
+  width: 320px;
 `;
 
 const PinTimes = styled.div`
