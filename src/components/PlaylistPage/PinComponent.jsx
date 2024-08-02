@@ -4,7 +4,7 @@ import mapIconBallad from "../../assets/images/MusicSearchPage/flower.svg";
 import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
 import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
 import PinModalBox from "../common/PinModalBox";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const PinComponent = ({
   pin = {},
@@ -21,8 +21,9 @@ const PinComponent = ({
   const handleClick = () => {
     if (selectable) {
       onSelect(pin.playlistPinId);
+    } else {
+      navigate(`/details-song/${pin.songInfo.songId}`);
     }
-    navigate(`/details-song/${pin.songInfo.songId}`);
   };
   const formatDate = dateString => {
     const date = new Date(dateString);
