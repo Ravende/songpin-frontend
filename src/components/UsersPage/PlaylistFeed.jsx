@@ -1,14 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import pinImage from '../../assets/images/UsersPage/library_music.svg';
-import Playlist from '../PlaylistPage/Playlist';
+import React from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import pinImage from "../../assets/images/UsersPage/library_music.svg";
+import Playlist from "../PlaylistPage/Playlist";
 
 const PlaylistFeed = () => {
   const navigate = useNavigate();
 
-  const handlePlaylistClick = (id) => {
-    navigate(`/playlist/${id}`);
+  const handlePlaylistClick = id => {
+    navigate(`/playlists/${id}`);
   };
   return (
     <PlaylistFeedContainer>
@@ -17,10 +17,10 @@ const PlaylistFeed = () => {
         <PinNum>50</PinNum>
       </PinBox>
       <PlaylistContainer>
-          <Playlist onClick={() => handlePlaylistClick(1)} />
-          <Playlist onClick={() => handlePlaylistClick(2)} />
-          <Playlist onClick={() => handlePlaylistClick(3)} />
-        </PlaylistContainer>
+        <Playlist onClick={() => handlePlaylistClick(1)} />
+        <Playlist onClick={() => handlePlaylistClick(2)} />
+        <Playlist onClick={() => handlePlaylistClick(3)} />
+      </PlaylistContainer>
     </PlaylistFeedContainer>
   );
 };
@@ -28,8 +28,8 @@ const PlaylistFeed = () => {
 export default PlaylistFeed;
 
 const PlaylistFeedContainer = styled.div`
-display:flex;
-flex-direction:column;
+  display: flex;
+  flex-direction: column;
 `;
 
 const PinBox = styled.div`

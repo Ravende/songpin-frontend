@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ReactSwitch from "react-switch";
@@ -33,8 +32,6 @@ const PublicToggle = ({ isPublic, setIsPublic }) => {
 const Switch = styled.div`
   display: flex;
   align-items: center;
-
-
 `;
 
 const ToggleText = styled.span`

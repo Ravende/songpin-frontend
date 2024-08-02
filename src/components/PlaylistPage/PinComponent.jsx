@@ -1,31 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import albumImage from "../../assets/images/UsersPage/Rectangle 205.svg";
 import mapIconBallad from "../../assets/images/MusicSearchPage/flower.svg";
 import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
 import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
-import moreMenu from "../../assets/images/UsersPage/more_vert.svg";
 import PinModalBox from "../common/PinModalBox";
 
-
-
 const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
-
   const [image, setImage] = useState(mapIconBlack);
   // const [isSelected, setIsSelected] = useState(false);
   const { songInfo = {} } = pin;
-  
+
   const handleClick = () => {
     if (selectable) {
       onSelect(pin.playlistPinId);
-
     }
   };
-  const formatDate = (dateString) => {
+  const formatDate = dateString => {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}.${month}.${day}`;
   };
 
@@ -36,9 +30,8 @@ const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
       onMouseLeave={() => setImage(mapIconBlack)}
       bgColor={
         pin.isSelected
-          ? 'linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), var(--offwhite, #EFEFEF)'
-          : 'var(--offwhite, #efefef)'
-
+          ? "linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), var(--offwhite, #EFEFEF)"
+          : "var(--offwhite, #efefef)"
       }
     >
       <SongBox>
@@ -47,11 +40,8 @@ const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
           <PinTitle>
             {/* 장르에 따라 아이콘 변경해야함 */}
             <MapIcon src={image} alt="장르 아이콘" />
-            <TitleText>
-              {songInfo.title}
-             </TitleText>
-            {buttonVisible && <PinModalBox top="30px" right="0px"/>}
-
+            <TitleText>{songInfo.title}</TitleText>
+            {buttonVisible && <PinModalBox top="30px" right="0px" />}
           </PinTitle>
           <PinSinger>{songInfo.artist}</PinSinger>
           <InfoBox>
@@ -109,7 +99,7 @@ const PinTitle = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  position:relative;
+  position: relative;
   height: 28px;
 `;
 
