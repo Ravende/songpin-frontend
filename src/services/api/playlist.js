@@ -15,6 +15,14 @@ const patch = async (url, data) => {
   return res?.data;
 };
 
+export const createPlaylist = async createdPlaylist => {
+  try {
+    const data = await post(`/playlists`, createdPlaylist);
+    return data;
+  } catch (error) {
+    throw new Error("데이터 불러오기에 실패하였습니다.");
+
+
 // 플레이리스트 메인 api 연결
 export const getPlaylists = async () => {
   const url = "/playlists/main";
