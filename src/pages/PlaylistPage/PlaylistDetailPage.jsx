@@ -9,14 +9,14 @@ import PinComponent from "../../components/PlaylistPage/PinComponent";
 import SideSection from "../../components/common/SideSection";
 import BookmarkToggle from "../../components/PlaylistPage/BookmarkToggle";
 import PlaylistModalBox from "../../components/PlaylistPage/PlaylistModalBox";
-import lock from "../../assets/images/PlaylistPage/detail_lock.svg";
+// import lock from "../../assets/images/PlaylistPage/detail_lock.svg";
 
 const PlaylistDetailPage = () => {
   const { playlistId } = useParams();
   const navigate = useNavigate();
   const [playlistData, setPlaylistData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const isPrivate = playlistData.visibility === "PRIVATE";
+  // const isPrivate = playlistData.visibility === "PRIVATE";
 
   useEffect(() => {
     const fetchPlaylistDetail = async () => {
@@ -64,7 +64,7 @@ const PlaylistDetailPage = () => {
           </SmallBoxContainer>
         </PlaylistBox>
         <NameContainer>
-          {isPrivate && <LockImg src={lock} alt="나만보기 아이콘" />}
+          {/* {isPrivate && <LockImg src={lock} alt="나만보기 아이콘" />} */}
           <PlaylistName>{playlistData.playlistName}</PlaylistName>
         </NameContainer>
         <NameBox>
@@ -254,7 +254,11 @@ const PinContainer = styled.div`
   /* margin-bottom: 32px; */
 `;
 
-const NameContainer = styled.div``;
+const NameContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
 const LockImg = styled.img`
   width: 40px;
   height: 40px;
