@@ -5,6 +5,8 @@ import {
   getUserDetail,
   getUserPlaylists,
   getUserPins,
+  getUserFollowers,
+  getUserFollowings,
 } from "../../services/api/user";
 import UserInfo from "../../components/UsersPage/UserInfo";
 import Followers from "../../components/UsersPage/Followers";
@@ -21,15 +23,17 @@ const UsersPage = () => {
   const [pins, setPins] = useState([]);
   const [totalElements, setTotalElements] = useState(0);
   const [selectedMenu, setSelectedMenu] = useState("pinFeed");
+  const [followersData, setFollowersData] = useState(null);
+  const [followingsData, setFollowingsData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await getUserDetail(memberId);
-        setUserData(response.data); // response.data를 상태에 저장
+        setUserData(response.data);
 
-        // 타 유저의 플레이리스트도 가져오기
+        // 타 유저 플레이리스트 가져오기
         const playlistsResponse = await getUserPlaylists(memberId);
         setPlaylists(playlistsResponse.playlistList); // 플레이리스트 상태 업데이트
         setPlaylistCount(playlistsResponse.playlistCount);
@@ -38,6 +42,12 @@ const UsersPage = () => {
         const pinsResponse = await getUserPins(memberId);
         setPins(pinsResponse.pinFeedList);
         setTotalElements(pinsResponse.totalElements);
+
+        const followersResponse = await getUserFollowers(memberId); // 추가된 API 호출
+        setFollowersData(followersResponse);
+
+        const followingsResponse = await getUserFollowings(memberId); // 추가된 API 호출
+        setFollowingsData(followingsResponse);
       } catch (err) {
         console.error("Error fetching user data:", err);
       }

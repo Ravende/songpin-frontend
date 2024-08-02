@@ -47,3 +47,27 @@ export const getUserPins = async memberId => {
     throw error;
   }
 };
+
+// 유저의 팔로워 목록 조회 API
+export const getUserFollowers = async memberId => {
+  const url = `/members/${memberId}/followers`;
+  try {
+    const result = await client.get(url);
+    return result?.data;
+  } catch (error) {
+    console.error("Error fetching user followers:", error);
+    throw error;
+  }
+};
+
+// 유저의 팔로잉 목록 조회 API
+export const getUserFollowings = async memberId => {
+  const url = `/members/${memberId}/followings`;
+  try {
+    const result = await client.get(url);
+    return result?.data;
+  } catch (error) {
+    console.error("Error fetching user followings:", error);
+    throw error;
+  }
+};
