@@ -27,8 +27,8 @@ const SideBar = () => {
     <SideBarContainer>
       <PinFeatures>
         <StyledButton
-          onClick={() => onItemClick("/home")}
-          noBackground={activePath === "/home"}
+          onClick={() => onItemClick("/")}
+          noBackground={activePath === "/"}
         >
           <HomeLogo src={sidebar_logo} alt="Home Logo" />
         </StyledButton>
