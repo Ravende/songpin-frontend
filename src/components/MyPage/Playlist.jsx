@@ -8,14 +8,16 @@ import { ko } from "date-fns/locale";
 import { addBookmarkOne, deleteBookmarkOne } from "../../services/api/myPage";
 import { useNavigate } from "react-router-dom";
 
-const Playlist = ({
-  playlistId,
-  playlistName,
-  creatorNickname,
-  pinCount,
-  updateDate,
-  bookmarkId,
-}) => {
+const Playlist = ({ playlist }) => {
+  const {
+    playlistName,
+    creatorNickname,
+    pinCount,
+    updatedDate,
+    imgPathList,
+    bookmarkId,
+    playlistId,
+  } = playlist;
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(bookmarkId ? true : false);
@@ -37,14 +39,14 @@ const Playlist = ({
     navigate(`/playlists/${playlistId}`);
   };
 
-  const formattedUpdateDate = format(new Date(updateDate), "yy.MM.dd", {
+  const formattedUpdateDate = format(new Date(updatedDate), "yy.MM.dd", {
     locale: ko,
   });
 
   return (
     <PlaylistContainer>
       <PlaylistBox>
-        <BigBox>
+        <BigBox imageUrl={imgPathList[0]}>
           <BookmarkBtn
             src={isBookmarked ? yesbookmark : nobookmark}
             alt="북마크 버튼"
@@ -52,10 +54,8 @@ const Playlist = ({
           />
         </BigBox>
         <SmallBoxContainer>
-          <SmallBox />
-          <SmallBox />
-          {/* <SmallBox imageUrl={coverImages[1]} />
-          <SmallBox imageUrl={coverImages[2]} /> */}
+          <SmallBox imageUrl={imgPathList[1]} />
+          <SmallBox imageUrl={imgPathList[2]} />
         </SmallBoxContainer>
       </PlaylistBox>
       <PlaylistNameContainer
@@ -99,7 +99,9 @@ const BigBox = styled.div`
   height: 140px;
   border-radius: 8px 0px 0px 8px;
   border-right: 1px solid var(--f8f8f8, #fcfcfc);
-  background: #5452ff;
+  background: ${({ imageUrl }) =>
+    imageUrl ? `url(${imageUrl}) no-repeat center center` : "#E7E7E7"};
+  background-size: cover;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -115,13 +117,14 @@ const SmallBoxContainer = styled.div`
 const SmallBox = styled.div`
   width: 70px;
   height: 70px;
+  background: ${({ imageUrl }) =>
+    imageUrl ? `url(${imageUrl}) no-repeat center center` : "#E7E7E7"};
+  background-size: cover;
   &:first-child {
     border-radius: 0px 8px 0px 0px;
-    background: #00d2d2;
   }
   &:last-child {
     border-radius: 0px 0px 8px 0px;
-    background: var(--offwhite, #efefef);
   }
 `;
 
