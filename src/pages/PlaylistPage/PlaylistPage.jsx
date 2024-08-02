@@ -15,8 +15,8 @@ const PlaylistPage = () => {
     const fetchData = async () => {
       try {
         const data = await getPlaylists();
-        setRecentPlaylists(data.recentPlaylists);
-        setFollowingPlaylists(data.followingPlaylists);
+        setRecentPlaylists(data.recentPlaylists || []);
+        setFollowingPlaylists(data.followingPlaylists || []);
       } catch (error) {
         console.error("Error fetching playlists:", error);
       } finally {
