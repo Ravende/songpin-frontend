@@ -9,6 +9,7 @@ import checkedBox from "../../assets/images/MusicSearchPage/checkbox-oncheck.svg
 import MusicInfoPinPreview from "../../components/MusicSearchPage/MusicInfoPinPreview";
 import SideSection from "../../components/common/SideSection";
 import { getSongDetails } from "../../services/api/song";
+import { getSongPins } from "../../services/api/song";
 import { GenreList } from "../../constants/GenreList";
 
 const MusicInfoPage = () => {
@@ -20,6 +21,7 @@ const MusicInfoPage = () => {
   const { songId } = useParams();
   const [songInfo, setSongInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [pins, setPins] = useState([]);
 
   useEffect(() => {
     if (songInfo?.title) {
@@ -57,6 +59,21 @@ const MusicInfoPage = () => {
       }
     };
     fetchSongDetails();
+  }, [songId]);
+
+  useEffect(() => {
+    const fetchSongPins = async () => {
+      if (songId) {
+        try {
+          const pinsRes = await getSongPins(songId);
+          setPins(pinsRes); // 핀 정보 저장
+        } catch (err) {
+          console.error(err);
+          setPins([]);
+        }
+      }
+    };
+    fetchSongPins();
   }, [songId]);
 
   const getGenreIcon = genreName => {
@@ -113,9 +130,11 @@ const MusicInfoPage = () => {
               />
             </CheckMyPin>
           </PinInfo>
-          <MusicInfoPinPreview />
-          <MusicInfoPinPreview />
-          {/* <NoPinMessage>아직 공개된 핀 메모가 없습니다.</NoPinMessage> */}
+          {pins.length > 0 ? (
+            pins.map(pin => <MusicInfoPinPreview key={pin.pinId} pin={pin} />)
+          ) : (
+            <NoPinMessage>아직 공개된 핀 메모가 없습니다.</NoPinMessage>
+          )}
           {/* <NoMyPinMessage>아직 이 음악에 대해 핀을 등록하지 않았습니다.</NoMyPinMessage> */}
         </SongInfo>
       </MusicInfo>
