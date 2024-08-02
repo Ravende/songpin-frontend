@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import pinImage from '../../assets/images/MusicSearchPage/Rectangle 217.png';
+import React from "react";
+import styled from "styled-components";
 
-const PinComponent = ({ onPinClick }) => {
-
+const PinComponent = ({ onPinClick, imgPath, title, artist }) => {
   return (
     <PinBox onClick={onPinClick}>
-      <PinImg src={pinImage} alt="앨범 이미지" />
+      <PinImg src={imgPath} alt="앨범 이미지" />
       <TextBox>
         <PinTitle>
-          <TitleText>사랑</TitleText>
+          <TitleText>{title}</TitleText>
         </PinTitle>
-        <PinSinger>임재범</PinSinger>
+        <PinSinger>{artist}</PinSinger>
       </TextBox>
     </PinBox>
   );
@@ -30,16 +28,21 @@ const PinBox = styled.div`
   margin-bottom: 12px;
   &:active {
     border-radius: 8px;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), var(--offwhite, #efefef);
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      ),
+      var(--offwhite, #efefef);
   }
 `;
 
 const PinImg = styled.img`
   width: 78px;
   height: 78px;
-  padding: 11px;
-  padding-left: 12px;
-  border-radius: 4px;
+  margin: 11px;
+  margin-left: 12px;
+  border-radius: 8px;
 `;
 
 const TextBox = styled.div`

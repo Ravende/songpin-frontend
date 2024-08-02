@@ -143,7 +143,7 @@ const Info = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  bottom: 120px;
+  bottom: 118px;
 `;
 
 const SignUpAndPWReSet = styled.div`
@@ -153,7 +153,7 @@ const SignUpAndPWReSet = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 28px */
-  margin-top: 30px;
+  margin-top: 74px;
 `;
 const SignUpAndPWReSetText = styled.div`
   color: var(--gray02, #747474);
