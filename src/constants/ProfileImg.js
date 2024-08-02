@@ -23,7 +23,7 @@ export const ProfileImg = [
   {
     id: 2,
     name: "발라드",
-    EngName: "BALLADE",
+    EngName: "BALLAD",
 
     imgSrc: BalladeImg,
   },
