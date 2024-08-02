@@ -11,3 +11,12 @@ export const getSongs = async ({ keyword, sortBy, page, size }) => {
     console.error(e);
   }
 };
+
+export const getSongDetails = async songId => {
+  try {
+    const res = await client.get(`/songs/${songId}`);
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};

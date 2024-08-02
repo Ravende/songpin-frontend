@@ -1,20 +1,31 @@
-import React, { useEffect, useState, useRef } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import backIcon from '../../assets/images/MusicSearchPage/arrow_back.svg';
-import mapIconSpark from '../../assets/images/MusicSearchPage/spark_green.svg';
-import mapIconSparkBlack from '../../assets/images/MusicSearchPage/spark_black.svg';
-import uncheckedBox from '../../assets/images/MusicSearchPage/checkbox.svg';
-import checkedBox from '../../assets/images/MusicSearchPage/checkbox-oncheck.svg';
-import MusicInfoPinPreview from '../../components/MusicSearchPage/MusicInfoPinPreview';
-import SideSection from '../../components/common/SideSection';
+import React, { useEffect, useState, useRef } from "react";
+import styled, { keyframes } from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+import backIcon from "../../assets/images/MusicSearchPage/arrow_back.svg";
+import mapIconSpark from "../../assets/images/MusicSearchPage/spark_green.svg";
+import mapIconSparkBlack from "../../assets/images/MusicSearchPage/spark_black.svg";
+import uncheckedBox from "../../assets/images/MusicSearchPage/checkbox.svg";
+import checkedBox from "../../assets/images/MusicSearchPage/checkbox-oncheck.svg";
+import MusicInfoPinPreview from "../../components/MusicSearchPage/MusicInfoPinPreview";
+import SideSection from "../../components/common/SideSection";
+import { getSongDetails } from "../../services/api/song";
+import { GenreList } from "../../constants/GenreList";
 
 const MusicInfoPage = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [title, setTitle] = useState('Yes, and? aaaaaaaaaaaaaaaaaa');
+  const [title, setTitle] = useState("");
   const [titleWidth, setTitleWidth] = useState(0);
   const titleRef = useRef(null);
+  const { songId } = useParams();
+  const [songInfo, setSongInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (songInfo?.title) {
+      setTitle(songInfo.title);
+    }
+  }, [songInfo]);
 
   useEffect(() => {
     if (titleRef.current) {
@@ -29,18 +40,45 @@ const MusicInfoPage = () => {
 
   const navigate = useNavigate();
   const goSearchPage = () => {
-    navigate('/search');
+    navigate("/search");
   };
+
+  useEffect(() => {
+    const fetchSongDetails = async () => {
+      if (songId) {
+        try {
+          const res = await getSongDetails(songId);
+          setSongInfo(res.data);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    fetchSongDetails();
+  }, [songId]);
+
+  const getGenreIcon = genreName => {
+    const genre = GenreList.find(item => item.EngName === genreName);
+    return genre ? genre.strokeIconSrc : null;
+  };
+
+  const iconSrc = getGenreIcon(songInfo?.avgGenreName || null);
+
+  if (loading) {
+    return <SideSection />; // 로딩 중
+  }
 
   return (
     <SideSection>
       <MusicInfo>
         <SongInfo>
           <BackIcon src={backIcon} onClick={goSearchPage} />
-          <AlbumImg src="https://s3-alpha-sig.figma.com/img/676f/30fc/fd783e275b3ebcc7a70f49a291035300?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=epOzyXB0QMYKi8SRhdRvKZzyq58YSvoNaJMLg5VD4PIP6zYLrTOk5-N-m3LlpmMlVR7sLVNT4wRpabkXf9P9t~4xLPLerwxPrC8EMAR7GviyOGXwVxblJpAqq4T5Do2jjUmZqwz8TzzWl196AIz6~obC1gCyQqY-ZySx8b2b-77qhxSQJuXFo6ivLTsgQ9c2YtvTr6hLA~JFhwrkuRnBBy0Ip1310J-WCl4TTAvgVu7qH3NeSbQAtKjACccyFkrBGkPF5Gf9URd2qXP37uK7COCblCKbvvwosb86TAARTglVtwSCJRaFlKS0HRsBYIOS51Gn0gjdT9W~LoTrMEDT8Q__" />
+          <AlbumImg src={songInfo.imgPath} alt="앨범 이미지" />
           <SongDetail>
             <SongTitle>
-              <MapIcon src={mapIconSpark} />
+              <MapIcon src={iconSrc} alt="장르 아이콘" />
               <RotateBox
                 onMouseEnter={() => {
                   if (titleWidth > 424) setIsHovered(true);
@@ -55,17 +93,24 @@ const MusicInfoPage = () => {
                 {titleWidth > 424 && <FadeOut />}
               </RotateBox>
             </SongTitle>
-            <Singer>Ariana Grande</Singer>
+            <Singer>{songInfo.artist}</Singer>
             <PinCount>
               <MapIconBlack src={mapIconSparkBlack} />
-              <Num>50</Num>
+              <Num>{songInfo.pinCount}</Num>
             </PinCount>
           </SongDetail>
           <PinInfo>
-            <ListenedTimes>최근 들은 날짜: 2020.3.20</ListenedTimes>
+            <ListenedTimes>
+              {songInfo.lastListenedDate
+                ? `최근 들은 날짜: ${songInfo.lastListenedDate}`
+                : "아직 듣지 않았어요"}
+            </ListenedTimes>
             <CheckMyPin>
               <CheckText>나의 핀 보기</CheckText>
-              <Checkbox src={isChecked ? checkedBox : uncheckedBox} onClick={handleCheckboxChange} />
+              <Checkbox
+                src={isChecked ? checkedBox : uncheckedBox}
+                onClick={handleCheckboxChange}
+              />
             </CheckMyPin>
           </PinInfo>
           <MusicInfoPinPreview />
@@ -157,7 +202,8 @@ const TitleText = styled.div`
   font-weight: 700;
   line-height: 40px; /* 125% */
   display: inline-block;
-  animation: ${(props) => (props.isHovered ? rotateText : 'none')} 9s linear infinite;
+  animation: ${props => (props.isHovered ? rotateText : "none")} 9s linear
+    infinite;
 `;
 
 const FadeOut = styled.div`
