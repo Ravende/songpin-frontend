@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserDetail, getUserPlaylists } from "../../services/api/user";
+import {
+  getUserDetail,
+  getUserPlaylists,
+  getUserPins,
+} from "../../services/api/user";
 import UserInfo from "../../components/UsersPage/UserInfo";
 import Followers from "../../components/UsersPage/Followers";
 import backArrow from "../../assets/images/UsersPage/arrow_back_ios.svg";
@@ -14,6 +18,8 @@ const UsersPage = () => {
   const [userData, setUserData] = useState(null);
   const [playlists, setPlaylists] = useState([]);
   const [playlistCount, setPlaylistCount] = useState(0);
+  const [pins, setPins] = useState([]);
+  const [totalElements, setTotalElements] = useState(0);
   const [selectedMenu, setSelectedMenu] = useState("pinFeed");
   const navigate = useNavigate();
 
@@ -22,10 +28,16 @@ const UsersPage = () => {
       try {
         const response = await getUserDetail(memberId);
         setUserData(response.data); // response.data를 상태에 저장
+
         // 타 유저의 플레이리스트도 가져오기
         const playlistsResponse = await getUserPlaylists(memberId);
         setPlaylists(playlistsResponse.playlistList); // 플레이리스트 상태 업데이트
         setPlaylistCount(playlistsResponse.playlistCount);
+
+        //타유저 핀피드 가져오기
+        const pinsResponse = await getUserPins(memberId);
+        setPins(pinsResponse.pinFeedList);
+        setTotalElements(pinsResponse.totalElements);
       } catch (err) {
         console.error("Error fetching user data:", err);
       }
@@ -79,7 +91,7 @@ const UsersPage = () => {
       <Line />
       <FeedBox>
         {selectedMenu === "pinFeed" ? (
-          <PinFeed />
+          <PinFeed totalElements={totalElements} pins={pins} />
         ) : (
           <PlaylistFeed playlistCount={playlistCount} playlists={playlists} />
         )}

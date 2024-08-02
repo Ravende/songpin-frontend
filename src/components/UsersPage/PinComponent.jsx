@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import albumImage from '../../assets/images/UsersPage/Rectangle 205.svg';
-import mapIconBallad from '../../assets/images/MusicSearchPage/flower.svg';
-import mapIconBlack from '../../assets/images/MusicSearchPage/flower_black.svg';
-import mapIconGray from '../../assets/images/MusicSearchPage/flower_gray.svg';
-import moreMenu from '../../assets/images/UsersPage/more_vert.svg';
-import lock from '../../assets/images/UsersPage/lock.svg';
-const PinComponent = () => {
+import React, { useState } from "react";
+import styled from "styled-components";
+import albumImage from "../../assets/images/UsersPage/Rectangle 205.svg";
+import mapIconBallad from "../../assets/images/MusicSearchPage/flower.svg";
+import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
+import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
+import moreMenu from "../../assets/images/UsersPage/more_vert.svg";
+import lock from "../../assets/images/UsersPage/lock.svg";
+const PinComponent = ({ pin }) => {
   const [image, setImage] = useState(mapIconBlack);
   const [isTruncated, setIsTruncated] = useState(true);
+
+  const isPrivate = pin.visibility === "PRIVATE";
   const text =
-  '사랑하긴 했었나요 스쳐가는 인연이었나요 짧지 않은 우리 함께했던 시간들이 자꾸 내 마음을 가둬두네 누가 내 가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나';
+    isPrivate && !pin.isMine
+      ? "비공개인 메모입니다."
+      : pin.memo || "메모가 비어 있습니다.";
   const maxLength = 59;
   const showMoreBtn = text.length > maxLength;
   const displayText = showMoreBtn && isTruncated ? text.substring(0, 55) : text;
@@ -19,31 +23,45 @@ const PinComponent = () => {
     setIsTruncated(!isTruncated);
   };
 
+  const formatDate = dateString => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
+
   return (
-    <PinBox onMouseEnter={() => setImage(mapIconBallad)} onMouseLeave={() => setImage(mapIconBlack)}>
+    <PinBox
+      onMouseEnter={() => setImage(mapIconBallad)}
+      onMouseLeave={() => setImage(mapIconBlack)}
+    >
       <TextBox>
         <SongBox>
-          <PinImg src={albumImage} alt="앨범 이미지" />
+          <PinImg src={pin.songInfo.imgPath} alt="앨범 이미지" />
           <TitleBox>
             <PinTitle>
               <MapIcon src={image} alt="지도 아이콘" />
-              <TitleText>
-                사랑하긴 했었나요 스쳐가는 인연이었나요 짧지않은 우리 함께했던 시간들이 자꾸 내 마음을 가둬두네
-              </TitleText>
+              <TitleText>{pin.songInfo.title}</TitleText>
             </PinTitle>
-            <PinSinger>잔나비</PinSinger>
+            <PinSinger>{pin.songInfo.artist}</PinSinger>
           </TitleBox>
           {/* <MoreIcon src={moreMenu} alt="더보기 아이콘" /> */}
         </SongBox>
         <ContentBox>
-          <LyricText  onClick={isTruncated ? () => {} : toggleTruncation} isTruncated={isTruncated}>
-            <LockImg src={lock} alt="나만보기 아이콘" />
+          <LyricText
+            onClick={isTruncated && !isPrivate ? () => {} : toggleTruncation}
+            isTruncated={isTruncated}
+          >
+            {isPrivate && <LockImg src={lock} alt="나만보기 아이콘" />}
             {displayText}
-            {showMoreBtn && isTruncated && <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>}
+            {showMoreBtn && isTruncated && (
+              <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>
+            )}
           </LyricText>
           <InfoBox>
-            <InfoText>2024.04.04</InfoText>
-            <PlaceText>이화여대 학문관</PlaceText>
+            <InfoText>{formatDate(pin.listenedDate)}</InfoText>
+            <PlaceText>{pin.placeName}</PlaceText>
             <InfoText>에서</InfoText>
           </InfoBox>
         </ContentBox>
@@ -174,7 +192,7 @@ const LyricText = styled.div`
   line-height: 150%; /* 24px */
 
   margin-top: 11px;
-  cursor: ${(props) => (props.isTruncated ? 'auto' : 'pointer')};
+  cursor: ${props => (props.isTruncated ? "auto" : "pointer")};
 `;
 
 const ContentBox = styled.div`
