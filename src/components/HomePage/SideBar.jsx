@@ -38,12 +38,12 @@ const SideBar = () => {
                 <StyledButton onClick={() => onItemClick('/create')} isActive={activePath === '/create'}>
                     <Create src={sidebar_create} alt="Create" />
                 </StyledButton>
-                <StyledButton onClick={() => onItemClick('/playlist')} isActive={activePath === '/playlist'}>
+                <StyledButton onClick={() => onItemClick('/playlists')} isActive={activePath === '/playlist'}>
                     <Playlist src={sidebar_playlist} alt="Playlist" />
                 </StyledButton>
             </PinFeatures>
             <UserFeatures>
-                <StyledButton onClick={() => onItemClick('/users')} isActive={activePath === '/users'}>
+                <StyledButton onClick={() => onItemClick('/usersearch')} isActive={activePath === '/usersearch'}>
                     <UserSearch src={sidebar_usersearch} alt="Search User" />
                 </StyledButton>
                 <StyledButton onClick={() => onItemClick('/mypage')} isActive={activePath === '/mypage'}>
@@ -67,23 +67,23 @@ const SideBarContainer = styled.div`
 `;
 
 const PinFeatures = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const UserFeatures = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    margin-top: 50px;
-    margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;
 `;
 
 const StyledButton = styled.button`
@@ -112,69 +112,69 @@ const StyledButton = styled.button`
 `;
 
 const HomeLogo = styled.img`
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 `;
 
 const Home = styled.img`
-    width: 40px;
-    height: 40px;
-    transition: filter 0.3s ease;
+  width: 40px;
+  height: 40px;
+  transition: filter 0.3s ease;
 
-    ${StyledButton}:focus & {
-        filter: brightness(0) invert(1);
-    }
+  ${StyledButton}:focus & {
+    filter: brightness(0) invert(1);
+  }
 `;
 
 const Search = styled.img`
-    width: 27.308px;
-    height: 27.308px;
-    padding: 16px;
-    transition: filter 0.3s ease;
+  width: 27.308px;
+  height: 27.308px;
+  padding: 16px;
+  transition: filter 0.3s ease;
 
-    ${StyledButton}:focus & {
-        filter: brightness(0) invert(1);
-    }
+  ${StyledButton}:focus & {
+    filter: brightness(0) invert(1);
+  }
 `;
 
 const Create = styled.img`
-    width: 40px;
-    height: 40px;
-    transition: filter 0.3s ease;
+  width: 40px;
+  height: 40px;
+  transition: filter 0.3s ease;
 
-    ${StyledButton}:focus & {
-        filter: brightness(0) invert(1);
-    }
+  ${StyledButton}:focus & {
+    filter: brightness(0) invert(1);
+  }
 `;
 
 const Playlist = styled.img`
-    width: 43px;
-    height: 43px;
-    transition: filter 0.3s ease;
+  width: 43px;
+  height: 43px;
+  transition: filter 0.3s ease;
 
-    ${StyledButton}:focus & {
-        filter: brightness(0) invert(1);
-    }
+  ${StyledButton}:focus & {
+    filter: brightness(0) invert(1);
+  }
 `;
 
 const UserSearch = styled.img`
-    width: 40px;
-    height: 40px;
-    transition: filter 0.3s ease;
+  width: 40px;
+  height: 40px;
+  transition: filter 0.3s ease;
 
-    ${StyledButton}:focus & {
-        filter: brightness(0) invert(1);
-    }
+  ${StyledButton}:focus & {
+    filter: brightness(0) invert(1);
+  }
 `;
 
 const MyPage = styled.img`
-    width: 30px;
-    height: 28px;
-    transition: filter 0.3s ease;
+  width: 30px;
+  height: 28px;
+  transition: filter 0.3s ease;
 
-    ${StyledButton}:focus & {
-        filter: brightness(0) invert(1);
-    }
+  ${StyledButton}:focus & {
+    filter: brightness(0) invert(1);
+  }
 `;
 
 export default SideBar;
