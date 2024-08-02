@@ -7,11 +7,12 @@ import { useNavigate } from 'react-router-dom';
 const PlaceComponent = (place = {}) => {
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate('/details-place');
+    console.log(place);
+    //navigate(`/details-place/${place.placeId}`);
   };
 
-  console.log(place.name);
-  console.log(place.cnt);
+  // console.log(place.name);
+  // console.log(place.cnt);
 
   return (
     <PlaceBox onClick={handleNavigate}>
