@@ -1,18 +1,36 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const ColumnComponent = () => {
+const ColumnComponent = (alarm ={}) => {
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
     setIsClicked(true);
   };
 
+  const formatTimeAgo = (time) => {
+    const now = new Date();
+    const alarmDate = new Date(time);
+    const diff = Math.floor((now - alarmDate) / 1000);
+
+    if (diff < 60) {
+      return `${diff}초 전`;
+    } else if (diff < 3600) {
+      return `${Math.floor(diff / 60)}분 전`;
+    } else if (diff < 86400) {
+      return `${Math.floor(diff / 3600)}시간 전`;
+    } else {
+      return `${Math.floor(diff / 86400)}일 전`;
+    }
+  };
+
+  const formattedTime = formatTimeAgo(alarm.time);
+  
   return (
-    <Column onClick={handleClick} isClicked={isClicked}>
-      <Alarm isClicked={isClicked}>
-        김김김김김이이이이이(@ABCDEABCDEAB) 님이 팔로우했어요
+    <Column onClick={handleClick} isClicked={isClicked} read={alarm.read}>
+      <Alarm isClicked={isClicked} read={alarm.read}>
+        {alarm.message}
       </Alarm>
-      <Time>2시간 전</Time>
+      <Time>{formattedTime}</Time>
     </Column>
   );
 };
@@ -32,12 +50,12 @@ const Column = styled.div`
   padding-left: 34px;
   cursor: pointer;
   background: ${props =>
-    props.isClicked ? "var(--offwhite, #EFEFEF)" : "var(--f8f8f8, #FCFCFC)"};
+    props.read ? "var(--offwhite, #EFEFEF)" : "var(--f8f8f8, #FCFCFC)"};
 `;
 
 const Alarm = styled.div`
   color: ${props =>
-    props.isClicked
+    props.read
       ? " var(--gray02, #747474)"
       : "var(--light_black, #232323)"};
   font-family: Pretendard;
