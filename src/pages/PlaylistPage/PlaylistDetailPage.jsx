@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPlaylistDetail } from "../../services/api/stats";
+import { getPlaylistDetail } from "../../services/api/playlist";
 import backArrow from "../../assets/images/UsersPage/arrow_back_ios.svg";
 import pinImage from "../../assets/images/MusicSearchPage/spark_122.svg";
 import shareImg from "../../assets/images/PlaylistPage/share.svg";
-import moreButton from "../../assets/images/PlaylistPage/more_vert.svg";
 import PinComponent from "../../components/PlaylistPage/PinComponent";
 import SideSection from "../../components/common/SideSection";
 import BookmarkToggle from "../../components/PlaylistPage/BookmarkToggle";
-
-const options = ["플레이리스트 수정", "플레이리스트 삭제"];
+import PlaylistModalBox from "../../components/PlaylistPage/PlaylistModalBox";
 
 const PlaylistDetailPage = () => {
   const { playlistId } = useParams();
@@ -30,10 +28,6 @@ const PlaylistDetailPage = () => {
 
     fetchPlaylistDetail();
   }, [playlistId]);
-
-  const handlePopup = () => {
-    setIsOpen(!isOpen);
-  };
 
   const formatDate = dateString => {
     const date = new Date(dateString);
@@ -57,14 +51,7 @@ const PlaylistDetailPage = () => {
           <BackBtn src={backArrow} onClick={handleBackClick} />
           {/* 나의 플레이리스트일때만 MoreBtn 보이도록 함  */}
           {playlistData.isMine && (
-            <MoreBtn src={moreButton} onClick={handlePopup} />
-          )}
-          {isOpen && (
-            <MorePopup>
-              {options.map(option => (
-                <ListItem>{option}</ListItem>
-              ))}
-            </MorePopup>
+            <PlaylistModalBox top="44px" right="0px" playlistId={playlistId} />
           )}
         </ContentBox>
         <PlaylistBox>
@@ -75,6 +62,7 @@ const PlaylistDetailPage = () => {
           </SmallBoxContainer>
         </PlaylistBox>
         <PlaylistName>{playlistData.playlistName}</PlaylistName>
+
         <NameBox>
           <UserName>by {playlistData.creatorNickname}</UserName>
           <IconBox>
@@ -124,11 +112,6 @@ const ContentBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
   position: relative;
-
-  /* padding-left: 33px; */
-  /* padding-right: 33px; */
-  /* padding-top: 38px; */
-
   align-items: center;
 `;
 
@@ -137,13 +120,6 @@ const BackBtn = styled.img`
   height: 40px;
   flex-shrink: 0;
   padding-top: 5px;
-  cursor: pointer;
-`;
-
-const MoreBtn = styled.img`
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
   cursor: pointer;
 `;
 
@@ -222,12 +198,6 @@ const IconBox = styled.div`
   flex-direction: row;
   align-items: center;
 `;
-const BookmarkBtn = styled.img`
-  width: 19px;
-  height: 25px;
-  /* padding: 10px; */
-  cursor: pointer;
-`;
 
 const ShareBtn = styled.img`
   width: 30px;
@@ -272,37 +242,6 @@ const UpdatedDate = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 24px */
-`;
-
-const MorePopup = styled.div`
-  display: flex;
-  /* width: 182px; */
-  padding: 18px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid var(--gray02, #747474);
-  background: var(--f8f8f8, #fcfcfc);
-  z-index: 1000;
-  position: absolute;
-  /* top: 100%; */
-  /* right: -163px; */
-  top: 85px;
-  left: 540px;
-  z-index: 1000;
-  /* top: 100%; */
-`;
-
-const ListItem = styled.div`
-  color: var(--light_black, #232323);
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  cursor: pointer;
 `;
 
 const PinContainer = styled.div`

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import SideSection from "../../components/common/SideSection";
 import SearchBar from "../../components/UsersPage/SearchBar";
 import Playlist from "../../components/PlaylistPage/Playlist";
-import { getPlaylists } from "../../services/api/stats";
+import { getPlaylists } from "../../services/api/playlist";
 const PlaylistPage = () => {
   const navigate = useNavigate();
   const [recentPlaylists, setRecentPlaylists] = useState([]);
@@ -15,7 +15,6 @@ const PlaylistPage = () => {
     const fetchData = async () => {
       try {
         const data = await getPlaylists();
-        console.log("Fetched data:", data);
         setRecentPlaylists(data.recentPlaylists);
         setFollowingPlaylists(data.followingPlaylists);
       } catch (error) {

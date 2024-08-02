@@ -100,6 +100,7 @@ const PinTitle = styled.div`
   flex-direction: row;
   align-items: center;
   position: relative;
+  height: 28px;
 `;
 
 const MapIcon = styled.img`
