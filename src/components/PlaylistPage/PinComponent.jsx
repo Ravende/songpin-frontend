@@ -5,7 +5,13 @@ import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
 import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
 import PinModalBox from "../common/PinModalBox";
 
-const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
+const PinComponent = ({
+  pin = {},
+  selectable,
+  buttonVisible,
+  onSelect,
+  pinId,
+}) => {
   const [image, setImage] = useState(mapIconBlack);
   // const [isSelected, setIsSelected] = useState(false);
   const { songInfo = {} } = pin;
@@ -41,7 +47,9 @@ const PinComponent = ({ pin = {}, selectable, buttonVisible, onSelect }) => {
             {/* 장르에 따라 아이콘 변경해야함 */}
             <MapIcon src={image} alt="장르 아이콘" />
             <TitleText>{songInfo.title}</TitleText>
-            {buttonVisible && <PinModalBox top="30px" right="0px" />}
+            {buttonVisible && (
+              <PinModalBox top="30px" right="0px" pinId={pinId} />
+            )}
           </PinTitle>
           <PinSinger>{songInfo.artist}</PinSinger>
           <InfoBox>
