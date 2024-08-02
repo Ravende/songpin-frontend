@@ -10,9 +10,6 @@ const PlaceComponent = (place = {}) => {
     navigate('/details-place');
   };
 
-  console.log(place.name);
-  console.log(place.cnt);
-
   return (
     <PlaceBox onClick={handleNavigate}>
       <Mark>

@@ -59,7 +59,7 @@ export const GenreList = [
   {
     id: 2,
     name: "발라드",
-    EngName: "BALLADE",
+    EngName: "BALLAD",
 
     imgSrc: smallBalladeIcon,
     whiteImgSrc: whiteBalladeIcon,
