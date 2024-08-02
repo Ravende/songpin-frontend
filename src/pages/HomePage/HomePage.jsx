@@ -24,9 +24,9 @@ const HomePage = () => {
             }
         };
         fetchHomeData();
-        console.log(recentPlaces);
     }, []);
-
+    
+    console.log(recentPlaces);
     return (
         <div style={{ position: "relative" }}>
         <SideBar />
@@ -52,7 +52,7 @@ const HomePage = () => {
             {recentPlaces &&
                 recentPlaces.map(place => (
                 <PlaceComponent
-                    key={place.placeId}
+                    id={place.placeId}
                     name={place.placeName}
                     cnt={place.placePinCount}
                 />
