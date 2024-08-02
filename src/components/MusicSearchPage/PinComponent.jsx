@@ -4,31 +4,42 @@ import { useNavigate } from "react-router-dom";
 import mapIconBallad from "../../assets/images/MusicSearchPage/flower.svg";
 import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
 import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
+import { GenreList } from "../../constants/GenreList";
 
 const PinComponent = ({ songInfo, avgGenreName, pinCount }) => {
-  const [image, setImage] = useState(mapIconBlack);
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate("/details-song");
+    navigate(`/details-song/${songInfo?.songId}`);
   };
+
+  const getGenreIcon = genreName => {
+    const genre = GenreList.find(item => item.EngName === genreName);
+    return genre
+      ? { imgSrc: genre.imgSrc, iconSrc: genre.iconSrc }
+      : { imgSrc: mapIconBlack, iconSrc: mapIconBallad };
+  };
+
+  const { imgSrc, iconSrc } = getGenreIcon(avgGenreName || "");
+  const currentIconSrc = isHovered ? iconSrc : imgSrc;
 
   return (
     <PinBox
-      onMouseEnter={() => setImage(mapIconBallad)}
-      onMouseLeave={() => setImage(mapIconBlack)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={handleNavigate}
     >
       <PinImg src={songInfo?.imgPath} alt="앨범 이미지" />
       <TextBox>
         <PinTitle>
-          <MapIcon src={image} alt="지도 아이콘" />
-          <TitleText>{songInfo?.title || "로딩 중..."}</TitleText>
+          <MapIcon src={currentIconSrc} alt="지도 아이콘" />
+          <TitleText>{songInfo?.title || null}</TitleText>
         </PinTitle>
-        <PinSinger>{songInfo?.artist || "로딩 중..."}</PinSinger>
+        <PinSinger>{songInfo?.artist || null}</PinSinger>
         <PinTimes>
           <MapIconGray src={mapIconGray} />
-          <TimesNum>{pinCount || "로딩 중..."}</TimesNum>
+          <TimesNum>{pinCount || null}</TimesNum>
         </PinTimes>
       </TextBox>
     </PinBox>
@@ -95,6 +106,10 @@ const TitleText = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  max-width: 284px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const PinSinger = styled.div`
@@ -104,6 +119,10 @@ const PinSinger = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 24px */
+  max-width: 312px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const PinTimes = styled.div`

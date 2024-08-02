@@ -30,7 +30,7 @@ const SearchPlaces = ({ keyword, sortBy }) => {
           console.log(data);
           setSearchResults(data);
           setPage(1);
-          setHasMore(data.length > 0);
+          setHasMore(data.length === 20);
         } catch (error) {
           console.error(error);
         } finally {
@@ -49,16 +49,18 @@ const SearchPlaces = ({ keyword, sortBy }) => {
     if (!hasMore || isLoading) return;
 
     try {
+      setIsLoading(true);
+
       const data = await getPlaces({
         keyword,
         sortBy,
         page,
-        size: 20,
+        size: 10,
       });
 
       setSearchResults(prevResults => [...prevResults, ...data]);
       setPage(prevPage => prevPage + 1);
-      setHasMore(data.length > 0);
+      setHasMore(data.length === 10);
     } catch (error) {
       console.error("검색 에러: ", error);
     } finally {

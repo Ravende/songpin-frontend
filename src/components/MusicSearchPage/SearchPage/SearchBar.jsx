@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import search from "../../../assets/images/MusicSearchPage/search.svg";
 import arrow_dropdown from "../../../assets/images/MusicSearchPage/arrow_drop_down.svg";
-import { getExSpotify } from "../../../services/api/spotify";
 
 const options = ["노래", "장소"];
 
@@ -11,12 +10,20 @@ const SearchBar = ({ optionChange, onSearch }) => {
   const [selectedOption, setSelectedOption] = useState("노래");
   const [inputValue, setInputValue] = useState("");
 
+  useEffect(() => {
+    const storedOption = sessionStorage.getItem("selectedOption");
+    if (storedOption) {
+      setSelectedOption(storedOption);
+    }
+  }, []);
+
   const toggling = () => setIsOpen(!isOpen);
 
   const onOptionClicked = value => () => {
     setSelectedOption(value);
     setIsOpen(false);
     optionChange(value);
+    sessionStorage.setItem("selectedOption", value);
   };
 
   const handleChange = event => {

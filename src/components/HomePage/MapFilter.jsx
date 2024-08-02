@@ -7,24 +7,8 @@ import open_dropdown from '../../assets/filter/open_dropdown.svg';
 import close_dropdown from '../../assets/filter/close_dropdown.svg';
 import calendar_selected from '../../assets/filter/calendar_selected.svg';
 import Genre from '../common/Genre';
-
-import smallPopIcon from '../../assets/common/smallPopIcon.svg';
-import smallRockIcon from '../../assets/common/smallRockIcon.svg';
-import smallBalladeIcon from '../../assets/common/smallBalladeIcon.svg';
-import smallJazzIcon from '../../assets/common/smallJazzIcon.svg';
-import smallHiphopIcon from '../../assets/common/smallHiphopIcon.svg';
-import smallLofiIcon from '../../assets/common/smallLoFiIcon.svg';
-import smallDanceIcon from '../../assets/common/smallDanceIcon.svg';
-import smallEtcIcon from '../../assets/common/smallEtcIcon.svg';
-import whitePopIcon from '../../assets/common/whitePopIcon.svg';
-import whiteRockIcon from '../../assets/common/whiteRockIcon.svg';
-import whiteBalladeIcon from '../../assets/common/whiteBalladeIcon.svg';
-import whiteJazzIcon from '../../assets/common/whiteJazzIcon.svg';
-import whiteHiphopIcon from '../../assets/common/whiteHiphopIcon.svg';
-import whiteLoFiIcon from '../../assets/common/whiteLoFiIcon.svg';
-import whiteDanceIcon from '../../assets/common/whiteDanceIcon.svg';
-import whiteEtcIcon from '../../assets/common/whiteEtcIcon.svg';
 import { GenreList } from '../../constants/GenreList';
+import { postRecentMarkers } from '../../services/api/map';
 
 const MapFilter = () => {
   const [selectedOption, setSelectedOption] = useState('All');
@@ -36,6 +20,8 @@ const MapFilter = () => {
   const [endDate, setEndDate] = useState(null);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedDatesText, setSelectedDatesText] = useState('YYYY.MM.DD ~ YYYY.MM.DD');
+  const [recentPins, setRecentPins] = useState([]);
+
 
   const selectTerm = (term) => {
     setSelectedOption(term);
@@ -45,6 +31,7 @@ const MapFilter = () => {
     } else {
       setShowSetTerm(false);
     }
+    handleRequest(term, selectedGenres);
   };
 
   const handleDateChange = (date) => {
@@ -120,6 +107,34 @@ const MapFilter = () => {
     setShowGenre(!showGenre);
     setShowOptions(false);
     setShowCalendar(false);
+  };
+
+  const handleRequest = async (term, genres) => {
+  const periodMap = {
+    //'All': 'all',
+    '1week': 'week',
+    '1month': 'month',
+    '3months': 'three_months',
+    // 'Userself': 'custom'
+  };
+  const periodFilter = periodMap[term];
+  const genreNameFilters = genres.map(genre => GenreList.find(g => g.id === genre).name);
+
+  const request = {
+    boundCoords: {
+      swLat: 0,
+      swLng: 0,
+      neLat: 90,
+      neLng: 180
+    },
+    genreNameFilters,
+    periodFilter
+  };
+
+  console.log('Request:', request);
+  const Data = await postRecentMarkers(request);
+  console.log('Data:', Data);
+
   };
 
   return (

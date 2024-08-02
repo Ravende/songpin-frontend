@@ -8,6 +8,7 @@ import sparkIcon from "../../assets/images/MusicSearchPage/spark_122.svg";
 import PinComponent from "../../components/MusicSearchPage/PinComponent";
 import SideSection from "../../components/common/SideSection";
 import { getPlaceDetails } from "../../services/api/place";
+import { GenreList } from "../../constants/GenreList";
 
 const PlaceInfoPage = () => {
   const navigate = useNavigate();
@@ -35,6 +36,13 @@ const PlaceInfoPage = () => {
     fetchPlaceDetails();
   }, [placeId]);
 
+  const getGenreIcon = genreName => {
+    const genre = GenreList.find(item => item.EngName === genreName);
+    return genre ? genre.imgSrc : null;
+  };
+
+  const latestGenresrc = getGenreIcon(placeInfo?.latestGenreName) || sparkIcon;
+
   if (loading) {
     return <SideSection />; // 로딩 중
   }
@@ -54,7 +62,7 @@ const PlaceInfoPage = () => {
         <PinSection>
           <InfoSection>
             <PinCount>
-              <PinIcon src={sparkIcon} />
+              <PinIcon src={latestGenresrc} />
               <Num>{placeInfo.placePinCount}</Num>
             </PinCount>
             <RecentDate>최근 등록 일자: {placeInfo.updatedDate}</RecentDate>
@@ -161,6 +169,7 @@ const PinIcon = styled.img`
   height: 20px;
   flex-shrink: 0;
   padding-left: 5px;
+  opacity: 0.8;
 `;
 
 const Num = styled.div`

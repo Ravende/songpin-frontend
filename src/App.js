@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 
 import IntroducePage from "./pages/IntroducePage/IntroducePage";
 import HomePage from "./pages/HomePage/HomePage";
@@ -26,8 +26,44 @@ import PwResetPage from "./pages/AuthPages/PwResetPage";
 import PwResetCompletePage from "./pages/AuthPages/PwResetCompletePage";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import Notification from "./components/common/Notification";
+import { postAllMarkers, postRecentMarkers } from './services/api/map';
+
+import pop from './assets/map/glowing_map_pop.svg';
+import ballad from './assets/map/glowing_map_ballad.svg';
+import dance from './assets/map/glowing_map_dance.svg';
+import hiphop from './assets/map/glowing_map_hiphop.svg';
+import jazz from './assets/map/glowing_map_jazz.svg';
+import lofi from './assets/map/glowing_map_lofi.svg';
+import rock from './assets/map/glowing_map_rock.svg';
+import extra from './assets/map/glowing_map_extra.svg';
+
+const genreImages = {
+  "POP": pop,
+  "BALLAD": ballad,
+  "DANCE": dance,
+  "HIPHOP": hiphop,
+  "JAZZ": jazz,
+  "LOFI": lofi,
+  "ROCK": rock,
+  "EXTRA": extra,
+};
 
 function App() {
+
+  const [allPins, setAllPins] = useState([]);
+
+  useEffect(()=> {
+    const fetchAllPinData = async () => {
+      try {
+      const Data = await postAllMarkers();
+      setAllPins(Data.mapPlaceSet);
+      } catch (error) {
+      console.error("Error fetching all pin data:", error);
+      }
+    };
+    fetchAllPinData();
+  }, [])
+
   return (
     <Router>
       <Routes>
@@ -41,10 +77,10 @@ function App() {
         />
         <Route path="*" element={<h1>Not Found</h1>} />
 
-        <Route element={<MapLayout />}>
+        <Route element={<MapLayout allPins = {allPins}/>}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/details-song" element={<MusicInfoPage />} />
+          <Route path="/details-song/:songId" element={<MusicInfoPage />} />
           <Route path="/details-place/:placeId" element={<PlaceInfoPage />} />
           <Route path="/create" element={<CreatePinPage />} />
           <Route path="/pin-edit" element={<EditPinPage />} />
@@ -74,7 +110,9 @@ function App() {
 
 export default App;
 
-function MapLayout() {
+function MapLayout({ allPins }) {
+  const navigate = useNavigate();
+
   return (
     <div
       style={{
@@ -94,7 +132,29 @@ function MapLayout() {
           zIndex: 0,
           pointerEvents: "auto",
         }}
-      ></Map>
+      >
+        {allPins.map(pin => (
+          <MapMarker 
+            key={pin.id}
+            position={{ lat: pin.latitude, lng: pin.longitude }}
+            image={{
+              src: genreImages[pin.latestGenreName] || extra,
+              size: {
+                width: 114,
+                height: 114,
+              },
+            }}
+            onClick={() => {
+              if (pin.placePinCount >= 2) {
+                navigate(`/details-place/${pin.placeId}`);
+              } else {
+                navigate(`/details-song/${pin.latestSongId}`);
+              }
+            }}>
+            {/* <div style={{color:"#000"}}>{pin.name}</div> */}
+          </MapMarker>
+        ))}
+      </Map>
       <div
         style={{
           position: "absolute",
