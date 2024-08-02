@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import down from "../../../../assets/common/dropdown.svg";
 import styled from "styled-components";
 import Dropdown from "./Dropdown";
@@ -11,8 +11,11 @@ const PlaylistDropdown = ({ placeholder, setActive }) => {
   const [DropdownView, setDropdownView] = useState(false);
   const [initState, setInitState] = useState(placeholder);
   const { setPlaylistId } = usePlaylistIdStore();
-  const { playlistInfoMsg } = usePlaylistInfoMsgStore();
+  const { playlistInfoMsg, setPlaylistInfoMsg } = usePlaylistInfoMsgStore();
 
+  useEffect(() => {
+    setPlaylistInfoMsg("");
+  }, []);
   const { isError, data, error } = useQuery({
     queryKey: ["getMyPlaylist"],
     queryFn: getMyPlaylist,

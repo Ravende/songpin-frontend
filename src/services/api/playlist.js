@@ -24,6 +24,7 @@ export const createPlaylist = async createdPlaylist => {
   }
 };
 
+//특정 핀을 내 플레이리스트에 추가
 export const addPinPlaylist = async pinPlaylist => {
   try {
     const data = await post(`/playlists/pins`, pinPlaylist);
