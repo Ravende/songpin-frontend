@@ -278,8 +278,8 @@ const DropdownIcon = styled.img`
 
 const Dropdown = styled.div`
   position: absolute;
-  top: 120%;
-  left: 50%;
+  top: 115%;
+  right: -75px;
   transform: translateX(-50%);
   z-index: 10;
   display: flex;
@@ -363,9 +363,9 @@ const ApplyContainer = styled.div`
 `;
 
 const CalendarContainer = styled.div`
-  position: fixed;
-  top: 29%;
-  left: 71%;
+  position: absolute;
+  top: 233px;
+  left: 180px;
   transform: translate(-50%, -50%);
   z-index: 10;
   border: 1px solid var(--gray02, #747474);
