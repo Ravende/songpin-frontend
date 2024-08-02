@@ -26,7 +26,7 @@ import PwResetPage from "./pages/AuthPages/PwResetPage";
 import PwResetCompletePage from "./pages/AuthPages/PwResetCompletePage";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import Notification from "./components/common/Notification";
-import { postAllMarkers, postRecentMarkers } from './services/api/map';
+import { postAllMarkers, postRecentMarkers, postCustomPeriodMarkers } from './services/api/map';
 
 import pop from './assets/map/glowing_map_pop.svg';
 import ballad from './assets/map/glowing_map_ballad.svg';
