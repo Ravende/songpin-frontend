@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 
 import IntroducePage from "./pages/IntroducePage/IntroducePage";
 import HomePage from "./pages/HomePage/HomePage";
@@ -81,7 +81,7 @@ function App() {
         <Route element={<MapLayout allPins = {allPins}/>}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/details-song" element={<MusicInfoPage />} />
+          <Route path="/details-song/:songId" element={<MusicInfoPage />} />
           <Route path="/details-place/:placeId" element={<PlaceInfoPage />} />
           <Route path="/create" element={<CreatePinPage />} />
           <Route path="/pin-edit" element={<EditPinPage />} />
@@ -112,6 +112,8 @@ function App() {
 export default App;
 
 function MapLayout({ allPins }) {
+  const navigate = useNavigate();
+
   return (
     <div
       style={{
@@ -142,6 +144,13 @@ function MapLayout({ allPins }) {
                 width: 85,
                 height: 85,
               },
+            }}
+            onClick={() => {
+              if (pin.placePinCount >= 2) {
+                navigate(`/details-place/${pin.placeId}`);
+              } else {
+                navigate(`/details-song/${pin.latestSongId}`);
+              }
             }}>
             {/* <div style={{color:"#000"}}>{pin.name}</div> */}
           </MapMarker>
