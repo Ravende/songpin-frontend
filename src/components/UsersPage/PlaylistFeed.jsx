@@ -1,26 +1,33 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import pinImage from '../../assets/images/UsersPage/library_music.svg';
-import Playlist from '../PlaylistPage/Playlist';
+import React from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import pinImage from "../../assets/images/UsersPage/library_music.svg";
+import Playlist from "../PlaylistPage/Playlist";
 
-const PlaylistFeed = () => {
+const PlaylistFeed = ({ playlists, playlistCount }) => {
   const navigate = useNavigate();
 
-  const handlePlaylistClick = (id) => {
+  const handlePlaylistClick = id => {
     navigate(`/playlist/${id}`);
   };
   return (
     <PlaylistFeedContainer>
       <PinBox>
         <PinImg src={pinImage} alt="핀이미지" />
-        <PinNum>50</PinNum>
+        <PinNum>{playlistCount}</PinNum>
       </PinBox>
       <PlaylistContainer>
-          <Playlist onClick={() => handlePlaylistClick(1)} />
+        {playlists.map(playlist => (
+          <Playlist
+            key={playlist.playlistId}
+            onClick={() => handlePlaylistClick(playlist.playlistId)}
+            playlist={playlist} // 플레이리스트 정보를 전달
+          />
+        ))}
+        {/* <Playlist onClick={() => handlePlaylistClick(1)} />
           <Playlist onClick={() => handlePlaylistClick(2)} />
-          <Playlist onClick={() => handlePlaylistClick(3)} />
-        </PlaylistContainer>
+          <Playlist onClick={() => handlePlaylistClick(3)} /> */}
+      </PlaylistContainer>
     </PlaylistFeedContainer>
   );
 };
@@ -28,8 +35,8 @@ const PlaylistFeed = () => {
 export default PlaylistFeed;
 
 const PlaylistFeedContainer = styled.div`
-display:flex;
-flex-direction:column;
+  display: flex;
+  flex-direction: column;
 `;
 
 const PinBox = styled.div`
