@@ -1,48 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import lockIcon from "../../assets/images/MyPage/lock.svg";
 import { useNavigate } from "react-router-dom";
 import PinModalBox from "../common/PinModalBox";
 
-const MusicInfoPinPreview = () => {
+const MusicInfoPinPreview = ({ pin }) => {
   const [isTruncated, setIsTruncated] = useState(true);
+  const {
+    creatorNickname,
+    listenedDate,
+    memo,
+    visibility,
+    placeName,
+    latitude,
+    longitude,
+    isMine,
+  } = pin;
+
+  const navigate = useNavigate();
+
+  const goUsersPage = () => {
+    navigate("/users");
+  };
+
+  const goMapLocation = () => {
+    const location = {
+      lat: latitude,
+      long: longitude,
+    };
+  };
 
   const toggleTruncation = () => {
     setIsTruncated(!isTruncated);
   };
 
-  const text =
-    "사랑하긴 했었나요 스쳐가는 인연이었나요 누가 내 가슴에다 불을 질렀나 누가 내 심장에다 못을 박았나 그대의 눈빛은 날 얼어붙게 하네";
+  const text = memo || "메모가 비어 있습니다";
   const maxLength = 59;
   const showMoreBtn = text.length > maxLength;
   const displayText = showMoreBtn && isTruncated ? text.substring(0, 55) : text;
-
-  const navigate = useNavigate();
-  const goUsersPage = () => {
-    navigate("/users");
-  };
 
   return (
     <PinsContainer>
       <PinPreview>
         <PinContent>
           <UserView>
-            <UserName onClick={goUsersPage}>채연</UserName>
-            <PinModalBox top="32px" right="0px" />
+            <UserName onClick={goUsersPage}>{creatorNickname}</UserName>
+            {isMine && <PinModalBox top="32px" right="0px" />}
           </UserView>
           <PinMemo
             onClick={isTruncated ? () => {} : toggleTruncation}
             isTruncated={isTruncated}
+            visibility={visibility}
+            isEmpty={!memo}
           >
-            <SecretPin src={lockIcon} />
-            {displayText}
+            {visibility === "PRIVATE" && <SecretPin src={lockIcon} />}
+            {visibility === "PRIVATE" ? "비공개 메모입니다" : displayText}
             {showMoreBtn && isTruncated && (
               <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>
             )}
           </PinMemo>
           <Details>
-            <Date>2024.04.04</Date>
-            <Place>이화여대 학문관</Place>
+            <Date>{listenedDate}</Date>
+            <Place>{placeName}</Place>
             <PlaceText>에서</PlaceText>
           </Details>
         </PinContent>
@@ -99,6 +118,11 @@ const PinMemo = styled(UserName)`
   padding-right: 8px;
   cursor: ${props => (props.isTruncated ? "auto" : "pointer")};
   width: 426px;
+  min-height: 27px;
+  color: ${props =>
+    props.visibility === "PRIVATE" || props.isEmpty
+      ? "var(--gray02, #747474)"
+      : "#000"};
 `;
 
 const SecretPin = styled.img`
@@ -138,6 +162,7 @@ const Date = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 24px */
+  cursor: pointer;
 `;
 
 const Place = styled(Date)`
