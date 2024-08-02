@@ -3,6 +3,7 @@ import styled from "styled-components";
 import lockIcon from "../../assets/images/MyPage/lock.svg";
 import { useNavigate } from "react-router-dom";
 import PinModalBox from "../common/PinModalBox";
+import { postAllMarkers } from "../../services/api/map";
 
 const MusicInfoPinPreview = ({ pin }) => {
   const [isTruncated, setIsTruncated] = useState(true);
@@ -22,6 +23,30 @@ const MusicInfoPinPreview = ({ pin }) => {
   const goUsersPage = () => {
     navigate("/users");
   };
+
+  // const moveToLocation = (latitude, longitude) => {
+  //   const request = {
+  //     boundCoords: {
+  //       swLat: latitude - 0.05, // 대략적인 예시 좌표
+  //       swLng: longitude - 0.05,
+  //       neLat: latitude + 0.05,
+  //       neLng: longitude + 0.05,
+  //     },
+  //     genreNameFilters: null,
+  //   };
+
+  //   postAllMarkers(request)
+  //     .then(data => {
+  //       console.log("Received pins data:", data);
+  //     })
+  //     .catch(error => {
+  //       console.error("Error loading pins:", error.message);
+  //     });
+  // };
+
+  // const goMapLocation = () => {
+  //   moveToLocation(latitude, longitude);
+  // };
 
   const goMapLocation = () => {
     const location = {
@@ -67,7 +92,7 @@ const MusicInfoPinPreview = ({ pin }) => {
               <MoreBtn onClick={toggleTruncation}> ...더보기</MoreBtn>
             )}
           </PinMemo>
-          <Details>
+          <Details onClick={goMapLocation}>
             <Date>{formatDate(listenedDate)}</Date>
             <Place>{placeName}</Place>
             <PlaceText>에서</PlaceText>
