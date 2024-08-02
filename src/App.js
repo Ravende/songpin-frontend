@@ -25,7 +25,7 @@ import MyPinSearchPage from "./pages/MyPage/MyPinSearchPage";
 import PwResetPage from "./pages/AuthPages/PwResetPage";
 import PwResetCompletePage from "./pages/AuthPages/PwResetCompletePage";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import Notification from './components/common/Notification';
+import Notification from "./components/common/Notification";
 
 function App() {
   return (
@@ -48,13 +48,19 @@ function App() {
           <Route path="/details-place/:placeId" element={<PlaceInfoPage />} />
           <Route path="/create" element={<CreatePinPage />} />
           <Route path="/pin-edit" element={<EditPinPage />} />
-          <Route path="/playlist" element={<PlaylistPage />} />
+          <Route path="/playlists" element={<PlaylistPage />} />
           <Route path="/usersearch" element={<UserSearchPage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/user-follows" element={<UserFollowPage />} />
           <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
-          <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
-          <Route path="/playlist-edit/:id" element={<PlaylistEditPage />} />
+          <Route
+            path="/playlists/:playlistId"
+            element={<PlaylistDetailPage />}
+          />
+          <Route
+            path="/playlist-edit/:playlistId"
+            element={<PlaylistEditPage />}
+          />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/edit" element={<ProfileEditPage />} />
           <Route path="/settings" element={<SettingsPage />} />
@@ -107,13 +113,19 @@ function MapLayout() {
           <Route path="/details-place" element={<PlaceInfoPage />} />
           <Route path="/create" element={<CreatePinPage />} />
           <Route path="/pin-edit" element={<EditPinPage />} />
-          <Route path="/playlist" element={<PlaylistPage />} />
+          <Route path="/playlists" element={<PlaylistPage />} />
           <Route path="/usersearch" element={<UserSearchPage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/user-follows" element={<UserFollowPage />} />
           <Route path="/playlistsearch" element={<PlaylistSearchPage />} />
-          <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
-          <Route path="/playlist-edit/:id" element={<PlaylistEditPage />} />
+          <Route
+            path="/playlists/:playlistId"
+            element={<PlaylistDetailPage />}
+          />
+          <Route
+            path="/playlist-edit/:playlistId"
+            element={<PlaylistEditPage />}
+          />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/edit" element={<ProfileEditPage />} />
           <Route path="/settings" element={<SettingsPage />} />
