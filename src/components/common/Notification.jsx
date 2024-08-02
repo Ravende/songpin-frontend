@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import alarmIcon from "../../assets/notification/alarm.svg";
 import ColumnComponent from "./ColumnComponent";
-import { showAlarms, postNewAlarms } from '../../services/api/alarm';
+import { showAlarms, postNewAlarms } from "../../services/api/alarm";
 
 const Notification = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,38 +14,40 @@ const Notification = () => {
     setIsNewAlarm(false);
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     const fetchAlarmData = async () => {
       try {
-      const Data = await showAlarms();
-      setAlarms(Data.data.alarmList);
+        const Data = await showAlarms();
+        setAlarms(Data.data.alarmList);
       } catch (error) {
-      console.error("Error fetching alarm data:", error);
+        console.error("Error fetching alarm data:", error);
       }
     };
     fetchAlarmData();
-    
-    const eventSource = new EventSource("https://api.songpin.n-e.kr/alarms/subscribe")
+
+    const eventSource = new EventSource(
+      "https://api.songpin.n-e.kr/alarms/subscribe",
+    );
 
     eventSource.onopen = async () => {
-      console.log("sse opened!")
-    }
+      console.log("sse opened!");
+    };
 
-    eventSource.addEventListener('sse-alarm', (event) => {
-      console.log("sse-alarm")
+    eventSource.addEventListener("sse-alarm", event => {
+      console.log("sse-alarm");
       const data = JSON.parse(event.data);
       console.log(data);
       setIsNewAlarm(true);
     });
 
-    eventSource.onerror = async (e) => {
-      console.log(e)
-    }
+    eventSource.onerror = async e => {
+      console.log(e);
+    };
 
     return () => {
-      eventSource.close()
-    }
-  }, [])
+      eventSource.close();
+    };
+  }, []);
 
   return (
     <NotifComponent>
@@ -56,14 +58,15 @@ const Notification = () => {
           <NoticeBox>
             <AlarmTitle>알림</AlarmTitle>
             <ContentSection>
-              {alarms && alarms.map(alarm => (
-                <ColumnComponent 
-                  key={alarm.alarmId} 
-                  read={alarm.isRead} 
-                  message={alarm.message} 
-                  time={alarm.createdTime} 
-                  id={alarm.senderId} 
-                />
+              {alarms &&
+                alarms.map(alarm => (
+                  <ColumnComponent
+                    key={alarm.alarmId}
+                    read={alarm.isRead}
+                    message={alarm.message}
+                    time={alarm.createdTime}
+                    id={alarm.senderId}
+                  />
                 ))}
             </ContentSection>
           </NoticeBox>
@@ -77,9 +80,9 @@ export default Notification;
 
 const NotifComponent = styled.div`
   z-index: 1000;
-  position: absolute;
-  top: 840px;
-  right: 74px;
+  position: fixed;
+  bottom: 40px;
+  right: 80px;
 `;
 
 const NotifBtn = styled.img`
