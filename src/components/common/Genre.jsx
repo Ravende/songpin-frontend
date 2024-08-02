@@ -30,11 +30,11 @@ const GenreWrapper = styled.div`
       ? "1px solid rgba(0, 0, 0, 0)"
       : "1px solid var(--light_black, #232323)"};
   display: flex;
-  padding: 7px 9px;
+  padding: 6px 9px;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  font-weight: 600;
+  gap: 4px;
+  font-weight: 500;
   cursor: pointer;
 `;
 const ImgWrapper = styled.span`

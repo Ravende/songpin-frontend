@@ -213,19 +213,23 @@ const MapFilter = () => {
       </SetGenre>
       {showGenre && (
         <GenreDropdown>
-          {GenreList.map(genre => (
-            <Genre
-              key={genre.id}
-              name={genre.name}
-              img={
-                selectedGenres.includes(genre.id)
-                  ? genre.whiteImgSrc
-                  : genre.imgSrc
-              }
-              bgColor={selectedGenres.includes(genre.id) ? genre.bgColor : null}
-              onClick={() => toggleGenre(genre.id)}
-            />
-          ))}
+          <GenreTotal>
+            {GenreList.map(genre => (
+              <Genre
+                key={genre.id}
+                name={genre.name}
+                img={
+                  selectedGenres.includes(genre.id)
+                    ? genre.whiteImgSrc
+                    : genre.imgSrc
+                }
+                bgColor={
+                  selectedGenres.includes(genre.id) ? genre.bgColor : null
+                }
+                onClick={() => toggleGenre(genre.id)}
+              />
+            ))}
+          </GenreTotal>
         </GenreDropdown>
       )}
     </FilterContainer>
@@ -260,7 +264,7 @@ const GivenOptions = styled.div`
   border: 1px solid var(--gray02, #747474);
   background: var(--offwhite_, #fcfcfc);
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
   cursor: pointer;
@@ -292,10 +296,9 @@ const Dropdown = styled.div`
 const Option = styled.div`
   margin-top: 5px;
   margin-bottom: 5px;
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 150%;
   color: var(--light_black, #232323);
   border: none;
@@ -333,7 +336,7 @@ const SetGenre = styled.div`
   position: relative;
   display: flex;
   padding: 10px 16px 10px 20px;
-  width: 85px;
+  width: 86px;
   height: 24px;
   justify-content: center;
   align-items: center;
@@ -342,7 +345,7 @@ const SetGenre = styled.div`
   border: 1px solid var(--gray02, #747474);
   background: var(--offwhite_, #fcfcfc);
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
   cursor: pointer;
@@ -459,24 +462,27 @@ const ApplyButton = styled.button`
     color: #ffffff;
   }
 `;
-
+const GenreTotal = styled.div`
+  width: 204px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 4px;
+  row-gap: 6px;
+`;
 const GenreDropdown = styled.div`
   position: absolute;
   top: 50px;
   z-index: 10;
-  width: 220px;
-  height: 204px;
+  width: 230px;
+  height: 200px;
   display: flex;
-  justify-content: flex-start;
-  gap: 4px;
-  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   border-radius: 24px;
   border: 1px solid var(--gray02, #747474);
   background: var(--f8f8f8, #fcfcfc);
   cursor: pointer;
-  padding: 10px 4px;
-  padding-left: 10px;
 `;
 
 export default MapFilter;
