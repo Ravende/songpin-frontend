@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import nobookmark from "../../assets/images/MyPage/bookmark-no.svg";
 import yesbookmark from "../../assets/images/MyPage/bookmark-yes.svg";
 import pinImage from "../../assets/images/MusicSearchPage/spark_122.svg";
+import lock from "../../assets/images/UsersPage/lock.svg";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { addBookmarkOne, deleteBookmarkOne } from "../../services/api/myPage";
@@ -21,6 +22,7 @@ const Playlist = ({ playlist }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(bookmarkId ? true : false);
+  const isPrivate = playlist.visibility === "PRIVATE";
 
   const toggleBookmark = async () => {
     try {
@@ -58,17 +60,19 @@ const Playlist = ({ playlist }) => {
           <SmallBox imageUrl={imgPathList[2]} />
         </SmallBoxContainer>
       </PlaylistBox>
-      <PlaylistNameContainer
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={handlePlaylistClick}
-      >
-        <PlaylistName onClick={handlePlaylistClick} isHovered={isHovered}>
-          {playlistName}
-        </PlaylistName>
-
-        <FadeOut />
-      </PlaylistNameContainer>
+      <PlaylistNameBox>
+        {isPrivate && <LockImg src={lock} alt="나만보기 아이콘" />}
+        <PlaylistNameContainer
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={handlePlaylistClick}
+        >
+          <PlaylistName onClick={handlePlaylistClick} isHovered={isHovered}>
+            {playlistName}
+          </PlaylistName>
+          <FadeOut />
+        </PlaylistNameContainer>
+      </PlaylistNameBox>
       <NameBox>
         <UserName>by {creatorNickname}</UserName>
         <PinBox>
@@ -235,3 +239,15 @@ const UpdatedDate = styled.div`
   height: 24px;
   padding-left: 8px;
 `;
+
+const LockImg = styled.img`
+  width: 13px;
+  height: 16px;
+  flex-shrink: 0;
+  fill: var(--gray02, #747474);
+
+  padding-left: 3px;
+  padding-right: 7px;
+`;
+
+const PlaylistNameBox = styled.div``;
