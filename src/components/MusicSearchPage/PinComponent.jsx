@@ -10,7 +10,7 @@ const PinComponent = ({ songInfo, avgGenreName, pinCount }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate("/details-song");
+    navigate(`/details-song/${songInfo?.songId}`);
   };
 
   return (
@@ -23,12 +23,12 @@ const PinComponent = ({ songInfo, avgGenreName, pinCount }) => {
       <TextBox>
         <PinTitle>
           <MapIcon src={image} alt="지도 아이콘" />
-          <TitleText>{songInfo?.title || "로딩 중..."}</TitleText>
+          <TitleText>{songInfo?.title || null}</TitleText>
         </PinTitle>
-        <PinSinger>{songInfo?.artist || "로딩 중..."}</PinSinger>
+        <PinSinger>{songInfo?.artist || null}</PinSinger>
         <PinTimes>
           <MapIconGray src={mapIconGray} />
-          <TimesNum>{pinCount || "로딩 중..."}</TimesNum>
+          <TimesNum>{pinCount || null}</TimesNum>
         </PinTimes>
       </TextBox>
     </PinBox>

@@ -41,7 +41,7 @@ function App() {
         <Route path="*" element={<h1>Not Found</h1>} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/details-song" element={<MusicInfoPage />} />
+        <Route path="/details-song/:songId" element={<MusicInfoPage />} />
         <Route path="/details-place/:placeId" element={<PlaceInfoPage />} />
         <Route path="/create" element={<CreatePinPage />} />
         <Route path="/pin-edit" element={<EditPinPage />} />

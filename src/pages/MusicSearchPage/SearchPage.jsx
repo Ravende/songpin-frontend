@@ -63,7 +63,12 @@ const SearchContainer = () => {
           </DropdownSorting>
         </Sorting>
         <SearchResult>
-          {selectedOption === "노래" && <SearchSongs />}
+          {selectedOption === "노래" && (
+            <SearchSongs
+              keyword={keyword}
+              sortBy={sortOptions[selectedValue]}
+            />
+          )}
           {selectedOption === "장소" && (
             <SearchPlaces
               keyword={keyword}
