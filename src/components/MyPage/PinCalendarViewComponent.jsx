@@ -1,11 +1,25 @@
-import react from "react";
+import react, { useEffect } from "react";
 import styled from "styled-components";
 import albumImgExample from "../../assets/images/MyPage/album-eg.png";
 import pinIcon from "../../assets/images/MyPage/vector-icon.svg";
 import PinModalBox from "../common/PinModalBox";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
+import { GenreList } from "../../constants/GenreList";
 import { useNavigate } from "react-router-dom";
 
-const PinCalendarViewComponent = () => {
+const PinCalendarViewComponent = ({
+  title,
+  artist,
+  imgPath,
+  listenedDate,
+  placeName,
+  genre,
+}) => {
+  const formattedCalendarDate = format(new Date(listenedDate), "yy.MM.dd", {
+    locale: ko,
+  });
+
   const navigate = useNavigate();
   const goMusicInfoPage = () => {
     navigate("/details-song");
@@ -14,23 +28,28 @@ const PinCalendarViewComponent = () => {
     // 지도 위치 이동 코드 추가
   };
 
+  const genreIcon = GenreList.find(it => it.EngName === genre)?.imgSrc;
+  useEffect(() => {
+    console.log(listenedDate);
+  }, []);
+
   return (
     <PinBox>
-      <AlbumImg src={albumImgExample} />
+      <AlbumImg src={imgPath} />
       <Content>
         <TitleSection>
           <SongInfo onClick={goMusicInfoPage}>
             <SongTitle>
-              <SongIcon src={pinIcon} />
-              <TitleText>사랑하긴 했었나요 스쳐지나가는 인연이었나요</TitleText>
+              {genreIcon && <SongIcon src={genreIcon} />}
+              <TitleText>{title}</TitleText>
             </SongTitle>
-            <Singer>잔나비</Singer>
+            <Singer>{artist}</Singer>
           </SongInfo>
           <PinModalBox top="48px" right="12px" padding="31px" />
         </TitleSection>
         <Info onClick={goLocation}>
-          <Date>2024.04.04</Date>
-          <Place>신촌</Place>
+          <CalendarDate>{formattedCalendarDate}</CalendarDate>
+          <Place>{placeName}</Place>
           <PlaceText>에서</PlaceText>
         </Info>
       </Content>
@@ -72,13 +91,14 @@ const AlbumImg = styled.img`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
 
 const TitleSection = styled.div`
   display: flex;
   flex-direction: row;
   padding-top: 4px;
-  justify-content: space-between;
+  gap: 170px;
 `;
 
 const SongInfo = styled.div`
@@ -127,12 +147,11 @@ const Info = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding-right: 11px;
   white-space: nowrap;
   cursor: pointer;
 `;
 
-const Date = styled.div`
+const CalendarDate = styled.div`
   overflow: hidden;
   color: var(--gray02, #747474);
   text-overflow: ellipsis;
@@ -143,7 +162,13 @@ const Date = styled.div`
   line-height: 150%; /* 24px */
 `;
 
-const Place = styled(Date)`
+const Place = styled.div`
+  color: var(--gray02, #747474);
+  text-align: right;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
   max-width: 218px;
   white-space: nowrap;
   overflow: hidden;
@@ -152,7 +177,13 @@ const Place = styled(Date)`
   padding-left: 8px;
 `;
 
-const PlaceText = styled(Date)`
+const PlaceText = styled.div`
+  color: var(--gray02, #747474);
+  text-align: right;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
   white-space: nowrap;
   flex-shrink: 0;
 `;

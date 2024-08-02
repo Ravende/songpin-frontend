@@ -45,6 +45,7 @@ const LoginModal = ({
     };
 
     const result = await postLogin(userData);
+    console.log(result);
     if (result.token) {
       handleComplete();
       console.log("로그인 성공");
@@ -142,7 +143,7 @@ const Info = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  bottom: 120px;
+  bottom: 118px;
 `;
 
 const SignUpAndPWReSet = styled.div`
@@ -152,7 +153,7 @@ const SignUpAndPWReSet = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 28px */
-  margin-top: 30px;
+  margin-top: 74px;
 `;
 const SignUpAndPWReSetText = styled.div`
   color: var(--gray02, #747474);
