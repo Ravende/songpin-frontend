@@ -4,25 +4,36 @@ import { useNavigate } from "react-router-dom";
 import mapIconBallad from "../../assets/images/MusicSearchPage/flower.svg";
 import mapIconBlack from "../../assets/images/MusicSearchPage/flower_black.svg";
 import mapIconGray from "../../assets/images/MusicSearchPage/flower_gray.svg";
+import { GenreList } from "../../constants/GenreList";
 
 const PinComponent = ({ songInfo, avgGenreName, pinCount }) => {
-  const [image, setImage] = useState(mapIconBlack);
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
     navigate(`/details-song/${songInfo?.songId}`);
   };
 
+  const getGenreIcon = genreName => {
+    const genre = GenreList.find(item => item.EngName === genreName);
+    return genre
+      ? { imgSrc: genre.imgSrc, iconSrc: genre.iconSrc }
+      : { imgSrc: mapIconBlack, iconSrc: mapIconBallad };
+  };
+
+  const { imgSrc, iconSrc } = getGenreIcon(avgGenreName || "");
+  const currentIconSrc = isHovered ? iconSrc : imgSrc;
+
   return (
     <PinBox
-      onMouseEnter={() => setImage(mapIconBallad)}
-      onMouseLeave={() => setImage(mapIconBlack)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={handleNavigate}
     >
       <PinImg src={songInfo?.imgPath} alt="앨범 이미지" />
       <TextBox>
         <PinTitle>
-          <MapIcon src={image} alt="지도 아이콘" />
+          <MapIcon src={currentIconSrc} alt="지도 아이콘" />
           <TitleText>{songInfo?.title || null}</TitleText>
         </PinTitle>
         <PinSinger>{songInfo?.artist || null}</PinSinger>
