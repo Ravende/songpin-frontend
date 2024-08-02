@@ -147,7 +147,7 @@ const Stats = () => {
                   name={GenreList.find(it => it.id === genrePlaceId).name}
                   img={GenreList.find(it => it.id === genrePlaceId).whiteImgSrc}
                   bgColor={GenreList.find(it => it.id === genrePlaceId).bgColor}
-                  height="45px"
+                  height="35px"
                   text="28px"
                 />
               )}
@@ -187,7 +187,7 @@ const Stats = () => {
                   name={GenreList.find(it => it.id === genreSongId).name}
                   img={GenreList.find(it => it.id === genreSongId).whiteImgSrc}
                   bgColor={GenreList.find(it => it.id === genreSongId).bgColor}
-                  height="45px"
+                  height="35px"
                   text="28px"
                 />
               )}
@@ -336,7 +336,7 @@ const TotalGenre = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
+  width: 470px;
   gap: 4px;
 `;
 const MostListenGenreWrapper = styled.div`
