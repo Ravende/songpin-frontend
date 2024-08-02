@@ -17,45 +17,51 @@ const Notification = () => {
     const fetchAlarmData = async () => {
       try {
       const Data = await showAlarms();
-      setAlarms(Data.alarmList);
+      setAlarms(Data.data.alarmList);
       } catch (error) {
       console.error("Error fetching alarm data:", error);
       }
     };
     fetchAlarmData();
     
-    const eventSource = new EventSource("https://api.songpin.n-e.kr/alarms/subscribe")
+    // const eventSource = new EventSource("https://api.songpin.n-e.kr/alarms/subscribe")
 
-    eventSource.onopen = async () => {
-      await console.log("sse opened!")
-    }
+    // eventSource.onopen = async () => {
+    //   await console.log("sse opened!")
+    // }
 
-    eventSource.addEventListener('sse-alarm', (event) => {
-      console.log("sse-alarm")
-      const data = JSON.parse(event.data);
-      console.log(data)
-    });
+    // eventSource.addEventListener('sse-alarm', (event) => {
+    //   console.log("sse-alarm")
+    //   const data = JSON.parse(event.data);
+    //   console.log(data)
+    // });
 
-    eventSource.onerror = async (e) => {
-      await console.log(e)
-    }
+    // eventSource.onerror = async (e) => {
+    //   await console.log(e)
+    // }
 
-    return () => {
-      eventSource.close()
-    }
+    // return () => {
+    //   eventSource.close()
+    // }
   }, [])
 
   return (
     <NotifComponent>
       <NotifBtn src={alarmIcon} onClick={handleNotice} />
-      <RedDot />
+      {isNewAlarm && <RedDot />}
       {isOpen && (
         <NoticePopup>
           <NoticeBox>
             <AlarmTitle>알림</AlarmTitle>
             <ContentSection>
               {alarms && alarms.map(alarm => (
-                <ColumnComponent read={alarm.isRead} message={alarm.message} time={alarm.createdTime} id={alarm.senderId} />
+                <ColumnComponent 
+                  key={alarm.alarmId} 
+                  read={alarm.isRead} 
+                  message={alarm.message} 
+                  time={alarm.createdTime} 
+                  id={alarm.senderId} 
+                />
                 ))}
             </ContentSection>
           </NoticeBox>
