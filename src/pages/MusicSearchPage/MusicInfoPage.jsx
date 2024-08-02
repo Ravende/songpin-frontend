@@ -8,7 +8,7 @@ import uncheckedBox from "../../assets/images/MusicSearchPage/checkbox.svg";
 import checkedBox from "../../assets/images/MusicSearchPage/checkbox-oncheck.svg";
 import MusicInfoPinPreview from "../../components/MusicSearchPage/MusicInfoPinPreview";
 import SideSection from "../../components/common/SideSection";
-import { getSongDetails } from "../../services/api/song";
+import { getMySongPins, getSongDetails } from "../../services/api/song";
 import { getSongPins } from "../../services/api/song";
 import { GenreList } from "../../constants/GenreList";
 
@@ -22,6 +22,7 @@ const MusicInfoPage = () => {
   const [songInfo, setSongInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [pins, setPins] = useState([]);
+  const [myPins, setMyPins] = useState([]);
 
   useEffect(() => {
     if (songInfo?.title) {
@@ -36,8 +37,11 @@ const MusicInfoPage = () => {
     }
   }, [title]);
 
-  const handleCheckboxChange = () => {
+  const handleCheckboxChange = async () => {
     setIsChecked(!isChecked);
+    if (!isChecked) {
+      fetchMySongPins();
+    }
   };
 
   const navigate = useNavigate();
@@ -66,7 +70,7 @@ const MusicInfoPage = () => {
       if (songId) {
         try {
           const pinsRes = await getSongPins(songId);
-          setPins(pinsRes); // 핀 정보 저장
+          setPins(pinsRes);
         } catch (err) {
           console.error(err);
           setPins([]);
@@ -75,6 +79,20 @@ const MusicInfoPage = () => {
     };
     fetchSongPins();
   }, [songId]);
+
+  const fetchMySongPins = async () => {
+    if (songId) {
+      try {
+        const myPinsRes = await getMySongPins(songId);
+        setMyPins(myPinsRes);
+      } catch (err) {
+        console.error(err);
+        setMyPins([]);
+      }
+    }
+  };
+
+  const displayedPins = isChecked ? myPins : pins;
 
   const getGenreIcon = genreName => {
     const genre = GenreList.find(item => item.EngName === genreName);
@@ -130,12 +148,13 @@ const MusicInfoPage = () => {
               />
             </CheckMyPin>
           </PinInfo>
-          {pins.length > 0 ? (
-            pins.map(pin => <MusicInfoPinPreview key={pin.pinId} pin={pin} />)
+          {displayedPins.length > 0 ? (
+            displayedPins.map(pin => (
+              <MusicInfoPinPreview key={pin.pinId} pin={pin} />
+            ))
           ) : (
-            <NoPinMessage>아직 공개된 핀 메모가 없습니다.</NoPinMessage>
+            <NoPinMessage>아직 생성된 핀이 없습니다.</NoPinMessage>
           )}
-          {/* <NoMyPinMessage>아직 이 음악에 대해 핀을 등록하지 않았습니다.</NoMyPinMessage> */}
         </SongInfo>
       </MusicInfo>
     </SideSection>
@@ -254,7 +273,7 @@ const MapIconBlack = styled.img`
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  /* opacity: 0.8; */
+  opacity: 0.8;
   margin-right: 8px;
 `;
 
@@ -315,9 +334,5 @@ const NoPinMessage = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 28px */
-  margin: 142px 107px 142px 105px;
-`;
-
-const NoMyPinMessage = styled(NoPinMessage)`
-  margin: 142px 49px 142px 49px;
+  padding: 126px 125px 170px 126px;
 `;
