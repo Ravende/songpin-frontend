@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import alarmIcon from "../../assets/notification/alarm.svg";
 import ColumnComponent from "./ColumnComponent";
-import { showAlarms, getNewAlarms } from '../../services/api/alarm';
+import { showAlarms, postNewAlarms } from '../../services/api/alarm';
 
 const Notification = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +11,7 @@ const Notification = () => {
 
   const handleNotice = () => {
     setIsOpen(!isOpen);
+    setIsNewAlarm(false);
   };
 
   useEffect(()=> {
@@ -24,25 +25,26 @@ const Notification = () => {
     };
     fetchAlarmData();
     
-    // const eventSource = new EventSource("https://api.songpin.n-e.kr/alarms/subscribe")
+    const eventSource = new EventSource("https://api.songpin.n-e.kr/alarms/subscribe")
 
-    // eventSource.onopen = async () => {
-    //   await console.log("sse opened!")
-    // }
+    eventSource.onopen = async () => {
+      console.log("sse opened!")
+    }
 
-    // eventSource.addEventListener('sse-alarm', (event) => {
-    //   console.log("sse-alarm")
-    //   const data = JSON.parse(event.data);
-    //   console.log(data)
-    // });
+    eventSource.addEventListener('sse-alarm', (event) => {
+      console.log("sse-alarm")
+      const data = JSON.parse(event.data);
+      console.log(data);
+      setIsNewAlarm(true);
+    });
 
-    // eventSource.onerror = async (e) => {
-    //   await console.log(e)
-    // }
+    eventSource.onerror = async (e) => {
+      console.log(e)
+    }
 
-    // return () => {
-    //   eventSource.close()
-    // }
+    return () => {
+      eventSource.close()
+    }
   }, [])
 
   return (
