@@ -1,20 +1,68 @@
-import React from 'react';
-import styled from 'styled-components';
-import SideSection from '../../components/common/SideSection';
-import SearchBar from '../../components/UsersPage/SearchBar';
-import UserInfo from '../../components/UsersPage/UserInfo';
-
-
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useNavigate, useLocation } from "react-router-dom";
+import SideSection from "../../components/common/SideSection";
+import SearchBar from "../../components/UsersPage/SearchBar";
+import UserInfo from "../../components/UsersPage/UserInfo";
+import { searchUsers } from "../../services/api/user";
+import Main from "../IntroducePage/Main";
 
 const UserSearchPage = () => {
+  const [searchResults, setSearchResults] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [error, setError] = useState(null);
+  const [searched, setSearched] = useState(false);
+  const navigate = useNavigate();
+  const handleUserClick = id => {
+    navigate(`/users/${id}`);
+  };
+  const handleSearch = async keyword => {
+    if (!keyword.trim()) return; // 빈 검색어일 경우 무시
+
+    setSearching(true);
+    setError(null);
+    setSearched(true);
+
+    try {
+      const data = await searchUsers(keyword, 0, 20); // page와 size는 필요에 따라 조정
+      setSearchResults(data.memberList || []);
+    } catch (err) {
+      setError("검색 중 오류가 발생했습니다.");
+      setSearchResults([]);
+    } finally {
+      setSearching(false);
+    }
+  };
   return (
     <SideSection>
-        <SearchBox>
-          <SearchBar placeholder="핸들 또는 닉네임을 검색" />
-        </SearchBox>
-        <ContentBox>
-          <UserInfo />
-        </ContentBox>
+      <SearchBox>
+        <SearchBar
+          placeholder="닉네임 또는 핸들을 검색"
+          onSearch={handleSearch}
+        />
+      </SearchBox>
+      {!searched && <MainText>다른 사람을 팔로우해보세요</MainText>}
+      {/* <ContentBox>
+        <UserInfo />
+      </ContentBox> */}
+      {searching ? (
+        <div></div>
+      ) : searchResults.length > 0 ? (
+        searchResults.map(user => (
+          <ContentBox key={user.memberId}>
+            <UserInfo
+              memberId={user.memberId}
+              nickname={user.nickname}
+              handle={user.handle}
+              profileImg={user.profileImg}
+              isMe={user.isMe}
+              onClick={() => handleUserClick(user.memberId)}
+            />
+          </ContentBox>
+        ))
+      ) : searched ? (
+        <NoUser>검색 결과가 없습니다.</NoUser>
+      ) : null}
     </SideSection>
   );
 };
@@ -30,11 +78,26 @@ const ContentBox = styled.div`
 const SearchBox = styled.div`
   padding: 40px 34px 10px 34px;
   border-bottom: 1px solid var(--gray, #bcbcbc);
-`
-
-const Line = styled.div`
-  width: 528px;
-  height: 1px;
-  background: var(--gray, #bcbcbc);
 `;
 
+const MainText = styled.div`
+  color: var(--gray, #bcbcbc);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 28px */
+  margin-top: 448px;
+`;
+
+const NoUser = styled.div`
+  color: var(--gray02, #747474);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 28px */
+  margin-top: 448px;
+`;
