@@ -4,26 +4,45 @@ import SideSection from "../../components/common/SideSection";
 import styled from "styled-components";
 import PinComponent from "../../components/PlaylistPage/PinComponent";
 import PlaceComponent from "../../components/HomePage/PlaceComponent";
+import { getHomeInfo } from "../../services/api/home";
 
 const HomePage = () => {
+    const [homeInfo, setHomeInfo] = useState(null);
+    const [recentPins, setRecentPins] = useState([]);
+    const [recentPlaces, setRecentPlaces] = useState([]);
+
+    useEffect(() => {
+        const fetchHomeData = async () => {
+            try {
+            const Data = await getHomeInfo();
+            setHomeInfo(Data.nickname);
+            setRecentPins(Data.pinList);
+            setRecentPlaces(Data.placeList);
+            } catch (error) {
+            console.error("Error fetching home data:", error);
+            }
+        };
+        fetchHomeData();
+    }, []);
+
     return (
         <div style={{ position: "relative" }}>
-        <SideBar />
-        <SideSection>
+            <SideBar />
+            <SideSection>
             <Title>
-            닉네임님, <br></br> 무슨 노래 듣고 계세요?
+                {homeInfo}님, <br />무슨 노래 듣고 계세요?
             </Title>
             <SongTxt>사람들은 이 노래를 듣고 있어요</SongTxt>
             <SongListContainer>
-            <PinComponent />
-            <PinComponent />
-            <PinComponent />
+                {recentPins && recentPins.map(pin => (
+                <PinComponent key={pin.SongId} pin={pin} selectable={false} buttonVisible={true} />
+                ))}
             </SongListContainer>
-            <PlaceTxt>사람들은 이 장소에서 핀을 등록했어요</PlaceTxt>
+            <PlaceTxt>사람들이 이 장소에서 핀을 등록했어요</PlaceTxt>
             <PlaceListContainer>
-            <PlaceComponent />
-            <PlaceComponent />
-            <PlaceComponent />
+                {recentPlaces && recentPlaces.map(place => (
+                <PlaceComponent key={place.placeId} name={place.placeName} cnt={place.placePinCount} />
+                ))}
             </PlaceListContainer>
         </SideSection>
         <MapFilter />
@@ -46,6 +65,8 @@ const Title = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 40px;
+    white-space: pre-wrap;
+    line-height: 1.5em;
 `;
 
 const SongTxt = styled.div`
